@@ -66,29 +66,32 @@
       font-family: 'Caveat', cursive;
     }
 
+    /* HEADER CONTENEDOR FIJO UNIFICADO (Evita choques en móvil) */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+    }
+
     /* BARRA DE ANUNCIOS */
     .announcement-bar {
       background: var(--rojo-frambuesa);
       color: var(--blanco);
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 700;
-      letter-spacing: 0.4px;
-      padding: 7px 12px;
+      letter-spacing: 0.3px;
+      padding: 6px 12px;
       text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      line-height: 1.3;
     }
 
     /* NAVBAR */
     .navbar {
-      background: rgba(247, 239, 230, 0.95);
-      backdrop-filter: blur(12px);
+      background: rgba(247, 239, 230, 0.96);
+      backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border-suave);
-      padding: 10px 16px;
-      position: sticky;
-      top: 33px;
-      z-index: 99;
+      padding: 9px 16px;
     }
     .nav-container {
       max-width: 1240px;
@@ -695,21 +698,26 @@
       position: absolute;
       top: 10px;
       right: 10px;
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       border-radius: var(--radio-full);
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(4px);
-      border: none;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(181, 139, 114, 0.2);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--texto-mutado);
-      z-index: 1;
+      z-index: 2;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
-    .btn-wish.active {
+    .btn-wish:hover, .btn-wish.active {
       color: var(--rojo-frambuesa);
+      background: #FFFFFF;
+      transform: scale(1.1);
+      border-color: var(--rojo-frambuesa);
     }
 
     .product-info {
@@ -1317,47 +1325,51 @@
 </head>
 <body>
 
-  <!-- BARRA DE ANUNCIOS -->
-  <div class="announcement-bar" id="topAnnouncement">
-    <span>✨ Envíos a todo el Perú | Entregas inmediatas en Lima y Gamarra ♡ | Asesora WhatsApp: +51 902 778 794 ✨</span>
-  </div>
-
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <button class="btn-mobile-menu" onclick="toggleMobileMenu()" aria-label="Abrir menú">
-        <i class="fa-solid fa-bars"></i>
-      </button>
-
-      <ul class="nav-links">
-        <li><a onclick="goToCategory('todos')">Colección Pastel</a></li>
-        <li><a onclick="goToCategory('boxy')">Polos Boxy</a></li>
-        <li><a onclick="goToCategory('oversized')">Oversized Tees</a></li>
-        <li><a onclick="goToCategory('sweaters')">Sweaters & Fleece</a></li>
-        <li><a href="#lookbook">Lookbook ♡</a></li>
-        <li><a href="#gamarra">Tienda Gamarra</a></li>
-      </ul>
-
-      <!-- LOGO -->
-      <a href="#" class="nav-logo">
-        <img src="assets/logo_pretty_transparent.png" alt="Pretty Please Logo">
-      </a>
-
-      <!-- ACCIONES -->
-      <div class="nav-actions">
-        <button class="btn-icon" title="Favoritos" onclick="showToast('¡Guardado en tus favoritos! ♡')">
-          <i class="fa-regular fa-heart"></i>
-        </button>
-        <button class="btn-icon" title="Ver Carrito" onclick="openCart()">
-          <i class="fa-solid fa-bag-shopping"></i>
-          <span class="badge" id="cartBadge">0</span>
-        </button>
-        <a href="https://wa.me/51902778794?text=Hola%20Pretty%20Please%20♡%20Quiero%20información%20sobre%20la%20nueva%20colección!" target="_blank" class="btn-ws-nav">
-          <i class="fa-brands fa-whatsapp"></i> WhatsApp
-        </a>
-      </div>
+  <!-- HEADER FIJO UNIFICADO (Sin choques en móvil) -->
+  <header class="site-header">
+    <!-- BARRA DE ANUNCIOS -->
+    <div class="announcement-bar" id="topAnnouncement">
+      <span>✨ Envíos a todo el Perú • Entregas inmediatas en Lima y Gamarra ♡ ✨</span>
     </div>
-  </nav>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <button class="btn-mobile-menu" onclick="toggleMobileMenu()" aria-label="Abrir menú">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <ul class="nav-links">
+          <li><a onclick="goToCategory('todos')">Colección Pastel</a></li>
+          <li><a onclick="goToCategory('boxy')">Polos Boxy</a></li>
+          <li><a onclick="goToCategory('oversized')">Oversized Tees</a></li>
+          <li><a onclick="goToCategory('sweaters')">Sweaters & Fleece</a></li>
+          <li><a href="#lookbook">Lookbook ♡</a></li>
+          <li><a href="#gamarra">Tienda Gamarra</a></li>
+        </ul>
+
+        <!-- LOGO -->
+        <a href="#" class="nav-logo">
+          <img src="assets/logo_pretty_transparent.png" alt="Pretty Please Logo">
+        </a>
+
+        <!-- ACCIONES -->
+        <div class="nav-actions">
+          <button class="btn-icon" title="Mis Favoritos" onclick="openWishlist()">
+            <i class="fa-regular fa-heart" id="navHeartIcon"></i>
+            <span class="badge" id="wishlistBadge" style="display:none;">0</span>
+          </button>
+          <button class="btn-icon" title="Ver Carrito" onclick="openCart()">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span class="badge" id="cartBadge">0</span>
+          </button>
+          <a href="https://wa.me/51902778794?text=Hola%20Pretty%20Please%20♡%20Quiero%20información%20sobre%20la%20nueva%20colección!" target="_blank" class="btn-ws-nav">
+            <i class="fa-brands fa-whatsapp"></i> Asesora
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
 
   <!-- MENÚ MÓVIL LATERAL -->
   <div class="mobile-menu-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
@@ -1377,7 +1389,7 @@
       <li><a href="#gamarra" onclick="toggleMobileMenu()"><i class="fa-solid fa-location-dot"></i> Tienda en Gamarra</a></li>
       <li style="margin-top:10px;">
         <a href="https://wa.me/51902778794?text=Hola%20Pretty%20Please%20♡%20Quiero%20atención%20con%20una%20asesora" target="_blank" style="background:#25D366; color:white;">
-          <i class="fa-brands fa-whatsapp"></i> Chat Asesora (+51 902 778 794)
+          <i class="fa-brands fa-whatsapp"></i> Chat con Asesora
         </a>
       </li>
       <li style="margin-top:8px;">
@@ -1400,9 +1412,10 @@
       <i class="fa-brands fa-instagram"></i>
       <span>Lookbook</span>
     </div>
-    <div class="bottom-nav-item" onclick="showToast('¡Tus favoritos están guardados! ♡')">
-      <i class="fa-regular fa-heart"></i>
+    <div class="bottom-nav-item" onclick="openWishlist()" id="bottomNavDeseos">
+      <i class="fa-regular fa-heart" id="bottomHeartIcon"></i>
       <span>Deseos</span>
+      <span class="bottom-nav-badge" id="bottomWishlistBadge" style="display:none; right:12px; top:-2px;">0</span>
     </div>
     <div class="bottom-nav-item" onclick="openCart()">
       <i class="fa-solid fa-bag-shopping"></i>
@@ -1458,26 +1471,26 @@
     <div class="hero-container">
       <div class="hero-content">
         <div class="hero-pill">
-          <i class="fa-solid fa-sparkles"></i> NUEVA COLECCIÓN PASTEL 2026 ♡ GAMARRA
+          <i class="fa-solid fa-sparkles"></i> NUEVA COLECCIÓN 2026 • GAMARRA
         </div>
         <h1 class="hero-title">Clothes for good days ♡</h1>
-        <span class="hero-subtitle font-hand">good outfits brighter days ♡</span>
+        <span class="hero-subtitle font-hand">prendas para tus días más bonitos</span>
         <p class="hero-desc">
-          Ropa diseñada para tu versión más feliz. Siluetas <strong>oversized</strong>, <strong>boxy</strong> y básicos con bordados de corazón en 100% algodón peruano de tacto ultrasuave.
+          Polos boxy, siluetas oversized y prendas básicas confeccionadas en Gamarra con 100% algodón peruano de tacto ultrasuave.
         </p>
 
         <div class="hero-badges">
-          <div class="badge-chip"><i class="fa-solid fa-check" style="color:var(--rojo-frambuesa)"></i> 100% Algodón Peruano</div>
-          <div class="badge-chip"><i class="fa-solid fa-location-dot"></i> Gamarra, Lima</div>
-          <div class="badge-chip"><i class="fa-solid fa-truck-fast"></i> Envíos Express</div>
+          <div class="badge-chip"><i class="fa-solid fa-feather" style="color:var(--rojo-frambuesa)"></i> 100% Algodón Peruano</div>
+          <div class="badge-chip"><i class="fa-solid fa-location-dot" style="color:var(--rojo-frambuesa)"></i> Taller Gamarra, Lima</div>
+          <div class="badge-chip"><i class="fa-solid fa-truck-fast" style="color:var(--rojo-frambuesa)"></i> Envíos a todo el Perú</div>
         </div>
 
         <div class="hero-buttons">
           <a onclick="goToCategory('todos')" class="btn-primary">
-            Ver Colección <i class="fa-solid fa-arrow-right"></i>
+            Explorar Catálogo <i class="fa-solid fa-arrow-right"></i>
           </a>
-          <a href="https://wa.me/51902778794?text=Hola%20Pretty%20Please%20♡%20Quiero%20pedir%20el%20catálogo%20por%20WhatsApp!" target="_blank" class="btn-secondary">
-            <i class="fa-brands fa-whatsapp" style="color:#25D366"></i> Asesora (+51 902 778 794)
+          <a href="https://wa.me/51902778794?text=Hola%20Pretty%20Please%20♡%20Quiero%20atención%20con%20una%20asesora" target="_blank" class="btn-secondary">
+            <i class="fa-brands fa-whatsapp" style="color:#25D366"></i> Hablar con Asesora
           </a>
         </div>
       </div>
@@ -1732,7 +1745,7 @@
     </div>
 
     <div class="footer-bottom">
-      <div>© 2026 Pretty Please ♡ • Gamarra, Lima • Asesora: +51 902 778 794</div>
+      <div>© 2026 Pretty Please ♡ • Gamarra, Lima • Ropa para tus Good Days</div>
       <div style="display: flex; gap: 12px;">
         <span>Yape</span> • <span>Plin</span> • <span>Visa</span> • <span>Mastercard</span>
       </div>
@@ -1761,10 +1774,37 @@
         <span id="drawerTotalText">S/. 0.00</span>
       </div>
       <button class="btn-checkout-ws" onclick="checkoutWhatsApp()">
-        <i class="fa-brands fa-whatsapp" style="font-size: 1.25rem;"></i> Pedir por WhatsApp (+51 902 778 794)
+        <i class="fa-brands fa-whatsapp" style="font-size: 1.25rem;"></i> Confirmar Pedido por WhatsApp
       </button>
       <p style="font-size: 0.72rem; text-align: center; color: var(--texto-mutado); margin-top: 8px;">
         Nuestra asesora te confirmará tu talla y coordinará el envío de inmediato.
+      </p>
+    </div>
+  </aside>
+
+  <!-- MIS FAVORITOS / DESEOS LATERAL (DRAWER) -->
+  <div class="cart-drawer-overlay" id="wishlistOverlay" onclick="closeWishlist()"></div>
+  <aside class="cart-drawer" id="wishlistDrawer">
+    <div class="drawer-header">
+      <h3><i class="fa-solid fa-heart" style="color: var(--rojo-frambuesa);"></i> Mis Favoritos ♡ (<span id="wishlistCountHeader">0</span>)</h3>
+      <button class="btn-close-drawer" onclick="closeWishlist()">&times;</button>
+    </div>
+
+    <div class="drawer-items" id="wishlistItems">
+      <div class="drawer-empty" id="wishlistEmpty">
+        <i class="fa-regular fa-heart" style="font-size: 2.8rem; color: var(--rosa-empolvado);"></i>
+        <h4 style="font-size: 1rem; font-weight: 700; color: var(--texto-oscuro); margin-top: 8px;">Aún no tienes favoritos</h4>
+        <p style="font-size: 0.82rem; color: var(--texto-mutado);">Toca el corazoncito en cualquier prenda para guardarla aquí ♡</p>
+        <button class="btn-primary" style="font-size: 0.85rem; padding: 10px 18px; margin-top: 10px;" onclick="closeWishlist(); goToCategory('todos')">Explorar Catálogo</button>
+      </div>
+    </div>
+
+    <div class="drawer-footer" id="wishlistFooter" style="display: none;">
+      <button class="btn-checkout-ws" onclick="consultWishlistWhatsApp()">
+        <i class="fa-brands fa-whatsapp" style="font-size: 1.25rem;"></i> Consultar con Asesora
+      </button>
+      <p style="font-size: 0.72rem; text-align: center; color: var(--texto-mutado); margin-top: 8px;">
+        Pregunta por disponibilidad de tallas, colores o reservas por WhatsApp.
       </p>
     </div>
   </aside>
@@ -1925,7 +1965,23 @@
     }
 
     let cart = [];
+    let wishlist = [];
     let currentCategory = 'todos';
+
+    function loadWishlist() {
+      const stored = localStorage.getItem('pretty_wishlist');
+      if (stored) {
+        try { wishlist = JSON.parse(stored); } catch(e) { wishlist = []; }
+      } else {
+        wishlist = [];
+      }
+      updateWishlistUI();
+    }
+
+    function saveWishlist() {
+      localStorage.setItem('pretty_wishlist', JSON.stringify(wishlist));
+      updateWishlistUI();
+    }
 
     function renderProducts(cat = 'todos') {
       currentCategory = cat;
@@ -1942,7 +1998,7 @@
             <h3>Próximamente nuevos ingresos en esta categoría ♡</h3>
             <p>Estamos confeccionando más modelos en Gamarra con algodón peruano premium.</p>
             <a href="https://wa.me/${ASESORA_PHONE}?text=Hola%20Pretty%20Please%20♡%20¿Tienen%20modelos%20disponibles%20en%20esta%20categoría?" target="_blank" class="btn-primary" style="margin-top:14px;">
-              Consultar por WhatsApp (+51 902 778 794)
+              <i class="fa-brands fa-whatsapp"></i> Consultar con Asesora
             </a>
           </div>
         `;
@@ -1953,6 +2009,8 @@
         const card = document.createElement('div');
         card.className = 'product-card';
         card.setAttribute('data-category', p.cat);
+
+        const isFav = wishlist.some(w => w.id === p.id);
 
         const swatchesHtml = (p.colors || ['#C51F3D']).map((c, i) => 
           `<span class="color-dot ${i===0?'active':''}" style="background:${c};" onclick="selectColor(event, '${c}')"></span>`
@@ -1965,7 +2023,9 @@
         card.innerHTML = `
           <div class="product-thumb">
             ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
-            <button class="btn-wish" onclick="toggleWish(this)"><i class="fa-regular fa-heart"></i></button>
+            <button class="btn-wish ${isFav ? 'active' : ''}" onclick="toggleWishlist(${p.id}, event)" title="${isFav ? 'Quitar de favoritos' : 'Guardar en favoritos'}">
+              <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+            </button>
             <img src="${p.img}" alt="${p.name}">
           </div>
           <div class="product-info">
@@ -2120,6 +2180,7 @@
     }
 
     function openCart() {
+      closeWishlist();
       document.getElementById('cartOverlay').classList.add('active');
       document.getElementById('cartDrawer').classList.add('active');
     }
@@ -2146,6 +2207,152 @@
       window.open(wsUrl, '_blank');
     }
 
+    // LÓGICA DE FAVORITOS / DESEOS
+    function toggleWishlist(prodId, e) {
+      if (e) e.stopPropagation();
+      const prods = loadProducts();
+      const prod = prods.find(p => p.id === prodId);
+      if (!prod) return;
+
+      const idx = wishlist.findIndex(w => w.id === prodId);
+      if (idx > -1) {
+        wishlist.splice(idx, 1);
+        showToast('Eliminado de tus favoritos ♡');
+      } else {
+        wishlist.push({
+          id: prod.id,
+          name: prod.name,
+          price: prod.price,
+          priceOld: prod.priceOld,
+          img: prod.img,
+          cat: prod.cat,
+          sizes: prod.sizes,
+          colors: prod.colors
+        });
+        showToast('¡Guardado en tus favoritos! ♡');
+      }
+      saveWishlist();
+      renderProducts(currentCategory);
+    }
+
+    function updateWishlistUI() {
+      const count = wishlist.length;
+      const wishlistBadge = document.getElementById('wishlistBadge');
+      const bottomWishlistBadge = document.getElementById('bottomWishlistBadge');
+      const navHeartIcon = document.getElementById('navHeartIcon');
+      const bottomHeartIcon = document.getElementById('bottomHeartIcon');
+      const wishlistCountHeader = document.getElementById('wishlistCountHeader');
+
+      if (wishlistBadge) {
+        wishlistBadge.innerText = count;
+        wishlistBadge.style.display = count > 0 ? 'flex' : 'none';
+      }
+      if (bottomWishlistBadge) {
+        bottomWishlistBadge.innerText = count;
+        bottomWishlistBadge.style.display = count > 0 ? 'flex' : 'none';
+      }
+      if (wishlistCountHeader) {
+        wishlistCountHeader.innerText = count;
+      }
+
+      if (navHeartIcon) {
+        if (count > 0) {
+          navHeartIcon.className = 'fa-solid fa-heart';
+          navHeartIcon.style.color = 'var(--rojo-frambuesa)';
+        } else {
+          navHeartIcon.className = 'fa-regular fa-heart';
+          navHeartIcon.style.color = '';
+        }
+      }
+      if (bottomHeartIcon) {
+        if (count > 0) {
+          bottomHeartIcon.className = 'fa-solid fa-heart';
+          bottomHeartIcon.style.color = 'var(--rojo-frambuesa)';
+        } else {
+          bottomHeartIcon.className = 'fa-regular fa-heart';
+          bottomHeartIcon.style.color = '';
+        }
+      }
+
+      renderWishlistDrawerItems();
+    }
+
+    function renderWishlistDrawerItems() {
+      const container = document.getElementById('wishlistItems');
+      const emptyBox = document.getElementById('wishlistEmpty');
+      const footer = document.getElementById('wishlistFooter');
+      if (!container) return;
+
+      if (wishlist.length === 0) {
+        container.innerHTML = '';
+        if (emptyBox) container.appendChild(emptyBox);
+        if (footer) footer.style.display = 'none';
+        return;
+      }
+
+      if (footer) footer.style.display = 'block';
+
+      let html = '';
+      wishlist.forEach(item => {
+        html += `
+          <div class="drawer-item">
+            <img src="${item.img}" alt="${item.name}" class="drawer-item-img">
+            <div class="drawer-item-details">
+              <div class="drawer-item-title">${item.name}</div>
+              <div class="drawer-item-variant">${item.cat.toUpperCase()} • S/. ${item.price.toFixed(2)}</div>
+              <div class="drawer-item-bottom" style="margin-top:6px; display:flex; align-items:center; justify-content:space-between;">
+                <button class="btn-primary" style="padding:6px 14px; font-size:0.76rem; border-radius:999px; box-shadow:none;" onclick="moveToCartFromWishlist(${item.id})">
+                  <i class="fa-solid fa-bag-shopping"></i> Agregar
+                </button>
+                <button class="btn-icon" style="width:32px; height:32px; font-size:0.8rem; color:#dc2626;" onclick="removeFromWishlist(${item.id})" title="Quitar de favoritos">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function openWishlist() {
+      closeCart();
+      if (document.getElementById('mobileDrawer').classList.contains('active')) {
+        toggleMobileMenu();
+      }
+      renderWishlistDrawerItems();
+      document.getElementById('wishlistOverlay').classList.add('active');
+      document.getElementById('wishlistDrawer').classList.add('active');
+    }
+
+    function closeWishlist() {
+      document.getElementById('wishlistOverlay').classList.remove('active');
+      document.getElementById('wishlistDrawer').classList.remove('active');
+    }
+
+    function moveToCartFromWishlist(prodId) {
+      const prod = wishlist.find(p => p.id === prodId);
+      if (!prod) return;
+      addToCart(prod.name, prod.price, prod.sizes ? prod.sizes[0] : 'Standard', prod.img);
+    }
+
+    function removeFromWishlist(prodId) {
+      wishlist = wishlist.filter(p => p.id !== prodId);
+      saveWishlist();
+      renderProducts(currentCategory);
+      showToast('Eliminado de tus favoritos ♡');
+    }
+
+    function consultWishlistWhatsApp() {
+      if (wishlist.length === 0) return;
+      let msg = "¡Hola Pretty Please! ♡ Me encantaron estas prendas de mis favoritos de la web:%0A%0A";
+      wishlist.forEach(item => {
+        msg += `• *${item.name}* - S/. ${item.price.toFixed(2)} (${item.cat})%0A`;
+      });
+      msg += `%0A¿Tienen stock disponible para coordinar con la asesora? ✨`;
+      window.open(`https://wa.me/${ASESORA_PHONE}?text=${msg}`, '_blank');
+    }
+
     function showToast(text) {
       const toast = document.getElementById('toastMsg');
       document.getElementById('toastText').innerText = text;
@@ -2153,18 +2360,9 @@
       setTimeout(() => toast.classList.remove('show'), 3000);
     }
 
-    function toggleWish(btn) {
-      btn.classList.toggle('active');
-      if (btn.classList.contains('active')) {
-        btn.querySelector('i').classList.replace('fa-regular', 'fa-solid');
-        showToast('¡Guardado en tus favoritos! ♡');
-      } else {
-        btn.querySelector('i').classList.replace('fa-solid', 'fa-regular');
-      }
-    }
-
     // INICIALIZACIÓN
     document.addEventListener('DOMContentLoaded', () => {
+      loadWishlist();
       renderProducts('todos');
     });
   </script>
