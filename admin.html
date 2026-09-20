@@ -1017,7 +1017,7 @@ CREATE TABLE prendas (
         <div class="form-grid">
           <div class="form-group">
             <label class="form-label">SUPABASE URL</label>
-            <input type="text" id="supabaseUrl" class="form-input" placeholder="https://xyz.supabase.co">
+            <input type="text" id="supabaseUrl" class="form-input" value="https://jpibxoedrwalsuqfovkv.supabase.co" placeholder="https://jpibxoedrwalsuqfovkv.supabase.co">
           </div>
           <div class="form-group">
             <label class="form-label">SUPABASE ANON KEY</label>
@@ -1430,10 +1430,11 @@ CREATE TABLE prendas (
 
     // SUPABASE INTEGRACIÓN EN NUBE
     let supabaseClient = null;
+    const DEFAULT_PRETTY_SB_URL = 'https://jpibxoedrwalsuqfovkv.supabase.co';
     function initSupabase() {
-      const url = localStorage.getItem('pretty_supabase_url');
+      const url = localStorage.getItem('pretty_supabase_url') || DEFAULT_PRETTY_SB_URL;
       const key = localStorage.getItem('pretty_supabase_key');
-      if (url && document.getElementById('supabaseUrl')) document.getElementById('supabaseUrl').value = url;
+      if (document.getElementById('supabaseUrl')) document.getElementById('supabaseUrl').value = url;
       if (key && document.getElementById('supabaseKey')) document.getElementById('supabaseKey').value = key;
       if (url && key && window.supabase) {
         try {

@@ -2760,10 +2760,11 @@
       setTimeout(() => toast.classList.remove('show'), 3000);
     }
 
-    // CONEXIÓN CLOUD SUPABASE (OPCIONAL EN TIEMPO REAL)
+    // CONEXIÓN CLOUD SUPABASE (TIEMPO REAL)
+    const PRETTY_SUPABASE_URL = 'https://jpibxoedrwalsuqfovkv.supabase.co';
     let supabaseClient = null;
     function initSupabase() {
-      const url = localStorage.getItem('pretty_supabase_url');
+      const url = localStorage.getItem('pretty_supabase_url') || PRETTY_SUPABASE_URL;
       const key = localStorage.getItem('pretty_supabase_key');
       if (url && key && window.supabase) {
         try {
