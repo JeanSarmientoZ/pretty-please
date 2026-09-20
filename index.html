@@ -14,6 +14,9 @@
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+  <!-- Supabase JS Client (Para sincronización en vivo del catálogo) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     :root {
       --rojo-frambuesa: #C51F3D;
@@ -2360,10 +2363,51 @@
       setTimeout(() => toast.classList.remove('show'), 3000);
     }
 
+    // CONEXIÓN CLOUD SUPABASE (OPCIONAL EN TIEMPO REAL)
+    let supabaseClient = null;
+    function initSupabase() {
+      const url = localStorage.getItem('pretty_supabase_url');
+      const key = localStorage.getItem('pretty_supabase_key');
+      if (url && key && window.supabase) {
+        try {
+          supabaseClient = window.supabase.createClient(url, key);
+        } catch(e) {
+          console.warn('Supabase init error:', e);
+        }
+      }
+    }
+
+    async function syncProductsFromSupabase() {
+      if (!supabaseClient) return;
+      try {
+        const { data, error } = await supabaseClient.from('prendas').select('*').order('id', { ascending: false });
+        if (data && !error && data.length > 0) {
+          const mapped = data.map(d => ({
+            id: d.id,
+            name: d.nombre,
+            cat: d.categoria,
+            price: parseFloat(d.precio),
+            priceOld: d.precio_regular ? parseFloat(d.precio_regular) : null,
+            badge: d.badge,
+            img: d.imagen,
+            sizes: d.tallas || ['S', 'M', 'L'],
+            colors: d.colores || ['#C51F3D', '#E6B8B9'],
+            available: d.disponible !== false
+          }));
+          localStorage.setItem('pretty_products', JSON.stringify(mapped));
+          renderProducts(currentCategory);
+        }
+      } catch(e) {
+        console.warn('Sync from Supabase failed, using local catalog:', e);
+      }
+    }
+
     // INICIALIZACIÓN
     document.addEventListener('DOMContentLoaded', () => {
       loadWishlist();
       renderProducts('todos');
+      initSupabase();
+      syncProductsFromSupabase();
     });
   </script>
 </body>

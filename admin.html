@@ -13,6 +13,9 @@
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+  <!-- Supabase JS Client (Listo para conectar cuando el usuario ingrese sus llaves) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     :root {
       --rojo-frambuesa: #C51F3D;
@@ -557,6 +560,22 @@
       color: var(--blanco);
       border-color: var(--rojo-frambuesa);
     }
+    .calc-discount-chip {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: var(--radio-full);
+      background: #FEF3C7;
+      border: 1px solid #FDE68A;
+      color: #92400E;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .calc-discount-chip:hover {
+      background: #F59E0B;
+      color: white;
+    }
 
     @media (max-width: 768px) {
       .dash-navbar {
@@ -814,41 +833,77 @@
 
             <div class="form-group">
               <label class="form-label">Precio Regular (S/.)</label>
-              <input type="number" step="0.10" id="prodPriceOld" class="form-input" placeholder="65.00">
+              <input type="number" step="0.10" id="prodPriceOld" class="form-input" placeholder="65.00" oninput="calculateDiscountHelper()">
+              <div style="display:flex; gap:5px; flex-wrap:wrap; margin-top:6px; align-items:center;">
+                <span style="font-size:0.72rem; color:var(--texto-mutado); font-weight:700;">Calcular oferta:</span>
+                <span class="calc-discount-chip" onclick="applyDiscountPercent(15)">-15%</span>
+                <span class="calc-discount-chip" onclick="applyDiscountPercent(20)">-20%</span>
+                <span class="calc-discount-chip" onclick="applyDiscountPercent(25)">-25%</span>
+                <span class="calc-discount-chip" onclick="applyDiscountPercent(30)">-30%</span>
+                <span class="calc-discount-chip" onclick="applyDiscountPercent(50)">-50%</span>
+              </div>
             </div>
 
             <div class="form-group">
               <label class="form-label">Precio Final / Oferta (S/.)</label>
-              <input type="number" step="0.10" id="prodPrice" class="form-input" required placeholder="49.90">
+              <input type="number" step="0.10" id="prodPrice" class="form-input" required placeholder="49.90" oninput="calculateDiscountHelper()">
+              <div id="discountFeedback" style="font-size:0.75rem; font-weight:700; color:var(--rojo-frambuesa); margin-top:6px; min-height:18px;"></div>
             </div>
 
             <div class="form-group">
               <label class="form-label">Etiqueta Destacada (Badge)</label>
               <input type="text" id="prodBadge" class="form-input" style="font-size:0.85rem; padding:8px 12px;" placeholder="Ej: MÁS VENDIDO ♡">
               <div class="badge-quick-select">
-                <span class="badge-preset-chip" onclick="setBadge('MÁS VENDIDO ♡')">MÁS VENDIDO ♡</span>
-                <span class="badge-preset-chip" onclick="setBadge('NUEVO ✨')">NUEVO ✨</span>
-                <span class="badge-preset-chip" onclick="setBadge('EDICIÓN LIMITADA')">EDICIÓN LIMITADA</span>
-                <span class="badge-preset-chip" onclick="setBadge('HOT 🔥')">HOT 🔥</span>
-                <span class="badge-preset-chip" onclick="setBadge('FAV ♡')">FAV ♡</span>
-                <span class="badge-preset-chip" onclick="setBadge('OFERTA 25%')">OFERTA 25%</span>
-                <span class="badge-preset-chip" onclick="setBadge('')" style="color:var(--texto-mutado); background:transparent;">Ninguna ✕</span>
+                <span class="badge-preset-chip" onclick="selectBadgeWithSync('MÁS VENDIDO ♡')">MÁS VENDIDO ♡</span>
+                <span class="badge-preset-chip" onclick="selectBadgeWithSync('NUEVO ✨')">NUEVO ✨</span>
+                <span class="badge-preset-chip" onclick="selectBadgeWithSync('EDICIÓN LIMITADA')">EDICIÓN LIMITADA</span>
+                <span class="badge-preset-chip" onclick="selectBadgeWithSync('HOT 🔥')">HOT 🔥</span>
+                <span class="badge-preset-chip" onclick="selectBadgeWithSync('FAV ♡')">FAV ♡</span>
+                <span class="badge-preset-chip" onclick="selectBadgeWithSync('AHORRA 25%')">AHORRA 25%</span>
+                <span class="badge-preset-chip" onclick="selectBadgeWithSync('AHORRA 20%')">AHORRA 20%</span>
+                <span class="badge-preset-chip" onclick="selectBadgeWithSync('AHORRA 30%')">AHORRA 30%</span>
+                <span class="badge-preset-chip" onclick="selectBadgeWithSync('')" style="color:var(--texto-mutado); background:transparent;">Ninguna ✕</span>
               </div>
             </div>
 
             <div class="form-group">
-              <label class="form-label">Foto / Imagen de Prenda</label>
-              <select id="prodImgSelect" class="form-select" onchange="previewImg(this.value)">
-                <option value="assets/product_heart_close.jpg">Polo Boxy Corazón Bordado (Detalle)</option>
-                <option value="assets/product_lilac_tee.jpg">Oversized Tee Lavanda (Same girl)</option>
-                <option value="assets/product_stack_hoodies.jpg">Crewneck Fleece Pastel (Stack)</option>
-                <option value="assets/product_stack_pastel.jpg">Tripack Polos Pastel</option>
-                <option value="assets/product_tote_bag.jpg">Tote Bag Canvas Margaritas</option>
-                <option value="assets/product_pink_cap.jpg">Gorra Washed Rosa</option>
-                <option value="assets/product_girl_white_tee.jpg">Boxy Classic Blanco</option>
-                <option value="assets/product_pink_tee_girl.jpg">Baby Tee Sweet Rose</option>
-                <option value="assets/product_rack_pastel.jpg">Rack Ropa Pastel Gamarra</option>
-              </select>
+              <label class="form-label">Foto de la Prenda</label>
+              
+              <!-- Botón para subir desde dispositivo -->
+              <div style="display:flex; gap:8px; margin-bottom:10px;">
+                <label for="prodImgFile" class="btn-outline" style="cursor:pointer; font-size:0.78rem; padding:6px 14px; background:var(--blanco); border-color:var(--rojo-frambuesa); color:var(--rojo-frambuesa);">
+                  <i class="fa-solid fa-cloud-arrow-up"></i> Subir foto desde Celular o PC
+                </label>
+                <input type="file" id="prodImgFile" accept="image/*" style="display:none;" onchange="handleImageUpload(event)">
+              </div>
+
+              <!-- Selector de Presets de la Colección -->
+              <div style="margin-bottom:8px;">
+                <label style="font-size:0.74rem; color:var(--texto-mutado); font-weight:700;">O elegir una foto existente:</label>
+                <select id="prodImgSelect" class="form-select" onchange="previewPresetImg(this.value)" style="margin-top:4px;">
+                  <option value="assets/product_heart_close.jpg">Polo Boxy Corazón Bordado (Detalle)</option>
+                  <option value="assets/product_lilac_tee.jpg">Oversized Tee Lavanda (Same girl)</option>
+                  <option value="assets/product_stack_hoodies.jpg">Crewneck Fleece Pastel (Stack)</option>
+                  <option value="assets/product_stack_pastel.jpg">Tripack Polos Pastel</option>
+                  <option value="assets/product_tote_bag.jpg">Tote Bag Canvas Margaritas</option>
+                  <option value="assets/product_pink_cap.jpg">Gorra Washed Rosa</option>
+                  <option value="assets/product_girl_white_tee.jpg">Boxy Classic Blanco</option>
+                  <option value="assets/product_pink_tee_girl.jpg">Baby Tee Sweet Rose</option>
+                  <option value="assets/product_rack_pastel.jpg">Rack Ropa Pastel Gamarra</option>
+                </select>
+              </div>
+
+              <!-- Valor final de imagen -->
+              <input type="hidden" id="prodImgFinal" value="assets/product_heart_close.jpg">
+
+              <!-- Vista previa de foto -->
+              <div style="display:flex; align-items:center; gap:12px; margin-top:8px; padding:10px; background:var(--hueso-calido); border-radius:12px; border:1.5px dashed var(--border-suave);">
+                <img id="imgPreviewThumb" src="assets/product_heart_close.jpg" alt="Vista previa" style="width:58px; height:58px; border-radius:10px; object-fit:cover; border:1px solid var(--border-suave); background:white;">
+                <div style="overflow:hidden;">
+                  <span id="imgPreviewName" style="font-size:0.78rem; font-weight:700; color:var(--texto-oscuro); display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Polo Boxy Corazón Bordado</span>
+                  <span id="imgPreviewStatus" style="font-size:0.7rem; color:var(--marron-latte);">Foto lista para publicar</span>
+                </div>
+              </div>
             </div>
 
             <!-- SELECTOR DE COLORES -->
@@ -1143,6 +1198,11 @@ CREATE TABLE prendas (
         document.getElementById('productForm').reset();
         document.getElementById('editProdId').value = '';
         document.getElementById('formTitle').innerText = 'Subir Nueva Prenda al Catálogo';
+        document.getElementById('prodImgFinal').value = 'assets/product_heart_close.jpg';
+        document.getElementById('imgPreviewThumb').src = 'assets/product_heart_close.jpg';
+        document.getElementById('imgPreviewName').innerText = 'Polo Boxy Corazón Bordado';
+        document.getElementById('imgPreviewStatus').innerText = 'Foto lista para la prenda';
+        document.getElementById('discountFeedback').innerHTML = '';
       }
     }
 
@@ -1217,11 +1277,109 @@ CREATE TABLE prendas (
       document.getElementById('prodPrice').value = p.price;
       document.getElementById('prodPriceOld').value = p.priceOld || '';
       document.getElementById('prodBadge').value = p.badge || '';
-      document.getElementById('prodImgSelect').value = p.img;
+      document.getElementById('prodImgFinal').value = p.img;
+      document.getElementById('imgPreviewThumb').src = p.img;
+      document.getElementById('imgPreviewName').innerText = p.name;
+      document.getElementById('imgPreviewStatus').innerText = 'Foto actual de la prenda';
+      calculateDiscountHelper();
+    }
+
+    // CÁLCULO Y COHERENCIA DE DESCUENTOS
+    function calculateDiscountHelper() {
+      const oldP = parseFloat(document.getElementById('prodPriceOld').value);
+      const newP = parseFloat(document.getElementById('prodPrice').value);
+      const feedback = document.getElementById('discountFeedback');
+
+      if (oldP && newP && oldP > newP) {
+        const diff = oldP - newP;
+        const pct = Math.round((diff / oldP) * 100);
+        feedback.innerHTML = `⚡ Descuento del <strong>${pct}%</strong> (Ahorro: S/. ${diff.toFixed(2)}) <button type="button" class="calc-discount-chip" style="margin-left:6px;" onclick="setBadge('AHORRA ${pct}%')">Usar etiqueta AHORRA ${pct}%</button>`;
+      } else if (oldP && newP && newP >= oldP) {
+        feedback.innerHTML = `<span style="color:var(--texto-mutado); font-weight:normal;">Sin descuento (El precio de oferta debe ser menor al regular).</span>`;
+      } else {
+        feedback.innerHTML = '';
+      }
+    }
+
+    function applyDiscountPercent(pct) {
+      const oldP = parseFloat(document.getElementById('prodPriceOld').value);
+      if (!oldP || oldP <= 0) {
+        showToast('Ingresa primero el Precio Regular para calcular la oferta ♡');
+        document.getElementById('prodPriceOld').focus();
+        return;
+      }
+      const discounted = oldP * (1 - pct / 100);
+      document.getElementById('prodPrice').value = discounted.toFixed(2);
+      document.getElementById('prodBadge').value = `AHORRA ${pct}%`;
+      calculateDiscountHelper();
+      showToast(`¡Descuento del ${pct}% aplicado con éxito! ♡`);
+    }
+
+    function selectBadgeWithSync(badge) {
+      document.getElementById('prodBadge').value = badge;
+      const match = badge.match(/(\d+)%/);
+      if (match) {
+        const pct = parseInt(match[1]);
+        const oldP = parseFloat(document.getElementById('prodPriceOld').value);
+        if (oldP && oldP > 0) {
+          const discounted = oldP * (1 - pct / 100);
+          document.getElementById('prodPrice').value = discounted.toFixed(2);
+          calculateDiscountHelper();
+          showToast(`¡Precio de oferta calculado con -${pct}% de la etiqueta! ♡`);
+        } else {
+          calculateDiscountHelper();
+        }
+      } else {
+        calculateDiscountHelper();
+      }
     }
 
     function setBadge(val) {
-      document.getElementById('prodBadge').value = val;
+      selectBadgeWithSync(val);
+    }
+
+    // MANEJO Y COMPRESIÓN DE FOTOS
+    function previewPresetImg(val) {
+      document.getElementById('prodImgFinal').value = val;
+      document.getElementById('imgPreviewThumb').src = val;
+      document.getElementById('imgPreviewName').innerText = 'Foto de colección';
+      document.getElementById('imgPreviewStatus').innerText = 'Preset seleccionado';
+    }
+
+    function handleImageUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const maxDim = 800;
+          let w = img.width;
+          let h = img.height;
+          if (w > h && w > maxDim) {
+            h = Math.round((h * maxDim) / w);
+            w = maxDim;
+          } else if (h > maxDim) {
+            w = Math.round((w * maxDim) / h);
+            h = maxDim;
+          }
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          const optimizedDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+
+          document.getElementById('prodImgFinal').value = optimizedDataUrl;
+          document.getElementById('imgPreviewThumb').src = optimizedDataUrl;
+          document.getElementById('imgPreviewName').innerText = file.name;
+          document.getElementById('imgPreviewStatus').innerText = 'Foto optimizada y cargada ♡';
+          showToast('¡Foto cargada con éxito desde tu dispositivo! ♡');
+        };
+        img.src = evt.target.result;
+      };
+      reader.readAsDataURL(file);
     }
 
     function saveProduct(e) {
@@ -1240,7 +1398,7 @@ CREATE TABLE prendas (
         price: parseFloat(document.getElementById('prodPrice').value),
         priceOld: document.getElementById('prodPriceOld').value ? parseFloat(document.getElementById('prodPriceOld').value) : null,
         badge: document.getElementById('prodBadge').value.trim(),
-        img: document.getElementById('prodImgSelect').value,
+        img: document.getElementById('prodImgFinal').value || 'assets/product_heart_close.jpg',
         sizes: sizes.length ? sizes : ['S', 'M', 'L'],
         colors: colors.length ? colors : ['#C51F3D', '#E6B8B9'],
         available: true
@@ -1259,7 +1417,59 @@ CREATE TABLE prendas (
       }
 
       setProducts(prods);
+      if (supabaseClient) {
+        syncProductToSupabase(prodData, editId);
+      }
       document.querySelectorAll('.dash-tab')[0].click(); // volver a pestaña productos
+    }
+
+    // SUPABASE INTEGRACIÓN EN NUBE
+    let supabaseClient = null;
+    function initSupabase() {
+      const url = localStorage.getItem('pretty_supabase_url');
+      const key = localStorage.getItem('pretty_supabase_key');
+      if (url && document.getElementById('supabaseUrl')) document.getElementById('supabaseUrl').value = url;
+      if (key && document.getElementById('supabaseKey')) document.getElementById('supabaseKey').value = key;
+      if (url && key && window.supabase) {
+        try {
+          supabaseClient = window.supabase.createClient(url, key);
+        } catch(e) {
+          console.warn('Supabase init error:', e);
+        }
+      }
+    }
+
+    async function syncProductToSupabase(prodData, editId) {
+      if (!supabaseClient) return;
+      try {
+        if (editId) {
+          await supabaseClient.from('prendas').update({
+            nombre: prodData.name,
+            categoria: prodData.cat,
+            precio: prodData.price,
+            precio_regular: prodData.priceOld,
+            badge: prodData.badge,
+            imagen: prodData.img,
+            tallas: prodData.sizes,
+            colores: prodData.colors,
+            disponible: prodData.available
+          }).eq('id', editId);
+        } else {
+          await supabaseClient.from('prendas').insert([{
+            nombre: prodData.name,
+            categoria: prodData.cat,
+            precio: prodData.price,
+            precio_regular: prodData.priceOld,
+            badge: prodData.badge,
+            imagen: prodData.img,
+            tallas: prodData.sizes,
+            colores: prodData.colors,
+            disponible: true
+          }]);
+        }
+      } catch(e) {
+        console.warn('Supabase sync error:', e);
+      }
     }
 
     function updateStats() {
@@ -1281,6 +1491,7 @@ CREATE TABLE prendas (
       const key = document.getElementById('supabaseKey').value.trim();
       localStorage.setItem('pretty_supabase_url', url);
       localStorage.setItem('pretty_supabase_key', key);
+      initSupabase();
       showToast('Credenciales de Supabase registradas ♡');
     }
 
@@ -1300,6 +1511,7 @@ CREATE TABLE prendas (
     });
 
     // Check session al cargar
+    initSupabase();
     checkSession();
   </script>
 </body>
