@@ -1,0 +1,2099 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pretty Please ♡ | Clothes for good days • Gamarra, Lima</title>
+  <meta name="description" content="Ropa para tus good days ✨ Oversized • boxy • básicos & más. Tu estilo, tu historia ♡ Gamarra, Lima.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --rojo-frambuesa: #C51F3D;
+      --rojo-hover: #a81732;
+      --rosa-empolvado: #E6B8B9;
+      --rosa-suave: #f9ecec;
+      --lavanda-suave: #D9D1EA;
+      --menta-suave: #D9E5D1;
+      --amarillo-mantequilla: #F6E3A7;
+      --hueso-calido: #F7EFE6;
+      --marron-latte: #B58B72;
+      --marron-oscuro: #5C4337;
+      --texto-oscuro: #2D2421;
+      --texto-mutado: #786C66;
+      --blanco: #FFFFFF;
+      --border-suave: rgba(181, 139, 114, 0.22);
+      --sombra-card: 0 10px 28px -6px rgba(92, 67, 55, 0.08), 0 4px 10px -2px rgba(92, 67, 55, 0.04);
+      --sombra-roja: 0 8px 24px -4px rgba(197, 31, 61, 0.35);
+      --radio-md: 18px;
+      --radio-sm: 12px;
+      --radio-full: 999px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--hueso-calido);
+      color: var(--texto-oscuro);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .font-hand {
+      font-family: 'Caveat', cursive;
+    }
+
+    /* BARRA DE ANUNCIOS */
+    .announcement-bar {
+      background: var(--rojo-frambuesa);
+      color: var(--blanco);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      padding: 8px 16px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .announcement-bar span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      background: rgba(247, 239, 230, 0.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-suave);
+      padding: 12px 24px;
+      position: sticky;
+      top: 36px;
+      z-index: 99;
+    }
+    .nav-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      font-weight: 600;
+      font-size: 0.92rem;
+    }
+    .nav-links a {
+      color: var(--texto-oscuro);
+      transition: color 0.2s ease;
+      position: relative;
+    }
+    .nav-links a:hover {
+      color: var(--rojo-frambuesa);
+    }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--rojo-frambuesa);
+      border-radius: 2px;
+    }
+
+    .nav-logo img {
+      height: 48px;
+      width: auto;
+      display: block;
+      transition: transform 0.25s ease;
+    }
+    .nav-logo img:hover {
+      transform: scale(1.05) rotate(-2deg);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .btn-icon {
+      background: var(--blanco);
+      border: 1px solid var(--border-suave);
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radio-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--texto-oscuro);
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .btn-icon:hover {
+      background: var(--rosa-suave);
+      border-color: var(--rojo-frambuesa);
+      color: var(--rojo-frambuesa);
+      transform: translateY(-2px);
+    }
+    .btn-icon .badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: var(--rojo-frambuesa);
+      color: var(--blanco);
+      font-size: 0.7rem;
+      font-weight: 700;
+      width: 20px;
+      height: 20px;
+      border-radius: var(--radio-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-ws-nav {
+      background: #25D366;
+      color: white;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 9px 18px;
+      border-radius: var(--radio-full);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+    }
+    .btn-ws-nav:hover {
+      background: #1eb857;
+      transform: translateY(-2px);
+    }
+
+    /* INSTAGRAM HIGHLIGHTS (HISTORIAS) */
+    .highlights-section {
+      max-width: 1240px;
+      margin: 20px auto 0 auto;
+      padding: 10px 20px;
+    }
+    .highlights-slider {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: none;
+    }
+    .highlights-slider::-webkit-scrollbar {
+      display: none;
+    }
+    .highlight-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+    .highlight-item:hover {
+      transform: translateY(-3px);
+    }
+    .highlight-ring {
+      width: 72px;
+      height: 72px;
+      border-radius: var(--radio-full);
+      padding: 3px;
+      background: linear-gradient(45deg, var(--rojo-frambuesa), var(--rosa-empolvado), var(--amarillo-mantequilla));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .highlight-circle {
+      width: 100%;
+      height: 100%;
+      background: var(--hueso-calido);
+      border-radius: var(--radio-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--rojo-frambuesa);
+      border: 2px solid var(--blanco);
+      transition: background 0.2s ease;
+    }
+    .highlight-item:hover .highlight-circle {
+      background: var(--rosa-suave);
+    }
+    .highlight-item span {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--texto-oscuro);
+      letter-spacing: 0.3px;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      max-width: 1240px;
+      margin: 24px auto 40px auto;
+      padding: 0 20px;
+    }
+    .hero-container {
+      background: var(--blanco);
+      border: 1px solid var(--border-suave);
+      border-radius: 28px;
+      padding: 48px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 40px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--sombra-card);
+    }
+    .hero-container::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 320px;
+      height: 320px;
+      border-radius: var(--radio-full);
+      background: radial-gradient(circle, rgba(230, 184, 185, 0.45) 0%, rgba(247, 239, 230, 0) 70%);
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--rosa-suave);
+      color: var(--rojo-frambuesa);
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: var(--radio-full);
+      border: 1px solid rgba(197, 31, 61, 0.18);
+      margin-bottom: 16px;
+    }
+    .hero-title {
+      font-size: 3.4rem;
+      font-weight: 800;
+      color: var(--rojo-frambuesa);
+      line-height: 1.1;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+    .hero-subtitle {
+      font-size: 2rem;
+      color: var(--marron-latte);
+      margin-bottom: 16px;
+      display: block;
+    }
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--texto-mutado);
+      margin-bottom: 28px;
+      max-width: 520px;
+    }
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .badge-chip {
+      background: var(--hueso-calido);
+      border: 1px solid var(--border-suave);
+      padding: 6px 14px;
+      border-radius: var(--radio-full);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--marron-oscuro);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--rojo-frambuesa);
+      color: var(--blanco);
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 14px 32px;
+      border-radius: var(--radio-full);
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--sombra-roja);
+      transition: all 0.25s ease;
+    }
+    .btn-primary:hover {
+      background: var(--rojo-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -4px rgba(197, 31, 61, 0.45);
+    }
+    .btn-secondary {
+      background: var(--hueso-calido);
+      color: var(--texto-oscuro);
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 14px 28px;
+      border-radius: var(--radio-full);
+      border: 1px solid var(--border-suave);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.25s ease;
+    }
+    .btn-secondary:hover {
+      background: var(--blanco);
+      border-color: var(--rojo-frambuesa);
+      color: var(--rojo-frambuesa);
+      transform: translateY(-2px);
+    }
+
+    /* HERO VISUAL GRID */
+    .hero-visual {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    .visual-card {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--border-suave);
+      position: relative;
+      background: var(--blanco);
+      box-shadow: var(--sombra-card);
+      aspect-ratio: 1;
+      transition: transform 0.3s ease;
+    }
+    .visual-card:hover {
+      transform: translateY(-4px) scale(1.02);
+    }
+    .visual-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .visual-tag {
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      right: 8px;
+      background: rgba(247, 239, 230, 0.92);
+      backdrop-filter: blur(6px);
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--texto-oscuro);
+      text-align: center;
+    }
+    .floating-sticker {
+      position: absolute;
+      top: -15px;
+      left: -15px;
+      background: var(--rojo-frambuesa);
+      color: var(--blanco);
+      padding: 12px 18px;
+      border-radius: 20px;
+      font-family: 'Caveat', cursive;
+      font-size: 1.3rem;
+      box-shadow: var(--sombra-roja);
+      transform: rotate(-8deg);
+      z-index: 2;
+    }
+
+    /* PALETA BRANDING BAR */
+    .brand-palette-strip {
+      max-width: 1240px;
+      margin: 0 auto 48px auto;
+      padding: 0 20px;
+    }
+    .palette-box {
+      background: var(--blanco);
+      border: 1px solid var(--border-suave);
+      border-radius: var(--radio-md);
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .palette-info h4 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--marron-oscuro);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .palette-info p {
+      font-size: 0.82rem;
+      color: var(--texto-mutado);
+    }
+    .swatches-list {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .swatch-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: var(--hueso-calido);
+      padding: 6px 12px;
+      border-radius: var(--radio-full);
+      border: 1px solid var(--border-suave);
+    }
+    .swatch-color {
+      width: 18px;
+      height: 18px;
+      border-radius: var(--radio-full);
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    /* BENEFICIOS / BRAND VALUES */
+    .values-section {
+      max-width: 1240px;
+      margin: 0 auto 50px auto;
+      padding: 0 20px;
+    }
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .value-card {
+      background: var(--blanco);
+      border: 1px solid var(--border-suave);
+      border-radius: var(--radio-md);
+      padding: 22px 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: var(--sombra-card);
+      transition: transform 0.2s ease;
+    }
+    .value-card:hover {
+      transform: translateY(-3px);
+    }
+    .value-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radio-full);
+      background: var(--rosa-suave);
+      color: var(--rojo-frambuesa);
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .value-info h4 {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--texto-oscuro);
+      margin-bottom: 2px;
+    }
+    .value-info p {
+      font-size: 0.78rem;
+      color: var(--texto-mutado);
+      line-height: 1.3;
+    }
+
+    /* CATÁLOGO DE PRODUCTOS */
+    .catalog-section {
+      max-width: 1240px;
+      margin: 0 auto 60px auto;
+      padding: 0 20px;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .section-pill {
+      display: inline-block;
+      color: var(--rojo-frambuesa);
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--texto-oscuro);
+      margin-bottom: 8px;
+    }
+    .section-sub {
+      font-size: 1.4rem;
+      color: var(--marron-latte);
+    }
+
+    /* FILTERS PILLS */
+    .filters-bar {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: var(--blanco);
+      border: 1px solid var(--border-suave);
+      padding: 10px 22px;
+      border-radius: var(--radio-full);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--texto-oscuro);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .filter-btn:hover {
+      border-color: var(--rojo-frambuesa);
+      color: var(--rojo-frambuesa);
+    }
+    .filter-btn.active {
+      background: var(--rojo-frambuesa);
+      border-color: var(--rojo-frambuesa);
+      color: var(--blanco);
+      box-shadow: 0 4px 14px rgba(197, 31, 61, 0.25);
+    }
+
+    /* PRODUCT GRID */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+    }
+    .product-card {
+      background: var(--blanco);
+      border: 1px solid var(--border-suave);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--sombra-card);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 32px -8px rgba(92, 67, 55, 0.14);
+      border-color: rgba(197, 31, 61, 0.25);
+    }
+    .product-thumb {
+      position: relative;
+      aspect-ratio: 1;
+      background: var(--hueso-calido);
+      overflow: hidden;
+    }
+    .product-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .product-card:hover .product-thumb img {
+      transform: scale(1.06);
+    }
+    .product-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--rojo-frambuesa);
+      color: var(--blanco);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radio-full);
+      box-shadow: 0 2px 8px rgba(197, 31, 61, 0.3);
+    }
+    .btn-wish {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radio-full);
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(4px);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--texto-mutado);
+      transition: all 0.2s ease;
+    }
+    .btn-wish:hover, .btn-wish.active {
+      color: var(--rojo-frambuesa);
+      transform: scale(1.15);
+    }
+
+    .product-info {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .product-cat {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--marron-latte);
+      margin-bottom: 4px;
+    }
+    .product-name {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--texto-oscuro);
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .product-prices {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .price-curr {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--rojo-frambuesa);
+    }
+    .price-old {
+      font-size: 0.85rem;
+      color: #A39690;
+      text-decoration: line-through;
+    }
+
+    /* SELECTOR DE COLORES Y TALLAS */
+    .color-swatches-grid {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .color-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: var(--radio-full);
+      border: 2px solid var(--blanco);
+      box-shadow: 0 0 0 1px var(--border-suave);
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+    .color-dot:hover, .color-dot.active {
+      transform: scale(1.2);
+      box-shadow: 0 0 0 2px var(--rojo-frambuesa);
+    }
+
+    .size-pills {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .size-btn {
+      padding: 3px 8px;
+      border: 1px solid var(--border-suave);
+      background: var(--hueso-calido);
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .size-btn:hover, .size-btn.active {
+      background: var(--texto-oscuro);
+      color: var(--blanco);
+      border-color: var(--texto-oscuro);
+    }
+
+    .btn-add-cart {
+      margin-top: auto;
+      width: 100%;
+      background: var(--hueso-calido);
+      color: var(--texto-oscuro);
+      border: 1px solid var(--border-suave);
+      padding: 10px;
+      border-radius: var(--radio-full);
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    .btn-add-cart:hover {
+      background: var(--rojo-frambuesa);
+      color: var(--blanco);
+      border-color: var(--rojo-frambuesa);
+      box-shadow: 0 4px 12px rgba(197, 31, 61, 0.25);
+    }
+
+    /* INSTAGRAM FEED LOOKBOOK SECTION */
+    .feed-section {
+      max-width: 1240px;
+      margin: 0 auto 60px auto;
+      padding: 0 20px;
+    }
+    .feed-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .feed-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .feed-card {
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 1;
+      position: relative;
+      box-shadow: var(--sombra-card);
+      border: 1px solid var(--border-suave);
+    }
+    .feed-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .feed-card:hover img {
+      transform: scale(1.06);
+    }
+    .feed-card-quote {
+      background: var(--blanco);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+    }
+    .feed-card-quote h3 {
+      font-size: 1.8rem;
+      color: var(--rojo-frambuesa);
+      line-height: 1.2;
+    }
+    .feed-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(197, 31, 61, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .feed-card:hover .feed-overlay {
+      opacity: 1;
+    }
+
+    /* RESEÑAS CLIENTES */
+    .reviews-section {
+      background: var(--blanco);
+      border-top: 1px solid var(--border-suave);
+      border-bottom: 1px solid var(--border-suave);
+      padding: 60px 20px;
+      margin-bottom: 60px;
+    }
+    .reviews-container {
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 36px;
+    }
+    .review-card {
+      background: var(--hueso-calido);
+      border: 1px solid var(--border-suave);
+      border-radius: 18px;
+      padding: 24px;
+      position: relative;
+    }
+    .review-stars {
+      color: #FFB800;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+    .review-text {
+      font-size: 0.95rem;
+      color: var(--texto-oscuro);
+      font-style: italic;
+      margin-bottom: 16px;
+    }
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .author-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radio-full);
+      background: var(--rosa-empolvado);
+      color: var(--rojo-frambuesa);
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .author-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .author-loc {
+      font-size: 0.75rem;
+      color: var(--texto-mutado);
+    }
+
+    /* UBICACIÓN GAMARRA BANNER */
+    .gamarra-banner {
+      max-width: 1240px;
+      margin: 0 auto 60px auto;
+      padding: 0 20px;
+    }
+    .gamarra-box {
+      background: linear-gradient(135deg, var(--rojo-frambuesa) 0%, #8e142b 100%);
+      color: var(--blanco);
+      border-radius: 24px;
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      align-items: center;
+      gap: 30px;
+      box-shadow: var(--sombra-roja);
+    }
+    .gamarra-box h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .gamarra-box p {
+      font-size: 1rem;
+      opacity: 0.95;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+    .gamarra-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .btn-ws-gamarra {
+      background: #25D366;
+      color: var(--blanco);
+      font-weight: 700;
+      padding: 12px 24px;
+      border-radius: var(--radio-full);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-white-gamarra {
+      background: var(--blanco);
+      color: var(--rojo-frambuesa);
+      font-weight: 700;
+      padding: 12px 24px;
+      border-radius: var(--radio-full);
+      border: none;
+      cursor: pointer;
+    }
+
+    /* FOOTER */
+    .footer {
+      background: var(--blanco);
+      border-top: 1px solid var(--border-suave);
+      padding: 60px 20px 24px 20px;
+    }
+    .footer-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.5fr repeat(3, 1fr);
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    .footer-brand img {
+      height: 48px;
+      margin-bottom: 16px;
+    }
+    .footer-brand p {
+      font-size: 0.9rem;
+      color: var(--texto-mutado);
+      margin-bottom: 20px;
+      max-width: 320px;
+    }
+    .social-links {
+      display: flex;
+      gap: 12px;
+    }
+    .social-link {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radio-full);
+      background: var(--hueso-calido);
+      border: 1px solid var(--border-suave);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--texto-oscuro);
+      transition: all 0.2s ease;
+    }
+    .social-link:hover {
+      background: var(--rojo-frambuesa);
+      color: var(--blanco);
+      transform: translateY(-2px);
+    }
+    .footer-col h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--texto-oscuro);
+      margin-bottom: 16px;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: var(--texto-mutado);
+    }
+    .footer-links a:hover {
+      color: var(--rojo-frambuesa);
+    }
+    .footer-bottom {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-suave);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--texto-mutado);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* CARRITO SLIDE-IN (DRAWER) */
+    .cart-drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .cart-drawer-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: -420px;
+      width: 400px;
+      max-width: 90vw;
+      height: 100vh;
+      background: var(--blanco);
+      z-index: 1000;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .cart-drawer.active {
+      right: 0;
+    }
+    .drawer-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--border-suave);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .drawer-header h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--texto-oscuro);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-close-drawer {
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--texto-mutado);
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radio-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-close-drawer:hover {
+      background: var(--hueso-calido);
+      color: var(--rojo-frambuesa);
+    }
+    .drawer-items {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .drawer-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      text-align: center;
+      color: var(--texto-mutado);
+      gap: 12px;
+      padding: 40px;
+    }
+    .drawer-empty i {
+      font-size: 3rem;
+      color: var(--rosa-empolvado);
+    }
+    .drawer-item {
+      display: flex;
+      gap: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-suave);
+    }
+    .drawer-item-img {
+      width: 64px;
+      height: 64px;
+      border-radius: 10px;
+      object-fit: cover;
+      background: var(--hueso-calido);
+    }
+    .drawer-item-details {
+      flex-grow: 1;
+    }
+    .drawer-item-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--texto-oscuro);
+    }
+    .drawer-item-variant {
+      font-size: 0.75rem;
+      color: var(--texto-mutado);
+      margin-bottom: 6px;
+    }
+    .drawer-item-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .drawer-item-price {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--rojo-frambuesa);
+    }
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--hueso-calido);
+      border-radius: 6px;
+      padding: 2px 6px;
+    }
+    .qty-btn {
+      background: none;
+      border: none;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--texto-oscuro);
+    }
+    .qty-val {
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .drawer-footer {
+      padding: 20px;
+      border-top: 1px solid var(--border-suave);
+      background: var(--hueso-calido);
+    }
+    .drawer-subtotal {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--texto-oscuro);
+      margin-bottom: 16px;
+    }
+    .btn-checkout-ws {
+      width: 100%;
+      background: #25D366;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: var(--radio-full);
+      font-weight: 700;
+      font-size: 0.98rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
+      transition: all 0.2s ease;
+    }
+    .btn-checkout-ws:hover {
+      background: #1eb857;
+      transform: translateY(-2px);
+    }
+
+    /* TOAST NOTIFICATION */
+    .toast-msg {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--texto-oscuro);
+      color: var(--blanco);
+      padding: 12px 20px;
+      border-radius: var(--radio-full);
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      z-index: 2000;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+    .toast-msg.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 992px) {
+      .hero-container {
+        grid-template-columns: 1fr;
+        padding: 32px 24px;
+      }
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .values-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .reviews-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-container {
+        grid-template-columns: 1fr 1fr;
+      }
+      .gamarra-box {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      .hero-title {
+        font-size: 2.5rem;
+      }
+      .hero-subtitle {
+        font-size: 1.6rem;
+      }
+      .products-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .feed-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRA DE ANUNCIOS -->
+  <div class="announcement-bar">
+    <span>
+      ✨ Envíos a todo el Perú | Entregas inmediatas en Lima y Gamarra ♡ | Ropa para tus good days ✨
+    </span>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <ul class="nav-links">
+        <li><a href="#catalogo" class="active">Colección Pastel</a></li>
+        <li><a href="#catalogo">Polos Boxy</a></li>
+        <li><a href="#catalogo">Sweaters</a></li>
+        <li><a href="#lookbook">Lookbook ♡</a></li>
+        <li><a href="#gamarra">Tienda Gamarra</a></li>
+      </ul>
+
+      <!-- LOGO -->
+      <a href="#" class="nav-logo">
+        <img src="assets/logo_pretty_transparent.png" alt="Pretty Please Logo">
+      </a>
+
+      <!-- ACCIONES -->
+      <div class="nav-actions">
+        <button class="btn-icon" title="Favoritos" onclick="showToast('¡Guardado en tus favoritos! ♡')">
+          <i class="fa-regular fa-heart"></i>
+        </button>
+        <button class="btn-icon" title="Ver Carrito" onclick="openCart()">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="badge" id="cartBadge">0</span>
+        </button>
+        <a href="https://wa.me/51999999999?text=Hola%20Pretty%20Please%20♡%20Quiero%20información%20sobre%20la%20nueva%20colección!" target="_blank" class="btn-ws-nav">
+          <i class="fa-brands fa-whatsapp"></i> WhatsApp
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- INSTAGRAM STORY HIGHLIGHTS -->
+  <section class="highlights-section">
+    <div class="highlights-slider">
+      <div class="highlight-item" onclick="filterCatalog('todos', this)">
+        <div class="highlight-ring">
+          <div class="highlight-circle"><i class="fa-solid fa-shirt"></i></div>
+        </div>
+        <span>Novedades</span>
+      </div>
+      <div class="highlight-item" onclick="filterCatalog('boxy', this)">
+        <div class="highlight-ring">
+          <div class="highlight-circle"><i class="fa-regular fa-heart"></i></div>
+        </div>
+        <span>Looks</span>
+      </div>
+      <div class="highlight-item" onclick="document.getElementById('resenas').scrollIntoView({behavior: 'smooth'})">
+        <div class="highlight-ring">
+          <div class="highlight-circle"><i class="fa-solid fa-clover"></i></div>
+        </div>
+        <span>Clientes</span>
+      </div>
+      <div class="highlight-item" onclick="filterCatalog('sweaters', this)">
+        <div class="highlight-ring">
+          <div class="highlight-circle"><i class="fa-solid fa-mug-hot"></i></div>
+        </div>
+        <span>Good Days</span>
+      </div>
+      <div class="highlight-item" onclick="document.getElementById('gamarra').scrollIntoView({behavior: 'smooth'})">
+        <div class="highlight-ring">
+          <div class="highlight-circle"><i class="fa-solid fa-bag-shopping"></i></div>
+        </div>
+        <span>Tienda</span>
+      </div>
+      <div class="highlight-item" onclick="filterCatalog('accesorios', this)">
+        <div class="highlight-ring">
+          <div class="highlight-circle"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+        </div>
+        <span>Tips</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-pill">
+          <i class="fa-solid fa-sparkles"></i> NUEVA COLECCIÓN PASTEL 2026 ♡ GAMARRA
+        </div>
+        <h1 class="hero-title">Clothes for good days ♡</h1>
+        <span class="hero-subtitle font-hand">good outfits brighter days ♡</span>
+        <p class="hero-desc">
+          Ropa diseñada para tu versión más feliz. Siluetas <strong>oversized</strong>, <strong>boxy</strong> y prendas básicas confeccionadas con 100% algodón peruano de tacto ultrasuave y detalles bordados a mano.
+        </p>
+
+        <div class="hero-badges">
+          <div class="badge-chip"><i class="fa-solid fa-check" style="color:var(--rojo-frambuesa)"></i> 100% Algodón Peruano</div>
+          <div class="badge-chip"><i class="fa-solid fa-location-dot"></i> Gamarra, Lima</div>
+          <div class="badge-chip"><i class="fa-solid fa-truck-fast"></i> Envíos a Todo el Perú</div>
+        </div>
+
+        <div class="hero-buttons">
+          <a href="#catalogo" class="btn-primary">
+            Ver Colección <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="https://wa.me/51999999999?text=Hola%20Pretty%20Please%20♡%20Quiero%20pedir%20el%20catálogo%20por%20mayor%20o%20menor" target="_blank" class="btn-secondary">
+            <i class="fa-brands fa-whatsapp" style="color:#25D366"></i> Pedir por WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- VISUALES DE MOODBOARD -->
+      <div class="hero-visual">
+        <div class="floating-sticker font-hand">Tu estilo, tu historia ♡</div>
+        <div class="visual-card">
+          <img src="assets/product_stack_pastel.jpg" alt="Pack de polos pastel">
+          <div class="visual-tag font-hand">Packs Pastel ♡</div>
+        </div>
+        <div class="visual-card">
+          <img src="assets/product_heart_close.jpg" alt="Detalle bordado de corazón">
+          <div class="visual-tag font-hand">Bordado a mano ♡</div>
+        </div>
+        <div class="visual-card">
+          <img src="assets/product_lilac_tee.jpg" alt="Oversized Tee Lavanda">
+          <div class="visual-tag font-hand">Same girl, happier days</div>
+        </div>
+        <div class="visual-card">
+          <img src="assets/product_rack_pastel.jpg" alt="Rack boutique en Gamarra">
+          <div class="visual-tag font-hand">Gamarra, Lima ♡</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PALETA DE COLORES BRANDING STRIP -->
+  <section class="brand-palette-strip">
+    <div class="palette-box">
+      <div class="palette-info">
+        <h4>Nuestra Paleta de Colores Signature</h4>
+        <p>Tonos seleccionados para transmitir ternura, frescura y energía positiva en cada look.</p>
+      </div>
+      <div class="swatches-list">
+        <div class="swatch-chip"><span class="swatch-color" style="background:#C51F3D;"></span> Rojo Frambuesa</div>
+        <div class="swatch-chip"><span class="swatch-color" style="background:#E6B8B9;"></span> Rosa Empolvado</div>
+        <div class="swatch-chip"><span class="swatch-color" style="background:#D9D1EA;"></span> Lavanda Suave</div>
+        <div class="swatch-chip"><span class="swatch-color" style="background:#D9E5D1;"></span> Menta Suave</div>
+        <div class="swatch-chip"><span class="swatch-color" style="background:#F6E3A7;"></span> Amarillo Mantequilla</div>
+        <div class="swatch-chip"><span class="swatch-color" style="background:#B58B72;"></span> Marrón Latte</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFICIOS / BRAND VALUES -->
+  <section class="values-section">
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon"><i class="fa-solid fa-feather"></i></div>
+        <div class="value-info">
+          <h4>100% Algodón Peruano</h4>
+          <p>Tacto premium, frescura absoluta y cero deformación al lavar.</p>
+        </div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon"><i class="fa-solid fa-heart"></i></div>
+        <div class="value-info">
+          <h4>Detalles con Bordado</h4>
+          <p>Corazones y frases bordadas con hilos de alta densidad.</p>
+        </div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon"><i class="fa-solid fa-shop"></i></div>
+        <div class="value-info">
+          <h4>Gamarra, Lima</h4>
+          <p>Precio directo de taller sin intermediarios costosos.</p>
+        </div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon"><i class="fa-solid fa-truck"></i></div>
+        <div class="value-info">
+          <h4>Envíos Express</h4>
+          <p>Motorizado en Lima y envíos a provincia vía Shalom / Olva.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATÁLOGO DE PRODUCTOS -->
+  <section class="catalog-section" id="catalogo">
+    <div class="section-header">
+      <span class="section-pill">PRETTY CATALOG</span>
+      <h2 class="section-title">Prendas hechas para alegrar tu día ♡</h2>
+      <p class="section-sub font-hand">Detalles que marcan la diferencia ✨</p>
+    </div>
+
+    <!-- BOTONES DE FILTRO -->
+    <div class="filters-bar">
+      <button class="filter-btn active" onclick="filterCatalog('todos', this)">Todos</button>
+      <button class="filter-btn" onclick="filterCatalog('boxy', this)">Polos Boxy</button>
+      <button class="filter-btn" onclick="filterCatalog('oversized', this)">Oversized Tees</button>
+      <button class="filter-btn" onclick="filterCatalog('sweaters', this)">Sweaters & Fleece</button>
+      <button class="filter-btn" onclick="filterCatalog('packs', this)">Packs Ahorro</button>
+      <button class="filter-btn" onclick="filterCatalog('accesorios', this)">Tote Bags & Gorras</button>
+    </div>
+
+    <!-- PRODUCTOS GRID -->
+    <div class="products-grid" id="productsGrid">
+      
+      <!-- Producto 1 -->
+      <div class="product-card" data-category="boxy">
+        <div class="product-thumb">
+          <span class="product-badge">MÁS VENDIDO ♡</span>
+          <button class="btn-wish" onclick="toggleWish(this)"><i class="fa-regular fa-heart"></i></button>
+          <img src="assets/product_heart_close.jpg" alt="Polo Boxy Corazón">
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Básicos Boxy</span>
+          <h3 class="product-name">Polo Boxy "Corazón Bordado"</h3>
+          <div class="product-prices">
+            <span class="price-curr">S/. 49.90</span>
+            <span class="price-old">S/. 65.00</span>
+          </div>
+          <div class="color-swatches-grid">
+            <span class="color-dot active" style="background:#F7EFE6;" title="Hueso"></span>
+            <span class="color-dot" style="background:#E6B8B9;" title="Rosa Empolvado"></span>
+            <span class="color-dot" style="background:#D9D1EA;" title="Lavanda"></span>
+            <span class="color-dot" style="background:#D9E5D1;" title="Menta"></span>
+          </div>
+          <div class="size-pills">
+            <button class="size-btn active">S</button>
+            <button class="size-btn">M</button>
+            <button class="size-btn">L</button>
+            <button class="size-btn">Oversized</button>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('Polo Boxy Corazón Bordado', 49.90, 'Rosa Empolvado / M', 'assets/product_heart_close.jpg')">
+            <i class="fa-solid fa-bag-shopping"></i> Agregar a la bolsita
+          </button>
+        </div>
+      </div>
+
+      <!-- Producto 2 -->
+      <div class="product-card" data-category="oversized">
+        <div class="product-thumb">
+          <span class="product-badge">NUEVO ✨</span>
+          <button class="btn-wish" onclick="toggleWish(this)"><i class="fa-regular fa-heart"></i></button>
+          <img src="assets/product_lilac_tee.jpg" alt="Oversized Tee Same Girl">
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Oversized Tees</span>
+          <h3 class="product-name">Oversized Tee "Same Girl, Happier Days"</h3>
+          <div class="product-prices">
+            <span class="price-curr">S/. 55.00</span>
+            <span class="price-old">S/. 70.00</span>
+          </div>
+          <div class="color-swatches-grid">
+            <span class="color-dot active" style="background:#D9D1EA;" title="Lavanda"></span>
+            <span class="color-dot" style="background:#F7EFE6;" title="Hueso"></span>
+            <span class="color-dot" style="background:#F6E3A7;" title="Amarillo Mantequilla"></span>
+          </div>
+          <div class="size-pills">
+            <button class="size-btn active">Standard Oversized</button>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('Oversized Tee Same Girl Happier Days', 55.00, 'Lavanda / Standard', 'assets/product_lilac_tee.jpg')">
+            <i class="fa-solid fa-bag-shopping"></i> Agregar a la bolsita
+          </button>
+        </div>
+      </div>
+
+      <!-- Producto 3 -->
+      <div class="product-card" data-category="sweaters">
+        <div class="product-thumb">
+          <span class="product-badge">COZY FAVORITE</span>
+          <button class="btn-wish" onclick="toggleWish(this)"><i class="fa-regular fa-heart"></i></button>
+          <img src="assets/product_stack_hoodies.jpg" alt="Crewneck Fleece Pastel">
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Sweaters & Hoodies</span>
+          <h3 class="product-name">Crewneck Soft Fleece "Pastel Dream"</h3>
+          <div class="product-prices">
+            <span class="price-curr">S/. 79.90</span>
+            <span class="price-old">S/. 99.00</span>
+          </div>
+          <div class="color-swatches-grid">
+            <span class="color-dot active" style="background:#E6B8B9;" title="Rosa"></span>
+            <span class="color-dot" style="background:#D9E5D1;" title="Menta"></span>
+            <span class="color-dot" style="background:#D9D1EA;" title="Lavanda"></span>
+            <span class="color-dot" style="background:#F7EFE6;" title="Hueso"></span>
+          </div>
+          <div class="size-pills">
+            <button class="size-btn">S</button>
+            <button class="size-btn active">M</button>
+            <button class="size-btn">L</button>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('Crewneck Soft Fleece Pastel Dream', 79.90, 'Rosa Empolvado / M', 'assets/product_stack_hoodies.jpg')">
+            <i class="fa-solid fa-bag-shopping"></i> Agregar a la bolsita
+          </button>
+        </div>
+      </div>
+
+      <!-- Producto 4 -->
+      <div class="product-card" data-category="packs">
+        <div class="product-thumb">
+          <span class="product-badge" style="background: #25D366;">AHORRA 25% ✨</span>
+          <button class="btn-wish" onclick="toggleWish(this)"><i class="fa-regular fa-heart"></i></button>
+          <img src="assets/product_stack_pastel.jpg" alt="Tripack Polos Pastel">
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Packs Exclusivos</span>
+          <h3 class="product-name">Tripack "Good Days" (3 Polos a elección)</h3>
+          <div class="product-prices">
+            <span class="price-curr">S/. 129.90</span>
+            <span class="price-old">S/. 165.00</span>
+          </div>
+          <div class="color-swatches-grid">
+            <span class="color-dot active" style="background:#C51F3D;"></span>
+            <span class="color-dot" style="background:#E6B8B9;"></span>
+            <span class="color-dot" style="background:#D9D1EA;"></span>
+            <span class="color-dot" style="background:#D9E5D1;"></span>
+            <span class="color-dot" style="background:#F6E3A7;"></span>
+          </div>
+          <div class="size-pills">
+            <button class="size-btn active">Pack S/M/L</button>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('Tripack Good Days (3 Polos)', 129.90, 'Colores Variados', 'assets/product_stack_pastel.jpg')">
+            <i class="fa-solid fa-bag-shopping"></i> Agregar a la bolsita
+          </button>
+        </div>
+      </div>
+
+      <!-- Producto 5 -->
+      <div class="product-card" data-category="accesorios">
+        <div class="product-thumb">
+          <span class="product-badge">ECO FRIENDLY</span>
+          <button class="btn-wish" onclick="toggleWish(this)"><i class="fa-regular fa-heart"></i></button>
+          <img src="assets/product_tote_bag.jpg" alt="Tote Bag Canvas">
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Accesorios</span>
+          <h3 class="product-name">Tote Bag Canvas "Pretty Please ♡"</h3>
+          <div class="product-prices">
+            <span class="price-curr">S/. 29.90</span>
+            <span class="price-old">S/. 40.00</span>
+          </div>
+          <div class="color-swatches-grid">
+            <span class="color-dot active" style="background:#F7EFE6;" title="Crudo Natural"></span>
+          </div>
+          <div class="size-pills">
+            <button class="size-btn active">Única</button>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('Tote Bag Canvas Pretty Please', 29.90, 'Crudo Natural', 'assets/product_tote_bag.jpg')">
+            <i class="fa-solid fa-bag-shopping"></i> Agregar a la bolsita
+          </button>
+        </div>
+      </div>
+
+      <!-- Producto 6 -->
+      <div class="product-card" data-category="accesorios">
+        <div class="product-thumb">
+          <span class="product-badge">VINTAGE WASH</span>
+          <button class="btn-wish" onclick="toggleWish(this)"><i class="fa-regular fa-heart"></i></button>
+          <img src="assets/product_pink_cap.jpg" alt="Gorra Vintage Washed">
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Accesorios</span>
+          <h3 class="product-name">Gorra Washed Bordada "Pretty Please"</h3>
+          <div class="product-prices">
+            <span class="price-curr">S/. 39.90</span>
+            <span class="price-old">S/. 50.00</span>
+          </div>
+          <div class="color-swatches-grid">
+            <span class="color-dot active" style="background:#E6B8B9;" title="Rosa Pastel"></span>
+            <span class="color-dot" style="background:#B58B72;" title="Marrón Latte"></span>
+          </div>
+          <div class="size-pills">
+            <button class="size-btn active">Ajustable</button>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('Gorra Washed Bordada Pretty Please', 39.90, 'Rosa Pastel', 'assets/product_pink_cap.jpg')">
+            <i class="fa-solid fa-bag-shopping"></i> Agregar a la bolsita
+          </button>
+        </div>
+      </div>
+
+      <!-- Producto 7 -->
+      <div class="product-card" data-category="boxy">
+        <div class="product-thumb">
+          <span class="product-badge">ESSENTIAL</span>
+          <button class="btn-wish" onclick="toggleWish(this)"><i class="fa-regular fa-heart"></i></button>
+          <img src="assets/product_girl_white_tee.jpg" alt="White Boxy Tee">
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Básicos Boxy</span>
+          <h3 class="product-name">Polo Boxy Classic "Clean White"</h3>
+          <div class="product-prices">
+            <span class="price-curr">S/. 49.90</span>
+          </div>
+          <div class="color-swatches-grid">
+            <span class="color-dot active" style="background:#FFFFFF;" title="Blanco"></span>
+          </div>
+          <div class="size-pills">
+            <button class="size-btn">S</button>
+            <button class="size-btn active">M</button>
+            <button class="size-btn">L</button>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('Polo Boxy Classic Clean White', 49.90, 'Blanco / M', 'assets/product_girl_white_tee.jpg')">
+            <i class="fa-solid fa-bag-shopping"></i> Agregar a la bolsita
+          </button>
+        </div>
+      </div>
+
+      <!-- Producto 8 -->
+      <div class="product-card" data-category="boxy">
+        <div class="product-thumb">
+          <span class="product-badge">GIRL CRUSH</span>
+          <button class="btn-wish" onclick="toggleWish(this)"><i class="fa-regular fa-heart"></i></button>
+          <img src="assets/product_pink_tee_girl.jpg" alt="Pink Tee Girl">
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Básicos Boxy</span>
+          <h3 class="product-name">Baby Tee "Corazón Sweet Rose"</h3>
+          <div class="product-prices">
+            <span class="price-curr">S/. 45.00</span>
+            <span class="price-old">S/. 58.00</span>
+          </div>
+          <div class="color-swatches-grid">
+            <span class="color-dot active" style="background:#E6B8B9;"></span>
+            <span class="color-dot" style="background:#F6E3A7;"></span>
+          </div>
+          <div class="size-pills">
+            <button class="size-btn active">S</button>
+            <button class="size-btn">M</button>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart('Baby Tee Corazón Sweet Rose', 45.00, 'Sweet Rose / S', 'assets/product_pink_tee_girl.jpg')">
+            <i class="fa-solid fa-bag-shopping"></i> Agregar a la bolsita
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INSTAGRAM FEED LOOKBOOK -->
+  <section class="feed-section" id="lookbook">
+    <div class="feed-header">
+      <div>
+        <span class="section-pill font-hand" style="font-size: 1.3rem;">@prettyplease.pe</span>
+        <h2 class="section-title">Feed de Estilo & Lookbook ♡</h2>
+      </div>
+      <a href="https://instagram.com" target="_blank" class="btn-secondary">
+        <i class="fa-brands fa-instagram" style="color:var(--rojo-frambuesa)"></i> Seguir en Instagram
+      </a>
+    </div>
+
+    <div class="feed-grid">
+      <div class="feed-card">
+        <img src="assets/product_rack_pastel.jpg" alt="Rack Gamarra">
+        <div class="feed-overlay"><i class="fa-brands fa-instagram"></i></div>
+      </div>
+      <div class="feed-card feed-card-quote">
+        <h3 class="font-hand">good outfits<br>brighter<br>days ♡</h3>
+        <p style="font-size: 0.78rem; color: var(--marron-latte); margin-top: 8px;">Gamarra, Lima</p>
+      </div>
+      <div class="feed-card">
+        <img src="assets/boutique_facade.jpg" alt="Boutique Pretty Please">
+        <div class="feed-overlay"><i class="fa-brands fa-instagram"></i></div>
+      </div>
+      <div class="feed-card feed-card-quote">
+        <h3 class="font-hand">Tu estilo,<br>tu historia. ♡</h3>
+        <p style="font-size: 0.78rem; color: var(--marron-latte); margin-top: 8px;">100% Algodón</p>
+      </div>
+      <div class="feed-card">
+        <img src="assets/product_lilac_tee.jpg" alt="Lavanda Girl">
+        <div class="feed-overlay"><i class="fa-brands fa-instagram"></i></div>
+      </div>
+      <div class="feed-card">
+        <img src="assets/product_tote_bag.jpg" alt="Tote bag con margaritas">
+        <div class="feed-overlay"><i class="fa-brands fa-instagram"></i></div>
+      </div>
+      <div class="feed-card feed-card-quote">
+        <h3 class="font-hand">Ropa para<br>tu versión<br>más feliz ♡</h3>
+      </div>
+      <div class="feed-card">
+        <img src="assets/product_stack_hoodies.jpg" alt="Stack pastel">
+        <div class="feed-overlay"><i class="fa-brands fa-instagram"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEÑAS CLIENTES -->
+  <section class="reviews-section" id="resenas">
+    <div class="reviews-container">
+      <div class="section-header">
+        <span class="section-pill">PRETTY REVIEWS</span>
+        <h2 class="section-title">Lo que dicen nuestras clientas ♡</h2>
+        <p class="section-sub font-hand">Más de 2,500 chicas felices en todo el Perú ✨</p>
+      </div>
+
+      <div class="reviews-grid">
+        <div class="review-card">
+          <div class="review-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+          <p class="review-text">"¡La tela es increíble! Super gruesita pero fresca al mismo tiempo. El bordado del corazón está perfecto y no se deforma al lavarlo en lavadora. Ya pedí mi segundo tripack."</p>
+          <div class="review-author">
+            <div class="author-avatar">CR</div>
+            <div>
+              <div class="author-name">Camila Ramos ♡</div>
+              <div class="author-loc">Miraflores, Lima</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+          <p class="review-text">"Me llegó en menos de 24 horas por motorizado. La presentación con la bolsa, el sticker y la cartita fue un detalle precioso. El fit oversized queda soñado."</p>
+          <div class="review-author">
+            <div class="author-avatar">VM</div>
+            <div>
+              <div class="author-name">Valeria Morales ♡</div>
+              <div class="author-loc">San Miguel, Lima</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+          <p class="review-text">"Hice pedido para Arequipa por Shalom y me llegó en 2 días intacto. El tono rosa empolvado y el amarillo mantequilla son exactos a las fotos. ¡10/10!"</p>
+          <div class="review-author">
+            <div class="author-avatar">AS</div>
+            <div>
+              <div class="author-name">Andrea Salinas ♡</div>
+              <div class="author-loc">Arequipa, Perú</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BANNER GAMARRA TIENDA -->
+  <section class="gamarra-banner" id="gamarra">
+    <div class="gamarra-box">
+      <div>
+        <span class="font-hand" style="font-size: 1.5rem; display: block; margin-bottom: 6px;">Visítanos o pide directo a taller ♡</span>
+        <h2>¿Quieres comprar por mayor o visitarnos en Gamarra?</h2>
+        <p>
+          Atendemos ventas por menor y precios especiales para emprendedoras por mayor (a partir de 3 unidades). Ven a conocer nuestros acabados de algodón peruano en persona o escríbenos directamente a WhatsApp.
+        </p>
+        <div class="gamarra-actions">
+          <a href="https://wa.me/51999999999?text=Hola%20Pretty%20Please%20♡%20Quiero%20comprar%20por%20mayor%20o%20conocer%20la%20tienda%20en%20Gamarra" target="_blank" class="btn-ws-gamarra">
+            <i class="fa-brands fa-whatsapp"></i> Chat con Asesora
+          </a>
+          <button class="btn-white-gamarra" onclick="showToast('📍 Gamarra, La Victoria, Lima • Lun a Sáb 10am - 7pm')">
+            <i class="fa-solid fa-location-dot"></i> Ver Horarios & Dirección
+          </button>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+        <div style="background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); padding: 24px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.25);">
+          <i class="fa-solid fa-store" style="font-size: 2.8rem; margin-bottom: 12px;"></i>
+          <h4 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 6px;">Boutique Gamarra</h4>
+          <p style="font-size: 0.88rem; opacity: 0.9; margin-bottom: 12px;">La Victoria, Lima • Perú</p>
+          <span style="background: #FFFFFF; color: var(--rojo-frambuesa); font-size: 0.78rem; font-weight: 800; padding: 4px 12px; border-radius: 20px;">
+            LUN - SÁB: 10:00 AM - 7:00 PM
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <img src="assets/logo_pretty_transparent.png" alt="Pretty Please Logo">
+        <p>Ropa diseñada para tus good days ✨ Básicos, siluetas boxy y hoodies en algodón peruano premium con confección en Gamarra, Lima.</p>
+        <div class="social-links">
+          <a href="#" class="social-link" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="social-link" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="#" class="social-link" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Colecciones</h4>
+        <ul class="footer-links">
+          <li><a href="#catalogo">Polos Boxy</a></li>
+          <li><a href="#catalogo">Oversized Tees</a></li>
+          <li><a href="#catalogo">Sweaters & Fleece</a></li>
+          <li><a href="#catalogo">Packs de Ahorro</a></li>
+          <li><a href="#catalogo">Tote Bags & Gorras</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Atención al Cliente</h4>
+        <ul class="footer-links">
+          <li><a href="#" onclick="showToast('Guía de tallas: S (ancho 50cm), M (ancho 54cm), L (ancho 58cm)')">Guía de Tallas</a></li>
+          <li><a href="#" onclick="showToast('Envíos a todo Lima Metropolitana en 24h y provincias por Shalom / Olva')">Envíos y Tiempos</a></li>
+          <li><a href="#" onclick="showToast('Cambios permitidos hasta 7 días con etiqueta intacta ♡')">Cambios y Devoluciones</a></li>
+          <li><a href="#" onclick="showToast('Aceptamos Yape, Plin, Tarjetas y Transferencias BCP/BBVA')">Métodos de Pago</a></li>
+          <li><a href="#">Libro de Reclamaciones</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Good Days Club ♡</h4>
+        <p style="font-size: 0.82rem; color: var(--texto-mutado); margin-bottom: 12px;">Recibe 10% de descuento en tu primer pedido y entérate de drops exclusivos.</p>
+        <div style="display: flex; gap: 6px;">
+          <input type="email" placeholder="Tu correo aquí..." style="padding: 10px 14px; border: 1px solid var(--border-suave); border-radius: var(--radio-full); font-size: 0.82rem; width: 100%; outline: none;">
+          <button style="background: var(--rojo-frambuesa); color: white; border: none; padding: 10px 18px; border-radius: var(--radio-full); cursor: pointer; font-weight: 700; font-size: 0.82rem;" onclick="showToast('¡Gracias por unirte al Good Days Club! ♡')">Unirme</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2026 Pretty Please ♡ • Todos los derechos reservados. Hecho con amor en Gamarra, Lima.</div>
+      <div style="display: flex; gap: 16px; align-items: center;">
+        <span>Yape</span> • <span>Plin</span> • <span>Visa</span> • <span>Mastercard</span> • <span>BCP</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CARRITO LATERAL (DRAWER) -->
+  <div class="cart-drawer-overlay" id="cartOverlay" onclick="closeCart()"></div>
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="drawer-header">
+      <h3><i class="fa-solid fa-bag-shopping" style="color: var(--rojo-frambuesa);"></i> Tu Bolsita ♡</h3>
+      <button class="btn-close-drawer" onclick="closeCart()">&times;</button>
+    </div>
+
+    <div class="drawer-items" id="drawerItems">
+      <div class="drawer-empty" id="drawerEmpty">
+        <i class="fa-solid fa-basket-shopping"></i>
+        <p>Tu bolsita está vacía por ahora.<br>¡Elige tus prendas pastel favoritas!</p>
+        <button class="btn-primary" style="font-size: 0.88rem; padding: 10px 20px;" onclick="closeCart()">Explorar Catálogo</button>
+      </div>
+    </div>
+
+    <div class="drawer-footer" id="drawerFooter" style="display: none;">
+      <div class="drawer-subtotal">
+        <span>Total:</span>
+        <span id="drawerTotalText">S/. 0.00</span>
+      </div>
+      <button class="btn-checkout-ws" onclick="checkoutWhatsApp()">
+        <i class="fa-brands fa-whatsapp" style="font-size: 1.25rem;"></i> Pedir por WhatsApp ♡
+      </button>
+      <p style="font-size: 0.72rem; text-align: center; color: var(--texto-mutado); margin-top: 8px;">
+        Te contactaremos de inmediato para confirmar tu talla y envío.
+      </p>
+    </div>
+  </aside>
+
+  <!-- TOAST NOTIFICACIÓN -->
+  <div class="toast-msg" id="toastMsg">
+    <i class="fa-solid fa-heart" style="color: #FF5A79;"></i>
+    <span id="toastText">¡Prenda agregada a tu bolsita! ♡</span>
+  </div>
+
+  <!-- SCRIPT LÓGICA INTERACTIVA -->
+  <script>
+    let cart = [];
+
+    function addToCart(title, price, variant, img) {
+      const existing = cart.find(i => i.title === title && i.variant === variant);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ title, price, variant, img, qty: 1 });
+      }
+      updateCartUI();
+      openCart();
+      showToast('¡' + title + ' agregado a tu bolsita! ♡');
+    }
+
+    function changeQty(index, delta) {
+      if (cart[index]) {
+        cart[index].qty += delta;
+        if (cart[index].qty <= 0) {
+          cart.splice(index, 1);
+        }
+      }
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const drawerItems = document.getElementById('drawerItems');
+      const drawerEmpty = document.getElementById('drawerEmpty');
+      const drawerFooter = document.getElementById('drawerFooter');
+      const cartBadge = document.getElementById('cartBadge');
+      const drawerTotalText = document.getElementById('drawerTotalText');
+
+      const totalItems = cart.reduce((acc, i) => acc + i.qty, 0);
+      cartBadge.innerText = totalItems;
+
+      if (cart.length === 0) {
+        drawerEmpty.style.display = 'flex';
+        drawerFooter.style.display = 'none';
+        drawerItems.innerHTML = '';
+        drawerItems.appendChild(drawerEmpty);
+        return;
+      }
+
+      drawerEmpty.style.display = 'none';
+      drawerFooter.style.display = 'block';
+
+      let total = 0;
+      let html = '';
+
+      cart.forEach((item, index) => {
+        const itemTotal = item.price * item.qty;
+        total += itemTotal;
+        html += `
+          <div class="drawer-item">
+            <img src="${item.img}" alt="${item.title}" class="drawer-item-img">
+            <div class="drawer-item-details">
+              <div class="drawer-item-title">${item.title}</div>
+              <div class="drawer-item-variant">${item.variant}</div>
+              <div class="drawer-item-bottom">
+                <span class="drawer-item-price">S/. ${itemTotal.toFixed(2)}</span>
+                <div class="qty-controls">
+                  <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                  <span class="qty-val">${item.qty}</span>
+                  <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      drawerItems.innerHTML = html;
+      drawerTotalText.innerText = 'S/. ' + total.toFixed(2);
+    }
+
+    function openCart() {
+      document.getElementById('cartOverlay').classList.add('active');
+      document.getElementById('cartDrawer').classList.add('active');
+    }
+
+    function closeCart() {
+      document.getElementById('cartOverlay').classList.remove('active');
+      document.getElementById('cartDrawer').classList.remove('active');
+    }
+
+    function checkoutWhatsApp() {
+      if (cart.length === 0) return;
+      
+      let msg = "¡Hola Pretty Please! ♡ Quiero realizar el siguiente pedido desde la web:%0A%0A";
+      let total = 0;
+      cart.forEach(item => {
+        const sub = item.price * item.qty;
+        total += sub;
+        msg += `• *${item.qty}x* ${item.title} (${item.variant}) - S/. ${sub.toFixed(2)}%0A`;
+      });
+      msg += `%0A*TOTAL:* S/. ${total.toFixed(2)}%0A`;
+      msg += "%0A📍 *Dirección de Entrega:* %0A👤 *Nombre:* %0A✨ ¡Quedo atenta para coordinar el pago por Yape/Transferencia!";
+
+      const wsUrl = 'https://wa.me/51999999999?text=' + msg;
+      window.open(wsUrl, '_blank');
+    }
+
+    function showToast(text) {
+      const toast = document.getElementById('toastMsg');
+      document.getElementById('toastText').innerText = text;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    function toggleWish(btn) {
+      btn.classList.toggle('active');
+      if (btn.classList.contains('active')) {
+        btn.querySelector('i').classList.replace('fa-regular', 'fa-solid');
+        showToast('¡Guardado en tus favoritos! ♡');
+      } else {
+        btn.querySelector('i').classList.replace('fa-solid', 'fa-regular');
+      }
+    }
+
+    function filterCatalog(cat, clickedBtn) {
+      if (clickedBtn) {
+        const buttons = document.querySelectorAll('.filter-btn');
+        buttons.forEach(b => b.classList.remove('active'));
+        clickedBtn.classList.add('active');
+      }
+
+      const cards = document.querySelectorAll('.product-card');
+      cards.forEach(card => {
+        if (cat === 'todos' || card.getAttribute('data-category') === cat) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    document.querySelectorAll('.color-dot').forEach(dot => {
+      dot.addEventListener('click', (e) => {
+        const parent = e.target.parentElement;
+        parent.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+        e.target.classList.add('active');
+      });
+    });
+
+    document.querySelectorAll('.size-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const parent = e.target.parentElement;
+        parent.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
