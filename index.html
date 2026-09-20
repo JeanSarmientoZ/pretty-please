@@ -326,15 +326,15 @@
     /* HISTORIAS DESTACADAS (HIGHLIGHTS) */
     .highlights-section {
       max-width: 1240px;
-      margin: 16px auto 0 auto;
-      padding: 8px 16px;
+      margin: 10px auto 0 auto;
+      padding: 6px 16px;
     }
     .highlights-slider {
       display: flex;
       justify-content: flex-start;
       gap: 20px;
       overflow-x: auto;
-      padding-bottom: 8px;
+      padding: 14px 10px 16px 10px;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
     }
@@ -647,9 +647,9 @@
       display: flex;
       justify-content: flex-start;
       gap: 10px;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
       overflow-x: auto;
-      padding-bottom: 8px;
+      padding: 10px 4px 14px 4px;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
     }
@@ -798,29 +798,36 @@
       text-decoration: line-through;
     }
 
-    /* SELECTORES DE COLOR Y TALLA EN TARJETA */
+    /* SELECTORES DE COLOR Y TALLA EN TARJETA (COMPACTOS Y FINOS PARA MÓVIL) */
     .selector-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
+      line-height: 1.2;
+      min-height: 19px;
     }
     .selector-label {
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       font-weight: 800;
       color: var(--texto-mutado);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.4px;
+      flex-shrink: 0;
     }
     .selected-val-badge {
-      font-size: 0.68rem;
-      font-weight: 600;
+      font-size: 0.65rem;
+      font-weight: 700;
       color: var(--texto-mutado);
       background: var(--hueso-calido);
-      padding: 2px 8px;
+      padding: 1px 7px;
       border-radius: var(--radio-full);
       border: 1px dashed var(--border-suave);
       transition: all 0.2s ease;
+      white-space: nowrap;
+      max-width: 95px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .selected-val-badge.selected {
       color: var(--rojo-frambuesa);
@@ -830,13 +837,17 @@
       border-color: rgba(197, 31, 61, 0.25);
     }
     .badge-fixed-size {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       font-weight: 700;
       color: var(--marron-latte);
       background: var(--hueso-calido);
-      padding: 2px 8px;
+      padding: 1px 7px;
       border-radius: var(--radio-full);
       border: 1px solid var(--border-suave);
+      white-space: nowrap;
+      max-width: 105px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     /* AVISO DE SELECCIÓN OBLIGATORIA (PULSE Y SHAKE) */
@@ -1431,17 +1442,59 @@
         font-size: 0.92rem;
       }
       .products-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, 1fr);
         gap: 10px;
       }
+      .product-card {
+        border-radius: 15px;
+      }
       .product-info {
-        padding: 10px;
+        padding: 9px 8px 11px 8px;
       }
       .product-name {
-        font-size: 0.85rem;
+        font-size: 0.82rem;
+        min-height: 2.3em;
+        margin-bottom: 4px;
       }
       .price-curr {
-        font-size: 1rem;
+        font-size: 0.98rem;
+      }
+      .selector-header {
+        min-height: 18px;
+        margin-bottom: 4px;
+      }
+      .selector-label {
+        font-size: 0.62rem;
+      }
+      .selected-val-badge {
+        font-size: 0.62rem;
+        padding: 1px 6px;
+        max-width: 80px;
+      }
+      .badge-fixed-size {
+        font-size: 0.62rem;
+        padding: 1px 6px;
+        max-width: 90px;
+      }
+      .color-swatches-grid {
+        gap: 5px;
+        margin-bottom: 8px;
+      }
+      .color-dot {
+        width: 17px;
+        height: 17px;
+      }
+      .size-pills {
+        gap: 4px;
+        margin-bottom: 10px;
+      }
+      .size-btn {
+        padding: 2px 7px;
+        font-size: 0.68rem;
+      }
+      .btn-add-cart {
+        padding: 8px 6px;
+        font-size: 0.75rem;
       }
       .feed-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -1871,7 +1924,7 @@
           <li><a onclick="showToast('Guía de tallas: S (ancho 50cm), M (ancho 54cm), L (ancho 58cm)')">Guía de Tallas</a></li>
           <li><a onclick="showToast('Envíos a todo Lima Metropolitana en 24h y provincias por Shalom / Olva')">Envíos y Tiempos</a></li>
           <li><a onclick="showToast('Cambios permitidos hasta 7 días con etiqueta intacta ♡')">Cambios y Devoluciones</a></li>
-          <li><a href="admin.html" target="_blank">Panel de Administrador</a></li>
+          <li><a onclick="showToast('Compra 100% protegida y cifrada con Pretty Please ♡')">Compra Segura & Privacidad</a></li>
         </ul>
       </div>
 
@@ -2124,23 +2177,33 @@
       updateWishlistUI();
     }
 
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
     const COLOR_NAMES = {
-      '#c51f3d': 'Rojo Frambuesa',
-      '#e6b8b9': 'Rosa Empolvado',
-      '#d9d1ea': 'Lavanda Pastel',
-      '#d9e5d1': 'Verde Menta',
-      '#f6e3a7': 'Amarillo Mantequilla',
-      '#f7efe6': 'Vainilla / Hueso',
-      '#b58b72': 'Marrón Latte',
-      '#5c4337': 'Chocolate Latte',
-      '#ffffff': 'Blanco Clásico',
-      '#000000': 'Negro Classic'
+      '#c51f3d': 'Frambuesa',
+      '#e6b8b9': 'Rosa',
+      '#d9d1ea': 'Lavanda',
+      '#d9e5d1': 'Menta',
+      '#f6e3a7': 'Mantequilla',
+      '#f7efe6': 'Vainilla',
+      '#b58b72': 'Latte',
+      '#5c4337': 'Chocolate',
+      '#ffffff': 'Blanco',
+      '#000000': 'Negro'
     };
 
     function getColorName(hex) {
       if (!hex) return 'Color';
       const clean = hex.trim().toLowerCase();
-      return COLOR_NAMES[clean] || 'Tono Pastel';
+      return COLOR_NAMES[clean] || 'Pastel';
     }
 
     function renderProducts(cat = 'todos') {
@@ -2184,18 +2247,18 @@
           sizeSectionHtml = `
             <div class="selector-header">
               <span class="selector-label">Talla:</span>
-              <span class="selected-val-badge size-badge-val">Elige tu talla</span>
+              <span class="selected-val-badge size-badge-val">Elige talla</span>
             </div>
             <div class="size-pills">
-              ${p.sizes.map(s => `<button type="button" class="size-btn" data-size="${s}" onclick="selectCardSize(event, '${s}')">${s}</button>`).join('')}
+              ${p.sizes.map(s => `<button type="button" class="size-btn" data-size="${escapeHtml(s)}" onclick="selectCardSize(event, '${escapeHtml(s)}')">${escapeHtml(s)}</button>`).join('')}
             </div>
           `;
         } else {
           const displaySize = singleSize || 'Standard';
           sizeSectionHtml = `
-            <div class="selector-header" style="margin-bottom: 14px;">
+            <div class="selector-header" style="margin-bottom: 12px;">
               <span class="selector-label">Talla:</span>
-              <span class="badge-fixed-size">${displaySize}</span>
+              <span class="badge-fixed-size">${escapeHtml(displaySize)}</span>
             </div>
           `;
         }
@@ -2211,11 +2274,11 @@
           colorSectionHtml = `
             <div class="selector-header">
               <span class="selector-label">Color:</span>
-              <span class="selected-val-badge color-badge-val">Elige un color</span>
+              <span class="selected-val-badge color-badge-val">Elige color</span>
             </div>
             <div class="color-swatches-grid">
               ${p.colors.map(c => `
-                <span class="color-dot" style="background:${c};" data-color="${c}" title="${getColorName(c)}" onclick="selectCardColor(event, '${c}')"></span>
+                <span class="color-dot" style="background:${escapeHtml(c)};" data-color="${escapeHtml(c)}" title="${escapeHtml(getColorName(c))}" onclick="selectCardColor(event, '${escapeHtml(c)}')"></span>
               `).join('')}
             </div>
           `;
@@ -2227,7 +2290,7 @@
               <span class="selector-label">Color:</span>
               <span class="badge-fixed-size" style="display:inline-flex; align-items:center; gap:5px;">
                 <span style="width:8px; height:8px; border-radius:50%; background:${displayColor}; display:inline-block; border:1px solid rgba(0,0,0,0.15);"></span>
-                ${cName}
+                ${escapeHtml(cName)}
               </span>
             </div>
           `;
@@ -2235,15 +2298,15 @@
 
         card.innerHTML = `
           <div class="product-thumb">
-            ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
+            ${p.badge ? `<span class="product-badge">${escapeHtml(p.badge)}</span>` : ''}
             <button class="btn-wish ${isFav ? 'active' : ''}" onclick="toggleWishlist(${p.id}, event)" title="${isFav ? 'Quitar de favoritos' : 'Guardar en favoritos'}">
               <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
             </button>
-            <img src="${p.img}" alt="${p.name}">
+            <img src="${escapeHtml(p.img)}" alt="${escapeHtml(p.name)}">
           </div>
           <div class="product-info">
-            <span class="product-cat">${p.cat}</span>
-            <h3 class="product-name">${p.name}</h3>
+            <span class="product-cat">${escapeHtml(p.cat)}</span>
+            <h3 class="product-name">${escapeHtml(p.name)}</h3>
             <div class="product-prices">
               <span class="price-curr">S/. ${p.price.toFixed(2)}</span>
               ${p.priceOld ? `<span class="price-old">S/. ${p.priceOld.toFixed(2)}</span>` : ''}
@@ -2281,7 +2344,7 @@
 
       const sizeBadge = card.querySelector('.size-badge-val');
       if (sizeBadge) {
-        sizeBadge.innerText = `Talla ${size}`;
+        sizeBadge.innerText = size;
         sizeBadge.classList.add('selected');
       }
       card.classList.remove('need-size');
