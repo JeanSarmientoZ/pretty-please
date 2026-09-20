@@ -347,8 +347,11 @@
       align-items: center;
       gap: 6px;
       cursor: pointer;
-      transition: transform 0.2s ease;
+      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
       flex-shrink: 0;
+    }
+    .highlight-item:hover {
+      transform: translateY(-5px) scale(1.06);
     }
     .highlight-ring {
       width: 66px;
@@ -359,6 +362,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: all 0.3s ease;
+    }
+    .highlight-item:hover .highlight-ring {
+      box-shadow: 0 8px 18px rgba(197, 31, 61, 0.28);
+      background: linear-gradient(135deg, var(--rojo-frambuesa), #ff6b8b, var(--amarillo-mantequilla));
     }
     .highlight-circle {
       width: 100%;
@@ -371,12 +379,25 @@
       font-size: 1.35rem;
       color: var(--rojo-frambuesa);
       border: 2px solid var(--blanco);
-      transition: background 0.2s ease;
+      transition: all 0.25s ease;
+    }
+    .highlight-circle i {
+      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .highlight-item:hover .highlight-circle {
+      background: var(--blanco);
+    }
+    .highlight-item:hover .highlight-circle i {
+      transform: scale(1.18) rotate(-6deg);
     }
     .highlight-item span {
       font-size: 0.74rem;
       font-weight: 700;
       color: var(--texto-oscuro);
+      transition: color 0.2s ease;
+    }
+    .highlight-item:hover span {
+      color: var(--rojo-frambuesa);
     }
 
     /* HERO SECTION */
@@ -646,7 +667,13 @@
       cursor: pointer;
       white-space: nowrap;
       flex-shrink: 0;
-      transition: all 0.2s ease;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .filter-btn:hover {
+      transform: translateY(-3px) scale(1.04);
+      border-color: var(--rojo-frambuesa);
+      color: var(--rojo-frambuesa);
+      box-shadow: 0 6px 16px rgba(197, 31, 61, 0.15);
     }
     .filter-btn.active {
       background: var(--rojo-frambuesa);
@@ -683,10 +710,12 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.35s ease;
+      filter: saturate(1.06) contrast(1.02);
+      transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), filter 0.35s ease;
     }
     .product-card:hover .product-thumb img {
-      transform: scale(1.05);
+      transform: scale(1.08);
+      filter: saturate(1.10) contrast(1.03);
     }
     .product-badge {
       position: absolute;
@@ -769,42 +798,121 @@
       text-decoration: line-through;
     }
 
+    /* SELECTORES DE COLOR Y TALLA EN TARJETA */
+    .selector-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .selector-label {
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: var(--texto-mutado);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .selected-val-badge {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--texto-mutado);
+      background: var(--hueso-calido);
+      padding: 2px 8px;
+      border-radius: var(--radio-full);
+      border: 1px dashed var(--border-suave);
+      transition: all 0.2s ease;
+    }
+    .selected-val-badge.selected {
+      color: var(--rojo-frambuesa);
+      font-weight: 800;
+      background: var(--rosa-suave);
+      border-style: solid;
+      border-color: rgba(197, 31, 61, 0.25);
+    }
+    .badge-fixed-size {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--marron-latte);
+      background: var(--hueso-calido);
+      padding: 2px 8px;
+      border-radius: var(--radio-full);
+      border: 1px solid var(--border-suave);
+    }
+
+    /* AVISO DE SELECCIÓN OBLIGATORIA (PULSE Y SHAKE) */
+    .product-card.need-color .color-badge-val,
+    .product-card.need-size .size-badge-val {
+      color: #dc2626 !important;
+      background: #fee2e2 !important;
+      border: 1px solid #fca5a5 !important;
+      font-weight: 800 !important;
+      animation: softBadgePulse 0.8s infinite alternate;
+    }
+    @keyframes softBadgePulse {
+      0% { transform: scale(0.96); opacity: 0.85; }
+      100% { transform: scale(1.04); opacity: 1; }
+    }
+    @keyframes softShake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-4px); }
+      40%, 80% { transform: translateX(4px); }
+    }
+    .shake-prompt {
+      animation: softShake 0.4s ease;
+    }
+
     .color-swatches-grid {
       display: flex;
-      gap: 5px;
-      margin-bottom: 10px;
+      gap: 6px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
     }
     .color-dot {
-      width: 18px;
-      height: 18px;
+      width: 20px;
+      height: 20px;
       border-radius: var(--radio-full);
-      border: 1.5px solid var(--blanco);
-      box-shadow: 0 0 0 1px var(--border-suave);
+      border: 2px solid var(--blanco);
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.14);
       cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .color-dot:hover {
+      transform: scale(1.22);
+      box-shadow: 0 0 0 2px var(--marron-latte);
     }
     .color-dot.active {
-      box-shadow: 0 0 0 2px var(--rojo-frambuesa);
+      transform: scale(1.25);
+      box-shadow: 0 0 0 2px var(--rojo-frambuesa), 0 3px 8px rgba(197, 31, 61, 0.35);
     }
 
     .size-pills {
       display: flex;
-      gap: 4px;
-      margin-bottom: 12px;
+      gap: 5px;
+      margin-bottom: 14px;
       flex-wrap: wrap;
     }
     .size-btn {
-      padding: 2px 7px;
+      padding: 3px 9px;
       border: 1px solid var(--border-suave);
-      background: var(--hueso-calido);
-      border-radius: 5px;
-      font-size: 0.72rem;
+      background: var(--blanco);
+      border-radius: 6px;
+      font-size: 0.74rem;
       font-weight: 700;
       cursor: pointer;
+      color: var(--texto-oscuro);
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .size-btn:hover {
+      border-color: var(--rojo-frambuesa);
+      color: var(--rojo-frambuesa);
+      transform: translateY(-2px);
     }
     .size-btn.active {
-      background: var(--texto-oscuro);
+      background: var(--rojo-frambuesa);
       color: var(--blanco);
-      border-color: var(--texto-oscuro);
+      border-color: var(--rojo-frambuesa);
+      box-shadow: 0 2px 8px rgba(197, 31, 61, 0.28);
+      transform: translateY(-1px);
     }
 
     .btn-add-cart {
@@ -813,7 +921,7 @@
       background: var(--hueso-calido);
       color: var(--texto-oscuro);
       border: 1px solid var(--border-suave);
-      padding: 9px;
+      padding: 10px;
       border-radius: var(--radio-full);
       font-size: 0.82rem;
       font-weight: 700;
@@ -822,12 +930,14 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      transition: all 0.2s ease;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .btn-add-cart:hover {
       background: var(--rojo-frambuesa);
       color: var(--blanco);
       border-color: var(--rojo-frambuesa);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(197, 31, 61, 0.25);
     }
 
     /* ESTADO VACÍO EN CATÁLOGO */
@@ -1663,12 +1773,12 @@
           <div class="review-stars">
             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
           </div>
-          <p class="review-text">"¡La tela es increíble! Super gruesita pero fresca al mismo tiempo. El bordado del corazón está perfecto y no se deforma al lavarlo en lavadora. Ya pedí mi segundo tripack."</p>
+          <p class="review-text">"¡Los polos boxy tienen la caída perfecta! La tela pesada de algodón peruano 20/1 se siente súper fresca y no se destiñe con nada. Pedí dos tonos pastel y combinan con todo mi closet."</p>
           <div class="review-author">
-            <div class="author-avatar">CR</div>
+            <div class="author-avatar">FC</div>
             <div>
-              <div class="author-name">Camila Ramos ♡</div>
-              <div class="author-loc">Miraflores, Lima</div>
+              <div class="author-name">Fiorella C. ♡</div>
+              <div class="author-loc">Santiago de Surco, Lima</div>
             </div>
           </div>
         </div>
@@ -1677,12 +1787,12 @@
           <div class="review-stars">
             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
           </div>
-          <p class="review-text">"Me llegó en menos de 24 horas por motorizado. La presentación con la bolsa, el sticker y la cartita fue un detalle precioso. El fit oversized queda soñado."</p>
+          <p class="review-text">"Hice pedido para Trujillo por Olva y llegó en 48 horas impecable. El bordado del corazón es súper prolijo y la presentación con el sticker PP fue un detalle precioso. ¡Recomendadísimo!"</p>
           <div class="review-author">
-            <div class="author-avatar">VM</div>
+            <div class="author-avatar">XP</div>
             <div>
-              <div class="author-name">Valeria Morales ♡</div>
-              <div class="author-loc">San Miguel, Lima</div>
+              <div class="author-name">Ximena Paredes ♡</div>
+              <div class="author-loc">Trujillo, La Libertad</div>
             </div>
           </div>
         </div>
@@ -1691,12 +1801,12 @@
           <div class="review-stars">
             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
           </div>
-          <p class="review-text">"Hice pedido para Arequipa por Shalom y me llegó en 2 días intacto. El tono rosa empolvado y el amarillo mantequilla son exactos a las fotos. ¡10/10!"</p>
+          <p class="review-text">"Compré el sweater pastel y el fit oversized es soñado, tal cual las fotos del lookbook. Súper abrigador sin ser tosco. La atención por WhatsApp de la asesora fue un amor."</p>
           <div class="review-author">
-            <div class="author-avatar">AS</div>
+            <div class="author-avatar">AM</div>
             <div>
-              <div class="author-name">Andrea Salinas ♡</div>
-              <div class="author-loc">Arequipa, Perú</div>
+              <div class="author-name">Ariana Mendoza ♡</div>
+              <div class="author-loc">Magdalena del Mar, Lima</div>
             </div>
           </div>
         </div>
@@ -1776,7 +1886,7 @@
     </div>
 
     <div class="footer-bottom">
-      <div>© 2026 Pretty Please ♡ • Gamarra, Lima • Ropa para tus Good Days</div>
+      <div>© 2026 Pretty Please ♡ • Todos los derechos reservados. • Gamarra, Lima • Ropa para tus Good Days</div>
       <div style="display: flex; gap: 12px;">
         <span>Yape</span> • <span>Plin</span> • <span>Visa</span> • <span>Mastercard</span>
       </div>
@@ -2014,6 +2124,25 @@
       updateWishlistUI();
     }
 
+    const COLOR_NAMES = {
+      '#c51f3d': 'Rojo Frambuesa',
+      '#e6b8b9': 'Rosa Empolvado',
+      '#d9d1ea': 'Lavanda Pastel',
+      '#d9e5d1': 'Verde Menta',
+      '#f6e3a7': 'Amarillo Mantequilla',
+      '#f7efe6': 'Vainilla / Hueso',
+      '#b58b72': 'Marrón Latte',
+      '#5c4337': 'Chocolate Latte',
+      '#ffffff': 'Blanco Clásico',
+      '#000000': 'Negro Classic'
+    };
+
+    function getColorName(hex) {
+      if (!hex) return 'Color';
+      const clean = hex.trim().toLowerCase();
+      return COLOR_NAMES[clean] || 'Tono Pastel';
+    }
+
     function renderProducts(cat = 'todos') {
       currentCategory = cat;
       const prods = loadProducts();
@@ -2040,16 +2169,69 @@
         const card = document.createElement('div');
         card.className = 'product-card';
         card.setAttribute('data-category', p.cat);
+        card.setAttribute('data-prod-id', p.id);
 
         const isFav = wishlist.some(w => w.id === p.id);
 
-        const swatchesHtml = (p.colors || ['#C51F3D']).map((c, i) => 
-          `<span class="color-dot ${i===0?'active':''}" style="background:${c};" onclick="selectColor(event, '${c}')"></span>`
-        ).join('');
+        // LÓGICA DE TALLAS:
+        // Si tiene múltiples tallas (S, M, L), NO viene seleccionada ninguna por defecto
+        // Si tiene 1 sola talla o es fixed (Standard Oversized, Pack S/M/L, Única, Ajustable), se muestra fija
+        const hasMultipleSizes = p.sizes && p.sizes.length > 1;
+        const singleSize = (p.sizes && p.sizes.length === 1) ? p.sizes[0] : (p.sizes && p.sizes.length === 0 ? 'Standard' : null);
 
-        const sizesHtml = (p.sizes || ['S', 'M', 'L']).map((s, i) => 
-          `<button class="size-btn ${i===0?'active':''}" onclick="selectSize(event, '${s}')">${s}</button>`
-        ).join('');
+        let sizeSectionHtml = '';
+        if (hasMultipleSizes) {
+          sizeSectionHtml = `
+            <div class="selector-header">
+              <span class="selector-label">Talla:</span>
+              <span class="selected-val-badge size-badge-val">Elige tu talla</span>
+            </div>
+            <div class="size-pills">
+              ${p.sizes.map(s => `<button type="button" class="size-btn" data-size="${s}" onclick="selectCardSize(event, '${s}')">${s}</button>`).join('')}
+            </div>
+          `;
+        } else {
+          const displaySize = singleSize || 'Standard';
+          sizeSectionHtml = `
+            <div class="selector-header" style="margin-bottom: 14px;">
+              <span class="selector-label">Talla:</span>
+              <span class="badge-fixed-size">${displaySize}</span>
+            </div>
+          `;
+        }
+
+        // LÓGICA DE COLORES:
+        // Si tiene múltiples colores, NO viene seleccionado ninguno por defecto
+        // Si tiene 1 solo color, se muestra como fijo
+        const hasMultipleColors = p.colors && p.colors.length > 1;
+        const singleColor = (p.colors && p.colors.length === 1) ? p.colors[0] : (p.colors && p.colors.length === 0 ? '#C51F3D' : null);
+
+        let colorSectionHtml = '';
+        if (hasMultipleColors) {
+          colorSectionHtml = `
+            <div class="selector-header">
+              <span class="selector-label">Color:</span>
+              <span class="selected-val-badge color-badge-val">Elige un color</span>
+            </div>
+            <div class="color-swatches-grid">
+              ${p.colors.map(c => `
+                <span class="color-dot" style="background:${c};" data-color="${c}" title="${getColorName(c)}" onclick="selectCardColor(event, '${c}')"></span>
+              `).join('')}
+            </div>
+          `;
+        } else {
+          const displayColor = singleColor || '#C51F3D';
+          const cName = getColorName(displayColor);
+          colorSectionHtml = `
+            <div class="selector-header" style="margin-bottom: 12px;">
+              <span class="selector-label">Color:</span>
+              <span class="badge-fixed-size" style="display:inline-flex; align-items:center; gap:5px;">
+                <span style="width:8px; height:8px; border-radius:50%; background:${displayColor}; display:inline-block; border:1px solid rgba(0,0,0,0.15);"></span>
+                ${cName}
+              </span>
+            </div>
+          `;
+        }
 
         card.innerHTML = `
           <div class="product-thumb">
@@ -2066,12 +2248,8 @@
               <span class="price-curr">S/. ${p.price.toFixed(2)}</span>
               ${p.priceOld ? `<span class="price-old">S/. ${p.priceOld.toFixed(2)}</span>` : ''}
             </div>
-            <div class="color-swatches-grid">
-              ${swatchesHtml}
-            </div>
-            <div class="size-pills">
-              ${sizesHtml}
-            </div>
+            ${colorSectionHtml}
+            ${sizeSectionHtml}
             <button class="btn-add-cart" onclick="addToCartByProdId(${p.id}, this)">
               <i class="fa-solid fa-bag-shopping"></i> Agregar a la bolsita
             </button>
@@ -2081,16 +2259,32 @@
       });
     }
 
-    function selectColor(e, color) {
-      const parent = e.target.parentElement;
-      parent.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+    function selectCardColor(e, color) {
+      const card = e.target.closest('.product-card');
+      if (!card) return;
+      card.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
       e.target.classList.add('active');
+
+      const colorBadge = card.querySelector('.color-badge-val');
+      if (colorBadge) {
+        colorBadge.innerText = getColorName(color);
+        colorBadge.classList.add('selected');
+      }
+      card.classList.remove('need-color');
     }
 
-    function selectSize(e, size) {
-      const parent = e.target.parentElement;
-      parent.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+    function selectCardSize(e, size) {
+      const card = e.target.closest('.product-card');
+      if (!card) return;
+      card.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
       e.target.classList.add('active');
+
+      const sizeBadge = card.querySelector('.size-badge-val');
+      if (sizeBadge) {
+        sizeBadge.innerText = `Talla ${size}`;
+        sizeBadge.classList.add('selected');
+      }
+      card.classList.remove('need-size');
     }
 
     // NAVEGAR DIRECTO A CATEGORÍA CON SCROLL SUAVE
@@ -2156,22 +2350,62 @@
       const prod = prods.find(p => p.id == prodId);
       if (!prod) return;
 
-      let selectedSize = prod.sizes && prod.sizes.length ? prod.sizes[0] : 'Standard';
-      let selectedColor = prod.colors && prod.colors.length ? prod.colors[0] : null;
+      const card = btnElement ? btnElement.closest('.product-card') : null;
 
-      if (btnElement) {
-        const card = btnElement.closest('.product-card');
-        if (card) {
-          const activeSizeBtn = card.querySelector('.size-btn.active');
-          if (activeSizeBtn) selectedSize = activeSizeBtn.innerText.trim();
-          const activeColorDot = card.querySelector('.color-dot.active');
-          if (activeColorDot && activeColorDot.style.backgroundColor) {
-            selectedColor = activeColorDot.style.backgroundColor;
-          }
+      // 1. Determinar talla
+      const hasMultipleSizes = prod.sizes && prod.sizes.length > 1;
+      let selectedSize = null;
+
+      if (!hasMultipleSizes) {
+        selectedSize = (prod.sizes && prod.sizes.length === 1) ? prod.sizes[0] : 'Standard';
+      } else if (card) {
+        const activeSizeBtn = card.querySelector('.size-btn.active');
+        if (activeSizeBtn) {
+          selectedSize = activeSizeBtn.getAttribute('data-size') || activeSizeBtn.innerText.trim();
         }
       }
 
-      addToCart(prod.name, prod.price, selectedSize, prod.img, prod.id, selectedColor);
+      // 2. Determinar color
+      const hasMultipleColors = prod.colors && prod.colors.length > 1;
+      let selectedColor = null;
+
+      if (!hasMultipleColors) {
+        selectedColor = (prod.colors && prod.colors.length === 1) ? prod.colors[0] : '#C51F3D';
+      } else if (card) {
+        const activeColorDot = card.querySelector('.color-dot.active');
+        if (activeColorDot) {
+          selectedColor = activeColorDot.getAttribute('data-color');
+        }
+      }
+
+      // Validación obligatoria
+      const missingSize = hasMultipleSizes && !selectedSize;
+      const missingColor = hasMultipleColors && !selectedColor;
+
+      if (missingSize || missingColor) {
+        if (card) {
+          card.classList.remove('shake-prompt');
+          void card.offsetWidth; // Reflow para reiniciar la animación
+          card.classList.add('shake-prompt');
+
+          if (missingColor) card.classList.add('need-color');
+          if (missingSize) card.classList.add('need-size');
+        }
+
+        if (missingColor && missingSize) {
+          showToast('⚠️ Por favor elige un color y tu talla ♡');
+        } else if (missingColor) {
+          showToast('⚠️ Por favor elige un color ♡');
+        } else if (missingSize) {
+          showToast('⚠️ Por favor elige tu talla (S, M o L) ♡');
+        }
+        return; // Detiene la acción hasta que la clienta seleccione
+      }
+
+      const colorName = getColorName(selectedColor);
+      const variantText = selectedSize ? `${selectedSize} • ${colorName}` : colorName;
+
+      addToCart(prod.name, prod.price, variantText, prod.img, prod.id, selectedColor);
     }
 
     function addToCart(title, price, variant, img, prodId = null, color = null) {
@@ -2256,7 +2490,9 @@
             <img src="${item.img}" alt="${item.title}" class="drawer-item-img">
             <div class="drawer-item-details">
               <div class="drawer-item-title">${item.title}</div>
-              <div class="drawer-item-variant">${item.variant}</div>
+              <div class="drawer-item-variant">
+                ${item.color ? `<span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:${item.color}; border:1.5px solid #fff; box-shadow:0 0 0 1px rgba(0,0,0,0.15); vertical-align:middle; margin-right:5px;"></span>` : ''}${item.variant}
+              </div>
               <div class="drawer-item-bottom">
                 <span class="drawer-item-price">S/. ${itemTotal.toFixed(2)}</span>
                 <div style="display:flex; align-items:center; gap:8px;">
