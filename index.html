@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Pretty Please ♡ | Clothes for good days • Gamarra, Lima</title>
   <meta name="description" content="Ropa para tus good days ✨ Oversized • boxy • básicos & más. Tu estilo, tu historia ♡ Gamarra, Lima.">
   
@@ -41,6 +41,11 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
@@ -49,6 +54,7 @@
       color: var(--texto-oscuro);
       line-height: 1.6;
       overflow-x: hidden;
+      padding-bottom: 72px; /* espacio para la barra de navegación móvil */
     }
 
     a {
@@ -64,29 +70,24 @@
     .announcement-bar {
       background: var(--rojo-frambuesa);
       color: var(--blanco);
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      padding: 8px 16px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      padding: 7px 12px;
       text-align: center;
       position: sticky;
       top: 0;
       z-index: 100;
     }
-    .announcement-bar span {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
 
     /* NAVBAR */
     .navbar {
-      background: rgba(247, 239, 230, 0.94);
-      backdrop-filter: blur(10px);
+      background: rgba(247, 239, 230, 0.95);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-suave);
-      padding: 12px 24px;
+      padding: 10px 16px;
       position: sticky;
-      top: 36px;
+      top: 33px;
       z-index: 99;
     }
     .nav-container {
@@ -95,36 +96,37 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
+      gap: 12px;
     }
+
+    .btn-mobile-menu {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.35rem;
+      color: var(--texto-oscuro);
+      cursor: pointer;
+      padding: 6px;
+    }
+
     .nav-links {
       display: flex;
-      gap: 24px;
+      gap: 22px;
       list-style: none;
-      font-weight: 600;
-      font-size: 0.92rem;
+      font-weight: 700;
+      font-size: 0.9rem;
     }
     .nav-links a {
       color: var(--texto-oscuro);
       transition: color 0.2s ease;
-      position: relative;
+      cursor: pointer;
     }
     .nav-links a:hover {
       color: var(--rojo-frambuesa);
     }
-    .nav-links a.active::after {
-      content: '';
-      position: absolute;
-      bottom: -6px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: var(--rojo-frambuesa);
-      border-radius: 2px;
-    }
 
     .nav-logo img {
-      height: 48px;
+      height: 44px;
       width: auto;
       display: block;
       transition: transform 0.25s ease;
@@ -136,13 +138,13 @@
     .nav-actions {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 10px;
     }
     .btn-icon {
       background: var(--blanco);
       border: 1px solid var(--border-suave);
-      width: 42px;
-      height: 42px;
+      width: 40px;
+      height: 40px;
       border-radius: var(--radio-full);
       display: flex;
       align-items: center;
@@ -164,10 +166,10 @@
       right: -4px;
       background: var(--rojo-frambuesa);
       color: var(--blanco);
-      font-size: 0.7rem;
-      font-weight: 700;
-      width: 20px;
-      height: 20px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      width: 19px;
+      height: 19px;
       border-radius: var(--radio-full);
       display: flex;
       align-items: center;
@@ -177,33 +179,154 @@
       background: #25D366;
       color: white;
       font-weight: 700;
-      font-size: 0.85rem;
-      padding: 9px 18px;
+      font-size: 0.82rem;
+      padding: 8px 16px;
       border-radius: var(--radio-full);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       transition: all 0.2s ease;
-      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);
     }
     .btn-ws-nav:hover {
       background: #1eb857;
       transform: translateY(-2px);
     }
 
-    /* INSTAGRAM HIGHLIGHTS (HISTORIAS) */
+    /* MENÚ MÓVIL LATERAL (DRAWER) */
+    .mobile-menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .mobile-menu-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .mobile-menu-drawer {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 280px;
+      height: 100vh;
+      background: var(--blanco);
+      z-index: 1001;
+      box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      transition: left 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 20px;
+    }
+    .mobile-menu-drawer.active {
+      left: 0;
+    }
+    .mobile-menu-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-suave);
+      margin-bottom: 18px;
+    }
+    .mobile-menu-header img {
+      height: 38px;
+    }
+    .btn-close-menu {
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: var(--texto-mutado);
+    }
+    .mobile-menu-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 0.98rem;
+    }
+    .mobile-menu-list a {
+      padding: 10px 14px;
+      border-radius: var(--radio-sm);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--texto-oscuro);
+      transition: all 0.2s ease;
+    }
+    .mobile-menu-list a:hover, .mobile-menu-list a.active {
+      background: var(--rosa-suave);
+      color: var(--rojo-frambuesa);
+    }
+
+    /* BARRA INFERIOR DE NAVEGACIÓN MÓVIL (BOTTOM NAV) */
+    .mobile-bottom-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--border-suave);
+      padding: 8px 12px;
+      z-index: 95;
+      justify-content: space-around;
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05);
+    }
+    .bottom-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--texto-mutado);
+      cursor: pointer;
+      position: relative;
+    }
+    .bottom-nav-item.active, .bottom-nav-item:hover {
+      color: var(--rojo-frambuesa);
+    }
+    .bottom-nav-item i {
+      font-size: 1.25rem;
+    }
+    .bottom-nav-badge {
+      position: absolute;
+      top: -2px;
+      right: 14px;
+      background: var(--rojo-frambuesa);
+      color: white;
+      font-size: 0.62rem;
+      font-weight: 800;
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* HISTORIAS DESTACADAS (HIGHLIGHTS) */
     .highlights-section {
       max-width: 1240px;
-      margin: 20px auto 0 auto;
-      padding: 10px 20px;
+      margin: 16px auto 0 auto;
+      padding: 8px 16px;
     }
     .highlights-slider {
       display: flex;
-      justify-content: center;
-      gap: 28px;
+      justify-content: flex-start;
+      gap: 20px;
       overflow-x: auto;
       padding-bottom: 8px;
       scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
     }
     .highlights-slider::-webkit-scrollbar {
       display: none;
@@ -212,19 +335,16 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       cursor: pointer;
       transition: transform 0.2s ease;
       flex-shrink: 0;
     }
-    .highlight-item:hover {
-      transform: translateY(-3px);
-    }
     .highlight-ring {
-      width: 72px;
-      height: 72px;
+      width: 66px;
+      height: 66px;
       border-radius: var(--radio-full);
-      padding: 3px;
+      padding: 2.5px;
       background: linear-gradient(45deg, var(--rojo-frambuesa), var(--rosa-empolvado), var(--amarillo-mantequilla));
       display: flex;
       align-items: center;
@@ -238,54 +358,35 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
+      font-size: 1.35rem;
       color: var(--rojo-frambuesa);
       border: 2px solid var(--blanco);
       transition: background 0.2s ease;
     }
-    .highlight-item:hover .highlight-circle {
-      background: var(--rosa-suave);
-    }
     .highlight-item span {
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       font-weight: 700;
       color: var(--texto-oscuro);
-      letter-spacing: 0.3px;
     }
 
     /* HERO SECTION */
     .hero {
       max-width: 1240px;
-      margin: 24px auto 40px auto;
-      padding: 0 20px;
+      margin: 18px auto 36px auto;
+      padding: 0 16px;
     }
     .hero-container {
       background: var(--blanco);
       border: 1px solid var(--border-suave);
-      border-radius: 28px;
-      padding: 48px;
+      border-radius: 24px;
+      padding: 40px;
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1.15fr 0.85fr;
       align-items: center;
-      gap: 40px;
+      gap: 36px;
       position: relative;
       overflow: hidden;
       box-shadow: var(--sombra-card);
-    }
-    .hero-container::before {
-      content: '';
-      position: absolute;
-      top: -100px;
-      right: -100px;
-      width: 320px;
-      height: 320px;
-      border-radius: var(--radio-full);
-      background: radial-gradient(circle, rgba(230, 184, 185, 0.45) 0%, rgba(247, 239, 230, 0) 70%);
-      z-index: 0;
-    }
-    .hero-content {
-      position: relative;
-      z-index: 1;
     }
     .hero-pill {
       display: inline-flex;
@@ -293,46 +394,46 @@
       gap: 8px;
       background: var(--rosa-suave);
       color: var(--rojo-frambuesa);
-      font-size: 0.82rem;
-      font-weight: 700;
-      padding: 6px 16px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 5px 14px;
       border-radius: var(--radio-full);
       border: 1px solid rgba(197, 31, 61, 0.18);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
     .hero-title {
-      font-size: 3.4rem;
+      font-size: 3.2rem;
       font-weight: 800;
       color: var(--rojo-frambuesa);
       line-height: 1.1;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       letter-spacing: -0.5px;
     }
     .hero-subtitle {
       font-size: 2rem;
       color: var(--marron-latte);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       display: block;
     }
     .hero-desc {
-      font-size: 1.05rem;
+      font-size: 1rem;
       color: var(--texto-mutado);
-      margin-bottom: 28px;
+      margin-bottom: 24px;
       max-width: 520px;
     }
     .hero-badges {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 32px;
+      gap: 8px;
+      margin-bottom: 28px;
     }
     .badge-chip {
       background: var(--hueso-calido);
       border: 1px solid var(--border-suave);
-      padding: 6px 14px;
+      padding: 6px 12px;
       border-radius: var(--radio-full);
-      font-size: 0.8rem;
-      font-weight: 600;
+      font-size: 0.78rem;
+      font-weight: 700;
       color: var(--marron-oscuro);
       display: flex;
       align-items: center;
@@ -340,35 +441,34 @@
     }
     .hero-buttons {
       display: flex;
-      gap: 16px;
+      gap: 14px;
       flex-wrap: wrap;
     }
     .btn-primary {
       background: var(--rojo-frambuesa);
       color: var(--blanco);
       font-weight: 700;
-      font-size: 1rem;
-      padding: 14px 32px;
+      font-size: 0.95rem;
+      padding: 13px 28px;
       border-radius: var(--radio-full);
       border: none;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       box-shadow: var(--sombra-roja);
       transition: all 0.25s ease;
     }
     .btn-primary:hover {
       background: var(--rojo-hover);
       transform: translateY(-2px);
-      box-shadow: 0 12px 28px -4px rgba(197, 31, 61, 0.45);
     }
     .btn-secondary {
       background: var(--hueso-calido);
       color: var(--texto-oscuro);
       font-weight: 700;
-      font-size: 1rem;
-      padding: 14px 28px;
+      font-size: 0.95rem;
+      padding: 13px 24px;
       border-radius: var(--radio-full);
       border: 1px solid var(--border-suave);
       cursor: pointer;
@@ -384,25 +484,21 @@
       transform: translateY(-2px);
     }
 
-    /* HERO VISUAL GRID */
+    /* VISUAL MOODBOARD HERO */
     .hero-visual {
       position: relative;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
+      gap: 12px;
     }
     .visual-card {
-      border-radius: 18px;
+      border-radius: 16px;
       overflow: hidden;
       border: 1px solid var(--border-suave);
       position: relative;
       background: var(--blanco);
       box-shadow: var(--sombra-card);
       aspect-ratio: 1;
-      transition: transform 0.3s ease;
-    }
-    .visual-card:hover {
-      transform: translateY(-4px) scale(1.02);
     }
     .visual-card img {
       width: 100%;
@@ -412,13 +508,13 @@
     }
     .visual-tag {
       position: absolute;
-      bottom: 8px;
-      left: 8px;
-      right: 8px;
-      background: rgba(247, 239, 230, 0.92);
-      backdrop-filter: blur(6px);
-      padding: 6px 10px;
-      border-radius: 10px;
+      bottom: 6px;
+      left: 6px;
+      right: 6px;
+      background: rgba(247, 239, 230, 0.94);
+      backdrop-filter: blur(4px);
+      padding: 4px 8px;
+      border-radius: 8px;
       font-size: 0.72rem;
       font-weight: 700;
       color: var(--texto-oscuro);
@@ -426,115 +522,60 @@
     }
     .floating-sticker {
       position: absolute;
-      top: -15px;
-      left: -15px;
+      top: -12px;
+      left: -12px;
       background: var(--rojo-frambuesa);
       color: var(--blanco);
-      padding: 12px 18px;
-      border-radius: 20px;
+      padding: 10px 16px;
+      border-radius: 18px;
       font-family: 'Caveat', cursive;
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       box-shadow: var(--sombra-roja);
       transform: rotate(-8deg);
       z-index: 2;
     }
 
-    /* PALETA BRANDING BAR */
-    .brand-palette-strip {
-      max-width: 1240px;
-      margin: 0 auto 48px auto;
-      padding: 0 20px;
-    }
-    .palette-box {
-      background: var(--blanco);
-      border: 1px solid var(--border-suave);
-      border-radius: var(--radio-md);
-      padding: 20px 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    .palette-info h4 {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--marron-oscuro);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .palette-info p {
-      font-size: 0.82rem;
-      color: var(--texto-mutado);
-    }
-    .swatches-list {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-    .swatch-chip {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      background: var(--hueso-calido);
-      padding: 6px 12px;
-      border-radius: var(--radio-full);
-      border: 1px solid var(--border-suave);
-    }
-    .swatch-color {
-      width: 18px;
-      height: 18px;
-      border-radius: var(--radio-full);
-      border: 1px solid rgba(0,0,0,0.1);
-    }
-
-    /* BENEFICIOS / BRAND VALUES */
+    /* BRAND VALUES */
     .values-section {
       max-width: 1240px;
-      margin: 0 auto 50px auto;
-      padding: 0 20px;
+      margin: 0 auto 40px auto;
+      padding: 0 16px;
     }
     .values-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
+      gap: 14px;
     }
     .value-card {
       background: var(--blanco);
       border: 1px solid var(--border-suave);
       border-radius: var(--radio-md);
-      padding: 22px 18px;
+      padding: 18px 14px;
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
       box-shadow: var(--sombra-card);
-      transition: transform 0.2s ease;
-    }
-    .value-card:hover {
-      transform: translateY(-3px);
     }
     .value-icon {
-      width: 48px;
-      height: 48px;
+      width: 44px;
+      height: 44px;
       border-radius: var(--radio-full);
       background: var(--rosa-suave);
       color: var(--rojo-frambuesa);
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
     }
     .value-info h4 {
-      font-size: 0.92rem;
-      font-weight: 700;
+      font-size: 0.88rem;
+      font-weight: 800;
       color: var(--texto-oscuro);
       margin-bottom: 2px;
     }
     .value-info p {
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       color: var(--texto-mutado);
       line-height: 1.3;
     }
@@ -542,84 +583,84 @@
     /* CATÁLOGO DE PRODUCTOS */
     .catalog-section {
       max-width: 1240px;
-      margin: 0 auto 60px auto;
-      padding: 0 20px;
+      margin: 0 auto 50px auto;
+      padding: 0 16px;
+      scroll-margin-top: 100px;
     }
     .section-header {
       text-align: center;
-      margin-bottom: 32px;
+      margin-bottom: 24px;
     }
     .section-pill {
       display: inline-block;
       color: var(--rojo-frambuesa);
-      font-weight: 700;
-      font-size: 0.85rem;
+      font-weight: 800;
+      font-size: 0.8rem;
       text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 8px;
+      letter-spacing: 1.2px;
+      margin-bottom: 6px;
     }
     .section-title {
-      font-size: 2.2rem;
+      font-size: 2rem;
       font-weight: 800;
       color: var(--texto-oscuro);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     .section-sub {
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       color: var(--marron-latte);
     }
 
-    /* FILTERS PILLS */
+    /* FILTERS PILLS CON SCROLL MÓVIL */
     .filters-bar {
       display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 36px;
-      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 10px;
+      margin-bottom: 28px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .filters-bar::-webkit-scrollbar {
+      display: none;
     }
     .filter-btn {
       background: var(--blanco);
       border: 1px solid var(--border-suave);
-      padding: 10px 22px;
+      padding: 8px 18px;
       border-radius: var(--radio-full);
-      font-size: 0.88rem;
+      font-size: 0.84rem;
       font-weight: 700;
       color: var(--texto-oscuro);
       cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
       transition: all 0.2s ease;
-    }
-    .filter-btn:hover {
-      border-color: var(--rojo-frambuesa);
-      color: var(--rojo-frambuesa);
     }
     .filter-btn.active {
       background: var(--rojo-frambuesa);
       border-color: var(--rojo-frambuesa);
       color: var(--blanco);
-      box-shadow: 0 4px 14px rgba(197, 31, 61, 0.25);
+      box-shadow: 0 4px 12px rgba(197, 31, 61, 0.25);
     }
 
     /* PRODUCT GRID */
     .products-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 22px;
+      gap: 18px;
     }
     .product-card {
       background: var(--blanco);
       border: 1px solid var(--border-suave);
-      border-radius: 20px;
+      border-radius: 18px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       box-shadow: var(--sombra-card);
-      transition: all 0.3s ease;
+      transition: all 0.25s ease;
       position: relative;
-    }
-    .product-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 32px -8px rgba(92, 67, 55, 0.14);
-      border-color: rgba(197, 31, 61, 0.25);
     }
     .product-thumb {
       position: relative;
@@ -631,31 +672,33 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.4s ease;
+      display: block;
+      transition: transform 0.35s ease;
     }
     .product-card:hover .product-thumb img {
-      transform: scale(1.06);
+      transform: scale(1.05);
     }
     .product-badge {
       position: absolute;
-      top: 12px;
-      left: 12px;
+      top: 10px;
+      left: 10px;
       background: var(--rojo-frambuesa);
       color: var(--blanco);
-      font-size: 0.72rem;
-      font-weight: 700;
-      padding: 4px 10px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 4px 8px;
       border-radius: var(--radio-full);
-      box-shadow: 0 2px 8px rgba(197, 31, 61, 0.3);
+      box-shadow: 0 2px 6px rgba(197, 31, 61, 0.3);
+      z-index: 1;
     }
     .btn-wish {
       position: absolute;
-      top: 12px;
-      right: 12px;
-      width: 34px;
-      height: 34px;
+      top: 10px;
+      right: 10px;
+      width: 32px;
+      height: 32px;
       border-radius: var(--radio-full);
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(4px);
       border: none;
       cursor: pointer;
@@ -663,87 +706,87 @@
       align-items: center;
       justify-content: center;
       color: var(--texto-mutado);
-      transition: all 0.2s ease;
+      z-index: 1;
     }
-    .btn-wish:hover, .btn-wish.active {
+    .btn-wish.active {
       color: var(--rojo-frambuesa);
-      transform: scale(1.15);
     }
 
     .product-info {
-      padding: 18px;
+      padding: 14px;
       display: flex;
       flex-direction: column;
       flex-grow: 1;
     }
     .product-cat {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.6px;
       color: var(--marron-latte);
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
     .product-name {
-      font-size: 0.98rem;
+      font-size: 0.92rem;
       font-weight: 700;
       color: var(--texto-oscuro);
       margin-bottom: 6px;
-      line-height: 1.3;
+      line-height: 1.25;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
     .product-prices {
       display: flex;
       align-items: baseline;
-      gap: 8px;
-      margin-bottom: 12px;
+      gap: 6px;
+      margin-bottom: 10px;
     }
     .price-curr {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 800;
       color: var(--rojo-frambuesa);
     }
     .price-old {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: #A39690;
       text-decoration: line-through;
     }
 
-    /* SELECTOR DE COLORES Y TALLAS */
     .color-swatches-grid {
       display: flex;
-      gap: 6px;
-      margin-bottom: 12px;
+      gap: 5px;
+      margin-bottom: 10px;
     }
     .color-dot {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       border-radius: var(--radio-full);
-      border: 2px solid var(--blanco);
+      border: 1.5px solid var(--blanco);
       box-shadow: 0 0 0 1px var(--border-suave);
       cursor: pointer;
-      transition: transform 0.15s ease;
     }
-    .color-dot:hover, .color-dot.active {
-      transform: scale(1.2);
+    .color-dot.active {
       box-shadow: 0 0 0 2px var(--rojo-frambuesa);
     }
 
     .size-pills {
       display: flex;
-      gap: 6px;
-      margin-bottom: 16px;
+      gap: 4px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
     }
     .size-btn {
-      padding: 3px 8px;
+      padding: 2px 7px;
       border: 1px solid var(--border-suave);
       background: var(--hueso-calido);
-      border-radius: 6px;
-      font-size: 0.75rem;
+      border-radius: 5px;
+      font-size: 0.72rem;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.15s ease;
     }
-    .size-btn:hover, .size-btn.active {
+    .size-btn.active {
       background: var(--texto-oscuro);
       color: var(--blanco);
       border-color: var(--texto-oscuro);
@@ -755,45 +798,67 @@
       background: var(--hueso-calido);
       color: var(--texto-oscuro);
       border: 1px solid var(--border-suave);
-      padding: 10px;
+      padding: 9px;
       border-radius: var(--radio-full);
-      font-size: 0.88rem;
+      font-size: 0.82rem;
       font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       transition: all 0.2s ease;
     }
     .btn-add-cart:hover {
       background: var(--rojo-frambuesa);
       color: var(--blanco);
       border-color: var(--rojo-frambuesa);
-      box-shadow: 0 4px 12px rgba(197, 31, 61, 0.25);
+    }
+
+    /* ESTADO VACÍO EN CATÁLOGO */
+    .empty-catalog-state {
+      grid-column: 1 / -1;
+      background: var(--blanco);
+      border: 1.5px dashed var(--border-suave);
+      border-radius: 20px;
+      padding: 40px 20px;
+      text-align: center;
+      color: var(--texto-mutado);
+    }
+    .empty-catalog-state i {
+      font-size: 2.5rem;
+      color: var(--rosa-empolvado);
+      margin-bottom: 12px;
+      display: block;
+    }
+    .empty-catalog-state h3 {
+      color: var(--texto-oscuro);
+      font-size: 1.2rem;
+      margin-bottom: 6px;
     }
 
     /* INSTAGRAM FEED LOOKBOOK SECTION */
     .feed-section {
       max-width: 1240px;
-      margin: 0 auto 60px auto;
-      padding: 0 20px;
+      margin: 0 auto 50px auto;
+      padding: 0 16px;
+      scroll-margin-top: 100px;
     }
     .feed-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
-      gap: 16px;
+      gap: 12px;
     }
     .feed-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
+      gap: 12px;
     }
     .feed-card {
-      border-radius: 16px;
+      border-radius: 14px;
       overflow: hidden;
       aspect-ratio: 1;
       position: relative;
@@ -805,10 +870,6 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.3s ease;
-    }
-    .feed-card:hover img {
-      transform: scale(1.06);
     }
     .feed-card-quote {
       background: var(--blanco);
@@ -816,28 +877,13 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 24px;
+      padding: 16px;
       text-align: center;
     }
     .feed-card-quote h3 {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       color: var(--rojo-frambuesa);
       line-height: 1.2;
-    }
-    .feed-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(197, 31, 61, 0.6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 1.5rem;
-      opacity: 0;
-      transition: opacity 0.25s ease;
-    }
-    .feed-card:hover .feed-overlay {
-      opacity: 1;
     }
 
     /* RESEÑAS CLIENTES */
@@ -845,8 +891,9 @@
       background: var(--blanco);
       border-top: 1px solid var(--border-suave);
       border-bottom: 1px solid var(--border-suave);
-      padding: 60px 20px;
-      margin-bottom: 60px;
+      padding: 48px 16px;
+      margin-bottom: 50px;
+      scroll-margin-top: 80px;
     }
     .reviews-container {
       max-width: 1240px;
@@ -855,26 +902,25 @@
     .reviews-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-top: 36px;
+      gap: 18px;
+      margin-top: 28px;
     }
     .review-card {
       background: var(--hueso-calido);
       border: 1px solid var(--border-suave);
-      border-radius: 18px;
-      padding: 24px;
-      position: relative;
+      border-radius: 16px;
+      padding: 20px;
     }
     .review-stars {
       color: #FFB800;
-      margin-bottom: 10px;
-      font-size: 0.9rem;
+      margin-bottom: 8px;
+      font-size: 0.85rem;
     }
     .review-text {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       color: var(--texto-oscuro);
       font-style: italic;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
     .review-author {
       display: flex;
@@ -882,136 +928,106 @@
       gap: 10px;
     }
     .author-avatar {
-      width: 36px;
-      height: 36px;
+      width: 34px;
+      height: 34px;
       border-radius: var(--radio-full);
       background: var(--rosa-empolvado);
       color: var(--rojo-frambuesa);
-      font-weight: 700;
-      font-size: 0.85rem;
+      font-weight: 800;
+      font-size: 0.8rem;
       display: flex;
       align-items: center;
       justify-content: center;
     }
     .author-name {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 700;
     }
     .author-loc {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--texto-mutado);
     }
 
-    /* UBICACIÓN GAMARRA BANNER */
+    /* BANNER GAMARRA TIENDA */
     .gamarra-banner {
       max-width: 1240px;
-      margin: 0 auto 60px auto;
-      padding: 0 20px;
+      margin: 0 auto 50px auto;
+      padding: 0 16px;
+      scroll-margin-top: 80px;
     }
     .gamarra-box {
       background: linear-gradient(135deg, var(--rojo-frambuesa) 0%, #8e142b 100%);
       color: var(--blanco);
-      border-radius: 24px;
-      padding: 40px;
+      border-radius: 22px;
+      padding: 32px 24px;
       display: grid;
       grid-template-columns: 1.2fr 0.8fr;
       align-items: center;
-      gap: 30px;
+      gap: 24px;
       box-shadow: var(--sombra-roja);
     }
     .gamarra-box h2 {
-      font-size: 2.2rem;
+      font-size: 1.8rem;
       font-weight: 800;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
     .gamarra-box p {
-      font-size: 1rem;
+      font-size: 0.92rem;
       opacity: 0.95;
-      margin-bottom: 24px;
-      line-height: 1.5;
+      margin-bottom: 20px;
     }
     .gamarra-actions {
       display: flex;
-      gap: 14px;
+      gap: 10px;
       flex-wrap: wrap;
     }
     .btn-ws-gamarra {
       background: #25D366;
       color: var(--blanco);
       font-weight: 700;
-      padding: 12px 24px;
+      padding: 10px 20px;
       border-radius: var(--radio-full);
       display: inline-flex;
       align-items: center;
       gap: 8px;
-    }
-    .btn-white-gamarra {
-      background: var(--blanco);
-      color: var(--rojo-frambuesa);
-      font-weight: 700;
-      padding: 12px 24px;
-      border-radius: var(--radio-full);
-      border: none;
-      cursor: pointer;
+      font-size: 0.9rem;
     }
 
     /* FOOTER */
     .footer {
       background: var(--blanco);
       border-top: 1px solid var(--border-suave);
-      padding: 60px 20px 24px 20px;
+      padding: 48px 16px 20px 16px;
     }
     .footer-container {
       max-width: 1240px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1.5fr repeat(3, 1fr);
-      gap: 40px;
-      margin-bottom: 40px;
+      grid-template-columns: 1.4fr repeat(3, 1fr);
+      gap: 32px;
+      margin-bottom: 32px;
     }
     .footer-brand img {
-      height: 48px;
-      margin-bottom: 16px;
+      height: 42px;
+      margin-bottom: 14px;
     }
     .footer-brand p {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: var(--texto-mutado);
-      margin-bottom: 20px;
-      max-width: 320px;
-    }
-    .social-links {
-      display: flex;
-      gap: 12px;
-    }
-    .social-link {
-      width: 36px;
-      height: 36px;
-      border-radius: var(--radio-full);
-      background: var(--hueso-calido);
-      border: 1px solid var(--border-suave);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--texto-oscuro);
-      transition: all 0.2s ease;
-    }
-    .social-link:hover {
-      background: var(--rojo-frambuesa);
-      color: var(--blanco);
-      transform: translateY(-2px);
+      margin-bottom: 16px;
     }
     .footer-col h4 {
-      font-size: 0.95rem;
-      font-weight: 700;
+      font-size: 0.9rem;
+      font-weight: 800;
       color: var(--texto-oscuro);
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
     .footer-links {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      font-size: 0.88rem;
+      gap: 8px;
+      font-size: 0.84rem;
       color: var(--texto-mutado);
     }
     .footer-links a:hover {
@@ -1020,15 +1036,15 @@
     .footer-bottom {
       max-width: 1240px;
       margin: 0 auto;
-      padding-top: 20px;
+      padding-top: 16px;
       border-top: 1px solid var(--border-suave);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       color: var(--texto-mutado);
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 10px;
     }
 
     /* CARRITO SLIDE-IN (DRAWER) */
@@ -1050,7 +1066,7 @@
       position: fixed;
       top: 0;
       right: -420px;
-      width: 400px;
+      width: 380px;
       max-width: 90vw;
       height: 100vh;
       background: var(--blanco);
@@ -1064,15 +1080,15 @@
       right: 0;
     }
     .drawer-header {
-      padding: 20px;
+      padding: 16px 20px;
       border-bottom: 1px solid var(--border-suave);
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
     .drawer-header h3 {
-      font-size: 1.15rem;
-      font-weight: 700;
+      font-size: 1.1rem;
+      font-weight: 800;
       color: var(--texto-oscuro);
       display: flex;
       align-items: center;
@@ -1084,16 +1100,6 @@
       font-size: 1.3rem;
       cursor: pointer;
       color: var(--texto-mutado);
-      width: 32px;
-      height: 32px;
-      border-radius: var(--radio-full);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .btn-close-drawer:hover {
-      background: var(--hueso-calido);
-      color: var(--rojo-frambuesa);
     }
     .drawer-items {
       flex-grow: 1;
@@ -1101,7 +1107,7 @@
       padding: 16px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
     }
     .drawer-empty {
       display: flex;
@@ -1111,23 +1117,23 @@
       height: 100%;
       text-align: center;
       color: var(--texto-mutado);
-      gap: 12px;
-      padding: 40px;
+      gap: 10px;
+      padding: 24px;
     }
     .drawer-empty i {
-      font-size: 3rem;
+      font-size: 2.8rem;
       color: var(--rosa-empolvado);
     }
     .drawer-item {
       display: flex;
-      gap: 12px;
-      padding-bottom: 12px;
+      gap: 10px;
+      padding-bottom: 10px;
       border-bottom: 1px solid var(--border-suave);
     }
     .drawer-item-img {
-      width: 64px;
-      height: 64px;
-      border-radius: 10px;
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
       object-fit: cover;
       background: var(--hueso-calido);
     }
@@ -1135,14 +1141,14 @@
       flex-grow: 1;
     }
     .drawer-item-title {
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       font-weight: 700;
       color: var(--texto-oscuro);
     }
     .drawer-item-variant {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--texto-mutado);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
     .drawer-item-bottom {
       display: flex;
@@ -1150,14 +1156,14 @@
       align-items: center;
     }
     .drawer-item-price {
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       font-weight: 800;
       color: var(--rojo-frambuesa);
     }
     .qty-controls {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       background: var(--hueso-calido);
       border-radius: 6px;
       padding: 2px 6px;
@@ -1165,84 +1171,84 @@
     .qty-btn {
       background: none;
       border: none;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       cursor: pointer;
       font-weight: 700;
-      color: var(--texto-oscuro);
     }
     .qty-val {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
     }
     .drawer-footer {
-      padding: 20px;
+      padding: 16px 20px;
       border-top: 1px solid var(--border-suave);
       background: var(--hueso-calido);
     }
     .drawer-subtotal {
       display: flex;
       justify-content: space-between;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 800;
       color: var(--texto-oscuro);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
     .btn-checkout-ws {
       width: 100%;
       background: #25D366;
       color: white;
       border: none;
-      padding: 14px;
+      padding: 13px;
       border-radius: var(--radio-full);
       font-weight: 700;
-      font-size: 0.98rem;
+      font-size: 0.95rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
       cursor: pointer;
-      box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
-      transition: all 0.2s ease;
-    }
-    .btn-checkout-ws:hover {
-      background: #1eb857;
-      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
     }
 
-    /* TOAST NOTIFICATION */
+    /* TOAST */
     .toast-msg {
       position: fixed;
-      bottom: 24px;
-      right: 24px;
+      bottom: 80px;
+      right: 16px;
+      left: 16px;
+      margin: 0 auto;
+      max-width: 360px;
       background: var(--texto-oscuro);
       color: var(--blanco);
-      padding: 12px 20px;
+      padding: 12px 18px;
       border-radius: var(--radio-full);
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       font-weight: 600;
       display: flex;
       align-items: center;
-      gap: 10px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
       z-index: 2000;
       opacity: 0;
       transform: translateY(20px);
       transition: all 0.3s ease;
       pointer-events: none;
+      text-align: center;
     }
     .toast-msg.show {
       opacity: 1;
       transform: translateY(0);
     }
 
-    /* RESPONSIVE */
+    /* ADAPTACIÓN CELULARES (MOBILE FIRST) */
     @media (max-width: 992px) {
       .hero-container {
         grid-template-columns: 1fr;
-        padding: 32px 24px;
+        padding: 28px 20px;
       }
       .products-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
       }
       .values-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -1257,22 +1263,54 @@
         grid-template-columns: 1fr;
       }
     }
+
     @media (max-width: 768px) {
+      .btn-mobile-menu {
+        display: block;
+      }
       .nav-links {
         display: none;
       }
+      .btn-ws-nav {
+        display: none; /* se muestra en la barra inferior y en el hero */
+      }
+      .mobile-bottom-nav {
+        display: flex;
+      }
       .hero-title {
-        font-size: 2.5rem;
+        font-size: 2.3rem;
       }
       .hero-subtitle {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
+      }
+      .hero-desc {
+        font-size: 0.92rem;
       }
       .products-grid {
         grid-template-columns: 1fr 1fr;
-        gap: 12px;
+        gap: 10px;
+      }
+      .product-info {
+        padding: 10px;
+      }
+      .product-name {
+        font-size: 0.85rem;
+      }
+      .price-curr {
+        font-size: 1rem;
       }
       .feed-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+      .feed-card-quote h3 {
+        font-size: 1.3rem;
+      }
+      .values-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-container {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -1280,19 +1318,22 @@
 <body>
 
   <!-- BARRA DE ANUNCIOS -->
-  <div class="announcement-bar">
-    <span>
-      ✨ Envíos a todo el Perú | Entregas inmediatas en Lima y Gamarra ♡ | Ropa para tus good days ✨
-    </span>
+  <div class="announcement-bar" id="topAnnouncement">
+    <span>✨ Envíos a todo el Perú | Entregas inmediatas en Lima y Gamarra ♡ | Asesora WhatsApp: +51 902 778 794 ✨</span>
   </div>
 
   <!-- NAVBAR -->
   <nav class="navbar">
     <div class="nav-container">
+      <button class="btn-mobile-menu" onclick="toggleMobileMenu()" aria-label="Abrir menú">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
       <ul class="nav-links">
-        <li><a href="#catalogo" class="active">Colección Pastel</a></li>
-        <li><a href="#catalogo">Polos Boxy</a></li>
-        <li><a href="#catalogo">Sweaters</a></li>
+        <li><a onclick="goToCategory('todos')">Colección Pastel</a></li>
+        <li><a onclick="goToCategory('boxy')">Polos Boxy</a></li>
+        <li><a onclick="goToCategory('oversized')">Oversized Tees</a></li>
+        <li><a onclick="goToCategory('sweaters')">Sweaters & Fleece</a></li>
         <li><a href="#lookbook">Lookbook ♡</a></li>
         <li><a href="#gamarra">Tienda Gamarra</a></li>
       </ul>
@@ -1311,51 +1352,103 @@
           <i class="fa-solid fa-bag-shopping"></i>
           <span class="badge" id="cartBadge">0</span>
         </button>
-        <a href="https://wa.me/51999999999?text=Hola%20Pretty%20Please%20♡%20Quiero%20información%20sobre%20la%20nueva%20colección!" target="_blank" class="btn-ws-nav">
+        <a href="https://wa.me/51902778794?text=Hola%20Pretty%20Please%20♡%20Quiero%20información%20sobre%20la%20nueva%20colección!" target="_blank" class="btn-ws-nav">
           <i class="fa-brands fa-whatsapp"></i> WhatsApp
         </a>
       </div>
     </div>
   </nav>
 
-  <!-- INSTAGRAM STORY HIGHLIGHTS -->
+  <!-- MENÚ MÓVIL LATERAL -->
+  <div class="mobile-menu-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
+  <aside class="mobile-menu-drawer" id="mobileDrawer">
+    <div class="mobile-menu-header">
+      <img src="assets/logo_pretty_transparent.png" alt="Pretty Please">
+      <button class="btn-close-menu" onclick="toggleMobileMenu()">&times;</button>
+    </div>
+    <ul class="mobile-menu-list">
+      <li><a onclick="goToCategory('todos')"><i class="fa-solid fa-sparkles" style="color:var(--rojo-frambuesa)"></i> Colección Completa</a></li>
+      <li><a onclick="goToCategory('boxy')"><i class="fa-solid fa-shirt"></i> Polos Boxy</a></li>
+      <li><a onclick="goToCategory('oversized')"><i class="fa-solid fa-tshirt"></i> Oversized Tees</a></li>
+      <li><a onclick="goToCategory('sweaters')"><i class="fa-solid fa-cloud"></i> Sweaters & Fleece</a></li>
+      <li><a onclick="goToCategory('packs')"><i class="fa-solid fa-tags"></i> Packs de Ahorro</a></li>
+      <li><a onclick="goToCategory('accesorios')"><i class="fa-solid fa-bag-shopping"></i> Tote Bags & Gorras</a></li>
+      <li><a href="#lookbook" onclick="toggleMobileMenu()"><i class="fa-brands fa-instagram"></i> Lookbook & Feed ♡</a></li>
+      <li><a href="#gamarra" onclick="toggleMobileMenu()"><i class="fa-solid fa-location-dot"></i> Tienda en Gamarra</a></li>
+      <li style="margin-top:10px;">
+        <a href="https://wa.me/51902778794?text=Hola%20Pretty%20Please%20♡%20Quiero%20atención%20con%20una%20asesora" target="_blank" style="background:#25D366; color:white;">
+          <i class="fa-brands fa-whatsapp"></i> Chat Asesora (+51 902 778 794)
+        </a>
+      </li>
+      <li style="margin-top:8px;">
+        <a href="admin.html" target="_blank" style="font-size:0.8rem; color:var(--texto-mutado);"><i class="fa-solid fa-lock"></i> Acceso Administrador</a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- BARRA INFERIOR FIJA MÓVIL (BOTTOM NAVIGATION) -->
+  <nav class="mobile-bottom-nav">
+    <div class="bottom-nav-item active" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+      <i class="fa-solid fa-house"></i>
+      <span>Inicio</span>
+    </div>
+    <div class="bottom-nav-item" onclick="goToCategory('todos')">
+      <i class="fa-solid fa-shirt"></i>
+      <span>Catálogo</span>
+    </div>
+    <div class="bottom-nav-item" onclick="document.getElementById('lookbook').scrollIntoView({behavior:'smooth'})">
+      <i class="fa-brands fa-instagram"></i>
+      <span>Lookbook</span>
+    </div>
+    <div class="bottom-nav-item" onclick="showToast('¡Tus favoritos están guardados! ♡')">
+      <i class="fa-regular fa-heart"></i>
+      <span>Deseos</span>
+    </div>
+    <div class="bottom-nav-item" onclick="openCart()">
+      <i class="fa-solid fa-bag-shopping"></i>
+      <span>Bolsita</span>
+      <span class="bottom-nav-badge" id="bottomCartBadge">0</span>
+    </div>
+  </nav>
+
+  <!-- HISTORIAS DESTACADAS (HIGHLIGHTS) -->
   <section class="highlights-section">
     <div class="highlights-slider">
-      <div class="highlight-item" onclick="filterCatalog('todos', this)">
+      <div class="highlight-item" onclick="goToCategory('todos')">
         <div class="highlight-ring">
           <div class="highlight-circle"><i class="fa-solid fa-shirt"></i></div>
         </div>
         <span>Novedades</span>
       </div>
-      <div class="highlight-item" onclick="filterCatalog('boxy', this)">
+      <div class="highlight-item" onclick="goToCategory('boxy')">
         <div class="highlight-ring">
           <div class="highlight-circle"><i class="fa-regular fa-heart"></i></div>
         </div>
-        <span>Looks</span>
+        <span>Polos Boxy</span>
       </div>
-      <div class="highlight-item" onclick="document.getElementById('resenas').scrollIntoView({behavior: 'smooth'})">
+      <div class="highlight-item" onclick="goToCategory('oversized')">
         <div class="highlight-ring">
-          <div class="highlight-circle"><i class="fa-solid fa-clover"></i></div>
+          <div class="highlight-circle"><i class="fa-solid fa-star"></i></div>
         </div>
-        <span>Clientes</span>
+        <span>Oversized</span>
       </div>
-      <div class="highlight-item" onclick="filterCatalog('sweaters', this)">
+      <div class="highlight-item" onclick="goToCategory('sweaters')">
         <div class="highlight-ring">
           <div class="highlight-circle"><i class="fa-solid fa-mug-hot"></i></div>
         </div>
-        <span>Good Days</span>
+        <span>Sweaters</span>
       </div>
-      <div class="highlight-item" onclick="document.getElementById('gamarra').scrollIntoView({behavior: 'smooth'})">
+      <div class="highlight-item" onclick="document.getElementById('lookbook').scrollIntoView({behavior:'smooth'})">
+        <div class="highlight-ring">
+          <div class="highlight-circle"><i class="fa-brands fa-instagram"></i></div>
+        </div>
+        <span>Lookbook</span>
+      </div>
+      <div class="highlight-item" onclick="document.getElementById('gamarra').scrollIntoView({behavior:'smooth'})">
         <div class="highlight-ring">
           <div class="highlight-circle"><i class="fa-solid fa-bag-shopping"></i></div>
         </div>
-        <span>Tienda</span>
-      </div>
-      <div class="highlight-item" onclick="filterCatalog('accesorios', this)">
-        <div class="highlight-ring">
-          <div class="highlight-circle"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-        </div>
-        <span>Tips</span>
+        <span>Gamarra</span>
       </div>
     </div>
   </section>
@@ -1370,21 +1463,21 @@
         <h1 class="hero-title">Clothes for good days ♡</h1>
         <span class="hero-subtitle font-hand">good outfits brighter days ♡</span>
         <p class="hero-desc">
-          Ropa diseñada para tu versión más feliz. Siluetas <strong>oversized</strong>, <strong>boxy</strong> y prendas básicas confeccionadas con 100% algodón peruano de tacto ultrasuave y detalles bordados a mano.
+          Ropa diseñada para tu versión más feliz. Siluetas <strong>oversized</strong>, <strong>boxy</strong> y básicos con bordados de corazón en 100% algodón peruano de tacto ultrasuave.
         </p>
 
         <div class="hero-badges">
           <div class="badge-chip"><i class="fa-solid fa-check" style="color:var(--rojo-frambuesa)"></i> 100% Algodón Peruano</div>
           <div class="badge-chip"><i class="fa-solid fa-location-dot"></i> Gamarra, Lima</div>
-          <div class="badge-chip"><i class="fa-solid fa-truck-fast"></i> Envíos a Todo el Perú</div>
+          <div class="badge-chip"><i class="fa-solid fa-truck-fast"></i> Envíos Express</div>
         </div>
 
         <div class="hero-buttons">
-          <a href="#catalogo" class="btn-primary">
+          <a onclick="goToCategory('todos')" class="btn-primary">
             Ver Colección <i class="fa-solid fa-arrow-right"></i>
           </a>
-          <a href="https://wa.me/51999999999?text=Hola%20Pretty%20Please%20♡%20Quiero%20pedir%20el%20catálogo%20por%20mayor%20o%20menor" target="_blank" class="btn-secondary">
-            <i class="fa-brands fa-whatsapp" style="color:#25D366"></i> Pedir por WhatsApp
+          <a href="https://wa.me/51902778794?text=Hola%20Pretty%20Please%20♡%20Quiero%20pedir%20el%20catálogo%20por%20WhatsApp!" target="_blank" class="btn-secondary">
+            <i class="fa-brands fa-whatsapp" style="color:#25D366"></i> Asesora (+51 902 778 794)
           </a>
         </div>
       </div>
@@ -1412,24 +1505,6 @@
     </div>
   </section>
 
-  <!-- PALETA DE COLORES BRANDING STRIP -->
-  <section class="brand-palette-strip">
-    <div class="palette-box">
-      <div class="palette-info">
-        <h4>Nuestra Paleta de Colores Signature</h4>
-        <p>Tonos seleccionados para transmitir ternura, frescura y energía positiva en cada look.</p>
-      </div>
-      <div class="swatches-list">
-        <div class="swatch-chip"><span class="swatch-color" style="background:#C51F3D;"></span> Rojo Frambuesa</div>
-        <div class="swatch-chip"><span class="swatch-color" style="background:#E6B8B9;"></span> Rosa Empolvado</div>
-        <div class="swatch-chip"><span class="swatch-color" style="background:#D9D1EA;"></span> Lavanda Suave</div>
-        <div class="swatch-chip"><span class="swatch-color" style="background:#D9E5D1;"></span> Menta Suave</div>
-        <div class="swatch-chip"><span class="swatch-color" style="background:#F6E3A7;"></span> Amarillo Mantequilla</div>
-        <div class="swatch-chip"><span class="swatch-color" style="background:#B58B72;"></span> Marrón Latte</div>
-      </div>
-    </div>
-  </section>
-
   <!-- BENEFICIOS / BRAND VALUES -->
   <section class="values-section">
     <div class="values-grid">
@@ -1443,8 +1518,8 @@
       <div class="value-card">
         <div class="value-icon"><i class="fa-solid fa-heart"></i></div>
         <div class="value-info">
-          <h4>Detalles con Bordado</h4>
-          <p>Corazones y frases bordadas con hilos de alta densidad.</p>
+          <h4>Bordados Exclusivos</h4>
+          <p>Corazones y detalles bordados con hilo de alta densidad.</p>
         </div>
       </div>
       <div class="value-card">
@@ -1457,8 +1532,8 @@
       <div class="value-card">
         <div class="value-icon"><i class="fa-solid fa-truck"></i></div>
         <div class="value-info">
-          <h4>Envíos Express</h4>
-          <p>Motorizado en Lima y envíos a provincia vía Shalom / Olva.</p>
+          <h4>Envíos a Todo el Perú</h4>
+          <p>Motorizado en Lima y envíos por Shalom / Olva a provincias.</p>
         </div>
       </div>
     </div>
@@ -1473,7 +1548,7 @@
     </div>
 
     <!-- BOTONES DE FILTRO -->
-    <div class="filters-bar">
+    <div class="filters-bar" id="filtersBar">
       <button class="filter-btn active" onclick="filterCatalog('todos', this)">Todos</button>
       <button class="filter-btn" onclick="filterCatalog('boxy', this)">Polos Boxy</button>
       <button class="filter-btn" onclick="filterCatalog('oversized', this)">Oversized Tees</button>
@@ -1482,238 +1557,9 @@
       <button class="filter-btn" onclick="filterCatalog('accesorios', this)">Tote Bags & Gorras</button>
     </div>
 
-    <!-- PRODUCTOS GRID -->
+    <!-- CONTENEDOR DE PRODUCTOS (DINÁMICO) -->
     <div class="products-grid" id="productsGrid">
-      
-      <!-- Producto 1 -->
-      <div class="product-card" data-category="boxy">
-        <div class="product-thumb">
-          <span class="product-badge">MÁS VENDIDO ♡</span>
-          <button class="btn-wish" onclick="toggleWish(this)"><i class="fa-regular fa-heart"></i></button>
-          <img src="assets/product_heart_close.jpg" alt="Polo Boxy Corazón">
-        </div>
-        <div class="product-info">
-          <span class="product-cat">Básicos Boxy</span>
-          <h3 class="product-name">Polo Boxy "Corazón Bordado"</h3>
-          <div class="product-prices">
-            <span class="price-curr">S/. 49.90</span>
-            <span class="price-old">S/. 65.00</span>
-          </div>
-          <div class="color-swatches-grid">
-            <span class="color-dot active" style="background:#F7EFE6;" title="Hueso"></span>
-            <span class="color-dot" style="background:#E6B8B9;" title="Rosa Empolvado"></span>
-            <span class="color-dot" style="background:#D9D1EA;" title="Lavanda"></span>
-            <span class="color-dot" style="background:#D9E5D1;" title="Menta"></span>
-          </div>
-          <div class="size-pills">
-            <button class="size-btn active">S</button>
-            <button class="size-btn">M</button>
-            <button class="size-btn">L</button>
-            <button class="size-btn">Oversized</button>
-          </div>
-          <button class="btn-add-cart" onclick="addToCart('Polo Boxy Corazón Bordado', 49.90, 'Rosa Empolvado / M', 'assets/product_heart_close.jpg')">
-            <i class="fa-solid fa-bag-shopping"></i> Agregar a la bolsita
-          </button>
-        </div>
-      </div>
-
-      <!-- Producto 2 -->
-      <div class="product-card" data-category="oversized">
-        <div class="product-thumb">
-          <span class="product-badge">NUEVO ✨</span>
-          <button class="btn-wish" onclick="toggleWish(this)"><i class="fa-regular fa-heart"></i></button>
-          <img src="assets/product_lilac_tee.jpg" alt="Oversized Tee Same Girl">
-        </div>
-        <div class="product-info">
-          <span class="product-cat">Oversized Tees</span>
-          <h3 class="product-name">Oversized Tee "Same Girl, Happier Days"</h3>
-          <div class="product-prices">
-            <span class="price-curr">S/. 55.00</span>
-            <span class="price-old">S/. 70.00</span>
-          </div>
-          <div class="color-swatches-grid">
-            <span class="color-dot active" style="background:#D9D1EA;" title="Lavanda"></span>
-            <span class="color-dot" style="background:#F7EFE6;" title="Hueso"></span>
-            <span class="color-dot" style="background:#F6E3A7;" title="Amarillo Mantequilla"></span>
-          </div>
-          <div class="size-pills">
-            <button class="size-btn active">Standard Oversized</button>
-          </div>
-          <button class="btn-add-cart" onclick="addToCart('Oversized Tee Same Girl Happier Days', 55.00, 'Lavanda / Standard', 'assets/product_lilac_tee.jpg')">
-            <i class="fa-solid fa-bag-shopping"></i> Agregar a la bolsita
-          </button>
-        </div>
-      </div>
-
-      <!-- Producto 3 -->
-      <div class="product-card" data-category="sweaters">
-        <div class="product-thumb">
-          <span class="product-badge">COZY FAVORITE</span>
-          <button class="btn-wish" onclick="toggleWish(this)"><i class="fa-regular fa-heart"></i></button>
-          <img src="assets/product_stack_hoodies.jpg" alt="Crewneck Fleece Pastel">
-        </div>
-        <div class="product-info">
-          <span class="product-cat">Sweaters & Hoodies</span>
-          <h3 class="product-name">Crewneck Soft Fleece "Pastel Dream"</h3>
-          <div class="product-prices">
-            <span class="price-curr">S/. 79.90</span>
-            <span class="price-old">S/. 99.00</span>
-          </div>
-          <div class="color-swatches-grid">
-            <span class="color-dot active" style="background:#E6B8B9;" title="Rosa"></span>
-            <span class="color-dot" style="background:#D9E5D1;" title="Menta"></span>
-            <span class="color-dot" style="background:#D9D1EA;" title="Lavanda"></span>
-            <span class="color-dot" style="background:#F7EFE6;" title="Hueso"></span>
-          </div>
-          <div class="size-pills">
-            <button class="size-btn">S</button>
-            <button class="size-btn active">M</button>
-            <button class="size-btn">L</button>
-          </div>
-          <button class="btn-add-cart" onclick="addToCart('Crewneck Soft Fleece Pastel Dream', 79.90, 'Rosa Empolvado / M', 'assets/product_stack_hoodies.jpg')">
-            <i class="fa-solid fa-bag-shopping"></i> Agregar a la bolsita
-          </button>
-        </div>
-      </div>
-
-      <!-- Producto 4 -->
-      <div class="product-card" data-category="packs">
-        <div class="product-thumb">
-          <span class="product-badge" style="background: #25D366;">AHORRA 25% ✨</span>
-          <button class="btn-wish" onclick="toggleWish(this)"><i class="fa-regular fa-heart"></i></button>
-          <img src="assets/product_stack_pastel.jpg" alt="Tripack Polos Pastel">
-        </div>
-        <div class="product-info">
-          <span class="product-cat">Packs Exclusivos</span>
-          <h3 class="product-name">Tripack "Good Days" (3 Polos a elección)</h3>
-          <div class="product-prices">
-            <span class="price-curr">S/. 129.90</span>
-            <span class="price-old">S/. 165.00</span>
-          </div>
-          <div class="color-swatches-grid">
-            <span class="color-dot active" style="background:#C51F3D;"></span>
-            <span class="color-dot" style="background:#E6B8B9;"></span>
-            <span class="color-dot" style="background:#D9D1EA;"></span>
-            <span class="color-dot" style="background:#D9E5D1;"></span>
-            <span class="color-dot" style="background:#F6E3A7;"></span>
-          </div>
-          <div class="size-pills">
-            <button class="size-btn active">Pack S/M/L</button>
-          </div>
-          <button class="btn-add-cart" onclick="addToCart('Tripack Good Days (3 Polos)', 129.90, 'Colores Variados', 'assets/product_stack_pastel.jpg')">
-            <i class="fa-solid fa-bag-shopping"></i> Agregar a la bolsita
-          </button>
-        </div>
-      </div>
-
-      <!-- Producto 5 -->
-      <div class="product-card" data-category="accesorios">
-        <div class="product-thumb">
-          <span class="product-badge">ECO FRIENDLY</span>
-          <button class="btn-wish" onclick="toggleWish(this)"><i class="fa-regular fa-heart"></i></button>
-          <img src="assets/product_tote_bag.jpg" alt="Tote Bag Canvas">
-        </div>
-        <div class="product-info">
-          <span class="product-cat">Accesorios</span>
-          <h3 class="product-name">Tote Bag Canvas "Pretty Please ♡"</h3>
-          <div class="product-prices">
-            <span class="price-curr">S/. 29.90</span>
-            <span class="price-old">S/. 40.00</span>
-          </div>
-          <div class="color-swatches-grid">
-            <span class="color-dot active" style="background:#F7EFE6;" title="Crudo Natural"></span>
-          </div>
-          <div class="size-pills">
-            <button class="size-btn active">Única</button>
-          </div>
-          <button class="btn-add-cart" onclick="addToCart('Tote Bag Canvas Pretty Please', 29.90, 'Crudo Natural', 'assets/product_tote_bag.jpg')">
-            <i class="fa-solid fa-bag-shopping"></i> Agregar a la bolsita
-          </button>
-        </div>
-      </div>
-
-      <!-- Producto 6 -->
-      <div class="product-card" data-category="accesorios">
-        <div class="product-thumb">
-          <span class="product-badge">VINTAGE WASH</span>
-          <button class="btn-wish" onclick="toggleWish(this)"><i class="fa-regular fa-heart"></i></button>
-          <img src="assets/product_pink_cap.jpg" alt="Gorra Vintage Washed">
-        </div>
-        <div class="product-info">
-          <span class="product-cat">Accesorios</span>
-          <h3 class="product-name">Gorra Washed Bordada "Pretty Please"</h3>
-          <div class="product-prices">
-            <span class="price-curr">S/. 39.90</span>
-            <span class="price-old">S/. 50.00</span>
-          </div>
-          <div class="color-swatches-grid">
-            <span class="color-dot active" style="background:#E6B8B9;" title="Rosa Pastel"></span>
-            <span class="color-dot" style="background:#B58B72;" title="Marrón Latte"></span>
-          </div>
-          <div class="size-pills">
-            <button class="size-btn active">Ajustable</button>
-          </div>
-          <button class="btn-add-cart" onclick="addToCart('Gorra Washed Bordada Pretty Please', 39.90, 'Rosa Pastel', 'assets/product_pink_cap.jpg')">
-            <i class="fa-solid fa-bag-shopping"></i> Agregar a la bolsita
-          </button>
-        </div>
-      </div>
-
-      <!-- Producto 7 -->
-      <div class="product-card" data-category="boxy">
-        <div class="product-thumb">
-          <span class="product-badge">ESSENTIAL</span>
-          <button class="btn-wish" onclick="toggleWish(this)"><i class="fa-regular fa-heart"></i></button>
-          <img src="assets/product_girl_white_tee.jpg" alt="White Boxy Tee">
-        </div>
-        <div class="product-info">
-          <span class="product-cat">Básicos Boxy</span>
-          <h3 class="product-name">Polo Boxy Classic "Clean White"</h3>
-          <div class="product-prices">
-            <span class="price-curr">S/. 49.90</span>
-          </div>
-          <div class="color-swatches-grid">
-            <span class="color-dot active" style="background:#FFFFFF;" title="Blanco"></span>
-          </div>
-          <div class="size-pills">
-            <button class="size-btn">S</button>
-            <button class="size-btn active">M</button>
-            <button class="size-btn">L</button>
-          </div>
-          <button class="btn-add-cart" onclick="addToCart('Polo Boxy Classic Clean White', 49.90, 'Blanco / M', 'assets/product_girl_white_tee.jpg')">
-            <i class="fa-solid fa-bag-shopping"></i> Agregar a la bolsita
-          </button>
-        </div>
-      </div>
-
-      <!-- Producto 8 -->
-      <div class="product-card" data-category="boxy">
-        <div class="product-thumb">
-          <span class="product-badge">GIRL CRUSH</span>
-          <button class="btn-wish" onclick="toggleWish(this)"><i class="fa-regular fa-heart"></i></button>
-          <img src="assets/product_pink_tee_girl.jpg" alt="Pink Tee Girl">
-        </div>
-        <div class="product-info">
-          <span class="product-cat">Básicos Boxy</span>
-          <h3 class="product-name">Baby Tee "Corazón Sweet Rose"</h3>
-          <div class="product-prices">
-            <span class="price-curr">S/. 45.00</span>
-            <span class="price-old">S/. 58.00</span>
-          </div>
-          <div class="color-swatches-grid">
-            <span class="color-dot active" style="background:#E6B8B9;"></span>
-            <span class="color-dot" style="background:#F6E3A7;"></span>
-          </div>
-          <div class="size-pills">
-            <button class="size-btn active">S</button>
-            <button class="size-btn">M</button>
-          </div>
-          <button class="btn-add-cart" onclick="addToCart('Baby Tee Corazón Sweet Rose', 45.00, 'Sweet Rose / S', 'assets/product_pink_tee_girl.jpg')">
-            <i class="fa-solid fa-bag-shopping"></i> Agregar a la bolsita
-          </button>
-        </div>
-      </div>
-
+      <!-- Se renderiza vía JavaScript desde localStorage -->
     </div>
   </section>
 
@@ -1724,42 +1570,37 @@
         <span class="section-pill font-hand" style="font-size: 1.3rem;">@prettyplease.pe</span>
         <h2 class="section-title">Feed de Estilo & Lookbook ♡</h2>
       </div>
-      <a href="https://instagram.com" target="_blank" class="btn-secondary">
-        <i class="fa-brands fa-instagram" style="color:var(--rojo-frambuesa)"></i> Seguir en Instagram
+      <a href="https://wa.me/51902778794?text=Hola%20Pretty%20Please%20♡%20Quiero%20ver%20más%20fotos%20del%20lookbook" target="_blank" class="btn-secondary">
+        <i class="fa-brands fa-whatsapp" style="color:#25D366"></i> Pedir Fotos por WhatsApp
       </a>
     </div>
 
     <div class="feed-grid">
       <div class="feed-card">
         <img src="assets/product_rack_pastel.jpg" alt="Rack Gamarra">
-        <div class="feed-overlay"><i class="fa-brands fa-instagram"></i></div>
       </div>
       <div class="feed-card feed-card-quote">
         <h3 class="font-hand">good outfits<br>brighter<br>days ♡</h3>
-        <p style="font-size: 0.78rem; color: var(--marron-latte); margin-top: 8px;">Gamarra, Lima</p>
+        <p style="font-size: 0.75rem; color: var(--marron-latte); margin-top: 6px;">Gamarra, Lima</p>
       </div>
       <div class="feed-card">
         <img src="assets/boutique_facade.jpg" alt="Boutique Pretty Please">
-        <div class="feed-overlay"><i class="fa-brands fa-instagram"></i></div>
       </div>
       <div class="feed-card feed-card-quote">
         <h3 class="font-hand">Tu estilo,<br>tu historia. ♡</h3>
-        <p style="font-size: 0.78rem; color: var(--marron-latte); margin-top: 8px;">100% Algodón</p>
+        <p style="font-size: 0.75rem; color: var(--marron-latte); margin-top: 6px;">100% Algodón</p>
       </div>
       <div class="feed-card">
         <img src="assets/product_lilac_tee.jpg" alt="Lavanda Girl">
-        <div class="feed-overlay"><i class="fa-brands fa-instagram"></i></div>
       </div>
       <div class="feed-card">
         <img src="assets/product_tote_bag.jpg" alt="Tote bag con margaritas">
-        <div class="feed-overlay"><i class="fa-brands fa-instagram"></i></div>
       </div>
       <div class="feed-card feed-card-quote">
         <h3 class="font-hand">Ropa para<br>tu versión<br>más feliz ♡</h3>
       </div>
       <div class="feed-card">
         <img src="assets/product_stack_hoodies.jpg" alt="Stack pastel">
-        <div class="feed-overlay"><i class="fa-brands fa-instagram"></i></div>
       </div>
     </div>
   </section>
@@ -1823,27 +1664,24 @@
   <section class="gamarra-banner" id="gamarra">
     <div class="gamarra-box">
       <div>
-        <span class="font-hand" style="font-size: 1.5rem; display: block; margin-bottom: 6px;">Visítanos o pide directo a taller ♡</span>
+        <span class="font-hand" style="font-size: 1.4rem; display: block; margin-bottom: 6px;">Visítanos o pide directo a taller ♡</span>
         <h2>¿Quieres comprar por mayor o visitarnos en Gamarra?</h2>
         <p>
-          Atendemos ventas por menor y precios especiales para emprendedoras por mayor (a partir de 3 unidades). Ven a conocer nuestros acabados de algodón peruano en persona o escríbenos directamente a WhatsApp.
+          Ventas por menor y precios especiales para emprendedoras por mayor (a partir de 3 unidades). Acabados de algodón peruano garantizados.
         </p>
         <div class="gamarra-actions">
-          <a href="https://wa.me/51999999999?text=Hola%20Pretty%20Please%20♡%20Quiero%20comprar%20por%20mayor%20o%20conocer%20la%20tienda%20en%20Gamarra" target="_blank" class="btn-ws-gamarra">
-            <i class="fa-brands fa-whatsapp"></i> Chat con Asesora
+          <a href="https://wa.me/51902778794?text=Hola%20Pretty%20Please%20♡%20Quiero%20comprar%20por%20mayor%20o%20conocer%20la%20tienda%20en%20Gamarra" target="_blank" class="btn-ws-gamarra">
+            <i class="fa-brands fa-whatsapp"></i> Chat Asesora (+51 902 778 794)
           </a>
-          <button class="btn-white-gamarra" onclick="showToast('📍 Gamarra, La Victoria, Lima • Lun a Sáb 10am - 7pm')">
-            <i class="fa-solid fa-location-dot"></i> Ver Horarios & Dirección
-          </button>
         </div>
       </div>
 
       <div style="text-align: center;">
-        <div style="background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); padding: 24px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.25);">
-          <i class="fa-solid fa-store" style="font-size: 2.8rem; margin-bottom: 12px;"></i>
-          <h4 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 6px;">Boutique Gamarra</h4>
-          <p style="font-size: 0.88rem; opacity: 0.9; margin-bottom: 12px;">La Victoria, Lima • Perú</p>
-          <span style="background: #FFFFFF; color: var(--rojo-frambuesa); font-size: 0.78rem; font-weight: 800; padding: 4px 12px; border-radius: 20px;">
+        <div style="background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); padding: 20px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.25);">
+          <i class="fa-solid fa-store" style="font-size: 2.4rem; margin-bottom: 8px;"></i>
+          <h4 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 4px;">Boutique Gamarra</h4>
+          <p style="font-size: 0.82rem; opacity: 0.9; margin-bottom: 10px;">La Victoria, Lima • Perú</p>
+          <span style="background: #FFFFFF; color: var(--rojo-frambuesa); font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 20px;">
             LUN - SÁB: 10:00 AM - 7:00 PM
           </span>
         </div>
@@ -1857,49 +1695,46 @@
       <div class="footer-brand">
         <img src="assets/logo_pretty_transparent.png" alt="Pretty Please Logo">
         <p>Ropa diseñada para tus good days ✨ Básicos, siluetas boxy y hoodies en algodón peruano premium con confección en Gamarra, Lima.</p>
-        <div class="social-links">
-          <a href="#" class="social-link" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-          <a href="#" class="social-link" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-          <a href="#" class="social-link" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-        </div>
+        <p style="font-size:0.85rem; font-weight:700; color:var(--rojo-frambuesa);">
+          <i class="fa-brands fa-whatsapp"></i> Asesora: +51 902 778 794
+        </p>
       </div>
 
       <div class="footer-col">
         <h4>Colecciones</h4>
         <ul class="footer-links">
-          <li><a href="#catalogo">Polos Boxy</a></li>
-          <li><a href="#catalogo">Oversized Tees</a></li>
-          <li><a href="#catalogo">Sweaters & Fleece</a></li>
-          <li><a href="#catalogo">Packs de Ahorro</a></li>
-          <li><a href="#catalogo">Tote Bags & Gorras</a></li>
+          <li><a onclick="goToCategory('boxy')">Polos Boxy</a></li>
+          <li><a onclick="goToCategory('oversized')">Oversized Tees</a></li>
+          <li><a onclick="goToCategory('sweaters')">Sweaters & Fleece</a></li>
+          <li><a onclick="goToCategory('packs')">Packs de Ahorro</a></li>
+          <li><a onclick="goToCategory('accesorios')">Tote Bags & Gorras</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
         <h4>Atención al Cliente</h4>
         <ul class="footer-links">
-          <li><a href="#" onclick="showToast('Guía de tallas: S (ancho 50cm), M (ancho 54cm), L (ancho 58cm)')">Guía de Tallas</a></li>
-          <li><a href="#" onclick="showToast('Envíos a todo Lima Metropolitana en 24h y provincias por Shalom / Olva')">Envíos y Tiempos</a></li>
-          <li><a href="#" onclick="showToast('Cambios permitidos hasta 7 días con etiqueta intacta ♡')">Cambios y Devoluciones</a></li>
-          <li><a href="#" onclick="showToast('Aceptamos Yape, Plin, Tarjetas y Transferencias BCP/BBVA')">Métodos de Pago</a></li>
-          <li><a href="#">Libro de Reclamaciones</a></li>
+          <li><a onclick="showToast('Guía de tallas: S (ancho 50cm), M (ancho 54cm), L (ancho 58cm)')">Guía de Tallas</a></li>
+          <li><a onclick="showToast('Envíos a todo Lima Metropolitana en 24h y provincias por Shalom / Olva')">Envíos y Tiempos</a></li>
+          <li><a onclick="showToast('Cambios permitidos hasta 7 días con etiqueta intacta ♡')">Cambios y Devoluciones</a></li>
+          <li><a href="admin.html" target="_blank">Panel de Administrador</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
         <h4>Good Days Club ♡</h4>
-        <p style="font-size: 0.82rem; color: var(--texto-mutado); margin-bottom: 12px;">Recibe 10% de descuento en tu primer pedido y entérate de drops exclusivos.</p>
+        <p style="font-size: 0.8rem; color: var(--texto-mutado); margin-bottom: 10px;">Recibe 10% de descuento en tu primer pedido.</p>
         <div style="display: flex; gap: 6px;">
-          <input type="email" placeholder="Tu correo aquí..." style="padding: 10px 14px; border: 1px solid var(--border-suave); border-radius: var(--radio-full); font-size: 0.82rem; width: 100%; outline: none;">
-          <button style="background: var(--rojo-frambuesa); color: white; border: none; padding: 10px 18px; border-radius: var(--radio-full); cursor: pointer; font-weight: 700; font-size: 0.82rem;" onclick="showToast('¡Gracias por unirte al Good Days Club! ♡')">Unirme</button>
+          <input type="email" placeholder="Tu correo..." style="padding: 9px 12px; border: 1px solid var(--border-suave); border-radius: var(--radio-full); font-size: 0.8rem; width: 100%; outline: none;">
+          <button style="background: var(--rojo-frambuesa); color: white; border: none; padding: 9px 14px; border-radius: var(--radio-full); cursor: pointer; font-weight: 700; font-size: 0.78rem;" onclick="showToast('¡Gracias por unirte al Good Days Club! ♡')">OK</button>
         </div>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <div>© 2026 Pretty Please ♡ • Todos los derechos reservados. Hecho con amor en Gamarra, Lima.</div>
-      <div style="display: flex; gap: 16px; align-items: center;">
-        <span>Yape</span> • <span>Plin</span> • <span>Visa</span> • <span>Mastercard</span> • <span>BCP</span>
+      <div>© 2026 Pretty Please ♡ • Gamarra, Lima • Asesora: +51 902 778 794</div>
+      <div style="display: flex; gap: 12px;">
+        <span>Yape</span> • <span>Plin</span> • <span>Visa</span> • <span>Mastercard</span>
       </div>
     </div>
   </footer>
@@ -1916,7 +1751,7 @@
       <div class="drawer-empty" id="drawerEmpty">
         <i class="fa-solid fa-basket-shopping"></i>
         <p>Tu bolsita está vacía por ahora.<br>¡Elige tus prendas pastel favoritas!</p>
-        <button class="btn-primary" style="font-size: 0.88rem; padding: 10px 20px;" onclick="closeCart()">Explorar Catálogo</button>
+        <button class="btn-primary" style="font-size: 0.85rem; padding: 10px 18px;" onclick="closeCart()">Explorar Catálogo</button>
       </div>
     </div>
 
@@ -1926,10 +1761,10 @@
         <span id="drawerTotalText">S/. 0.00</span>
       </div>
       <button class="btn-checkout-ws" onclick="checkoutWhatsApp()">
-        <i class="fa-brands fa-whatsapp" style="font-size: 1.25rem;"></i> Pedir por WhatsApp ♡
+        <i class="fa-brands fa-whatsapp" style="font-size: 1.25rem;"></i> Pedir por WhatsApp (+51 902 778 794)
       </button>
       <p style="font-size: 0.72rem; text-align: center; color: var(--texto-mutado); margin-top: 8px;">
-        Te contactaremos de inmediato para confirmar tu talla y envío.
+        Nuestra asesora te confirmará tu talla y coordinará el envío de inmediato.
       </p>
     </div>
   </aside>
@@ -1942,8 +1777,274 @@
 
   <!-- SCRIPT LÓGICA INTERACTIVA -->
   <script>
-    let cart = [];
+    const ASESORA_PHONE = "51902778794";
 
+    // CATÁLOGO INICIAL COMPLETO
+    const INITIAL_PRODUCTS = [
+      {
+        id: 1,
+        name: 'Polo Boxy "Corazón Bordado"',
+        cat: 'boxy',
+        price: 49.90,
+        priceOld: 65.00,
+        badge: 'MÁS VENDIDO ♡',
+        img: 'assets/product_heart_close.jpg',
+        sizes: ['S', 'M', 'L', 'Oversized'],
+        colors: ['#F7EFE6', '#E6B8B9', '#D9D1EA', '#D9E5D1'],
+        available: true
+      },
+      {
+        id: 2,
+        name: 'Oversized Tee "Same Girl, Happier Days"',
+        cat: 'oversized',
+        price: 55.00,
+        priceOld: 70.00,
+        badge: 'NUEVO ✨',
+        img: 'assets/product_lilac_tee.jpg',
+        sizes: ['Standard Oversized'],
+        colors: ['#D9D1EA', '#F7EFE6', '#F6E3A7'],
+        available: true
+      },
+      {
+        id: 3,
+        name: 'Crewneck Soft Fleece "Pastel Dream"',
+        cat: 'sweaters',
+        price: 79.90,
+        priceOld: 99.00,
+        badge: 'COZY FAVORITE',
+        img: 'assets/product_stack_hoodies.jpg',
+        sizes: ['S', 'M', 'L'],
+        colors: ['#E6B8B9', '#D9E5D1', '#D9D1EA', '#F7EFE6'],
+        available: true
+      },
+      {
+        id: 4,
+        name: 'Tripack "Good Days" (3 Polos a elección)',
+        cat: 'packs',
+        price: 129.90,
+        priceOld: 165.00,
+        badge: 'AHORRA 25% ✨',
+        img: 'assets/product_stack_pastel.jpg',
+        sizes: ['Pack S/M/L'],
+        colors: ['#C51F3D', '#E6B8B9', '#D9D1EA', '#D9E5D1', '#F6E3A7'],
+        available: true
+      },
+      {
+        id: 5,
+        name: 'Tote Bag Canvas "Pretty Please ♡"',
+        cat: 'accesorios',
+        price: 29.90,
+        priceOld: 40.00,
+        badge: 'ECO FRIENDLY',
+        img: 'assets/product_tote_bag.jpg',
+        sizes: ['Única'],
+        colors: ['#F7EFE6'],
+        available: true
+      },
+      {
+        id: 6,
+        name: 'Gorra Washed Bordada "Pretty Please"',
+        cat: 'accesorios',
+        price: 39.90,
+        priceOld: 50.00,
+        badge: 'VINTAGE WASH',
+        img: 'assets/product_pink_cap.jpg',
+        sizes: ['Ajustable'],
+        colors: ['#E6B8B9', '#B58B72'],
+        available: true
+      },
+      {
+        id: 7,
+        name: 'Polo Boxy Classic "Clean White"',
+        cat: 'boxy',
+        price: 49.90,
+        priceOld: 60.00,
+        badge: 'ESSENTIAL',
+        img: 'assets/product_girl_white_tee.jpg',
+        sizes: ['S', 'M', 'L'],
+        colors: ['#FFFFFF'],
+        available: true
+      },
+      {
+        id: 8,
+        name: 'Baby Tee "Corazón Sweet Rose"',
+        cat: 'boxy',
+        price: 45.00,
+        priceOld: 58.00,
+        badge: 'GIRL CRUSH',
+        img: 'assets/product_pink_tee_girl.jpg',
+        sizes: ['S', 'M'],
+        colors: ['#E6B8B9', '#F6E3A7'],
+        available: true
+      },
+      {
+        id: 9,
+        name: 'Oversized Tee "Good Days" Menta Suave',
+        cat: 'oversized',
+        price: 55.00,
+        priceOld: 68.00,
+        badge: 'TRENDING',
+        img: 'assets/product_rack_pastel.jpg',
+        sizes: ['S/M', 'L/XL'],
+        colors: ['#D9E5D1', '#F6E3A7', '#D9D1EA'],
+        available: true
+      },
+      {
+        id: 10,
+        name: 'Hoodie Oversized "Soft Cotton Club"',
+        cat: 'sweaters',
+        price: 89.90,
+        priceOld: 110.00,
+        badge: 'EDICIÓN LIMITADA',
+        img: 'assets/product_stack_hoodies.jpg',
+        sizes: ['M', 'L', 'Oversized'],
+        colors: ['#D9D1EA', '#E6B8B9'],
+        available: true
+      },
+      {
+        id: 11,
+        name: 'Pack Dúo Boxy (2 Polos a tu elección)',
+        cat: 'packs',
+        price: 89.90,
+        priceOld: 110.00,
+        badge: 'OFERTA PACK',
+        img: 'assets/product_stack_pastel.jpg',
+        sizes: ['S', 'M', 'L'],
+        colors: ['#F7EFE6', '#E6B8B9'],
+        available: true
+      }
+    ];
+
+    function loadProducts() {
+      const stored = localStorage.getItem('pretty_products');
+      if (stored) {
+        try { return JSON.parse(stored); } catch(e) {}
+      }
+      localStorage.setItem('pretty_products', JSON.stringify(INITIAL_PRODUCTS));
+      return INITIAL_PRODUCTS;
+    }
+
+    let cart = [];
+    let currentCategory = 'todos';
+
+    function renderProducts(cat = 'todos') {
+      currentCategory = cat;
+      const prods = loadProducts();
+      const grid = document.getElementById('productsGrid');
+      grid.innerHTML = '';
+
+      const filtered = cat === 'todos' ? prods : prods.filter(p => p.cat === cat);
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-catalog-state">
+            <i class="fa-solid fa-shirt"></i>
+            <h3>Próximamente nuevos ingresos en esta categoría ♡</h3>
+            <p>Estamos confeccionando más modelos en Gamarra con algodón peruano premium.</p>
+            <a href="https://wa.me/${ASESORA_PHONE}?text=Hola%20Pretty%20Please%20♡%20¿Tienen%20modelos%20disponibles%20en%20esta%20categoría?" target="_blank" class="btn-primary" style="margin-top:14px;">
+              Consultar por WhatsApp (+51 902 778 794)
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.setAttribute('data-category', p.cat);
+
+        const swatchesHtml = (p.colors || ['#C51F3D']).map((c, i) => 
+          `<span class="color-dot ${i===0?'active':''}" style="background:${c};" onclick="selectColor(event, '${c}')"></span>`
+        ).join('');
+
+        const sizesHtml = (p.sizes || ['S', 'M', 'L']).map((s, i) => 
+          `<button class="size-btn ${i===0?'active':''}" onclick="selectSize(event, '${s}')">${s}</button>`
+        ).join('');
+
+        card.innerHTML = `
+          <div class="product-thumb">
+            ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
+            <button class="btn-wish" onclick="toggleWish(this)"><i class="fa-regular fa-heart"></i></button>
+            <img src="${p.img}" alt="${p.name}">
+          </div>
+          <div class="product-info">
+            <span class="product-cat">${p.cat}</span>
+            <h3 class="product-name">${p.name}</h3>
+            <div class="product-prices">
+              <span class="price-curr">S/. ${p.price.toFixed(2)}</span>
+              ${p.priceOld ? `<span class="price-old">S/. ${p.priceOld.toFixed(2)}</span>` : ''}
+            </div>
+            <div class="color-swatches-grid">
+              ${swatchesHtml}
+            </div>
+            <div class="size-pills">
+              ${sizesHtml}
+            </div>
+            <button class="btn-add-cart" onclick="addToCart('${p.name.replace(/'/g, "\\'")}', ${p.price}, '${p.sizes ? p.sizes[0] : 'Standard'}', '${p.img}')">
+              <i class="fa-solid fa-bag-shopping"></i> Agregar a la bolsita
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function selectColor(e, color) {
+      const parent = e.target.parentElement;
+      parent.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+      e.target.classList.add('active');
+    }
+
+    function selectSize(e, size) {
+      const parent = e.target.parentElement;
+      parent.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+      e.target.classList.add('active');
+    }
+
+    // NAVEGAR DIRECTO A CATEGORÍA CON SCROLL SUAVE
+    function goToCategory(cat) {
+      if (document.getElementById('mobileDrawer').classList.contains('active')) {
+        toggleMobileMenu();
+      }
+      
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(b => {
+        const text = b.innerText.toLowerCase();
+        if (
+          (cat === 'todos' && text.includes('todos')) ||
+          (cat === 'boxy' && text.includes('boxy')) ||
+          (cat === 'oversized' && text.includes('oversized')) ||
+          (cat === 'sweaters' && text.includes('sweaters')) ||
+          (cat === 'packs' && text.includes('packs')) ||
+          (cat === 'accesorios' && text.includes('tote'))
+        ) {
+          buttons.forEach(btn => btn.classList.remove('active'));
+          b.classList.add('active');
+        }
+      });
+
+      renderProducts(cat);
+      const catSec = document.getElementById('catalogo');
+      if (catSec) {
+        catSec.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function filterCatalog(cat, clickedBtn) {
+      if (clickedBtn) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        clickedBtn.classList.add('active');
+      }
+      renderProducts(cat);
+    }
+
+    function toggleMobileMenu() {
+      document.getElementById('mobileOverlay').classList.toggle('active');
+      document.getElementById('mobileDrawer').classList.toggle('active');
+    }
+
+    // CARRITO
     function addToCart(title, price, variant, img) {
       const existing = cart.find(i => i.title === title && i.variant === variant);
       if (existing) {
@@ -1953,7 +2054,7 @@
       }
       updateCartUI();
       openCart();
-      showToast('¡' + title + ' agregado a tu bolsita! ♡');
+      showToast(`¡${title} agregado a tu bolsita! ♡`);
     }
 
     function changeQty(index, delta) {
@@ -1971,10 +2072,12 @@
       const drawerEmpty = document.getElementById('drawerEmpty');
       const drawerFooter = document.getElementById('drawerFooter');
       const cartBadge = document.getElementById('cartBadge');
+      const bottomCartBadge = document.getElementById('bottomCartBadge');
       const drawerTotalText = document.getElementById('drawerTotalText');
 
       const totalItems = cart.reduce((acc, i) => acc + i.qty, 0);
       cartBadge.innerText = totalItems;
+      if (bottomCartBadge) bottomCartBadge.innerText = totalItems;
 
       if (cart.length === 0) {
         drawerEmpty.style.display = 'flex';
@@ -2013,7 +2116,7 @@
       });
 
       drawerItems.innerHTML = html;
-      drawerTotalText.innerText = 'S/. ' + total.toFixed(2);
+      drawerTotalText.innerText = `S/. ${total.toFixed(2)}`;
     }
 
     function openCart() {
@@ -2037,9 +2140,9 @@
         msg += `• *${item.qty}x* ${item.title} (${item.variant}) - S/. ${sub.toFixed(2)}%0A`;
       });
       msg += `%0A*TOTAL:* S/. ${total.toFixed(2)}%0A`;
-      msg += "%0A📍 *Dirección de Entrega:* %0A👤 *Nombre:* %0A✨ ¡Quedo atenta para coordinar el pago por Yape/Transferencia!";
+      msg += `%0A📍 *Dirección de Entrega:* %0A👤 *Nombre:* %0A✨ ¡Quedo atenta para coordinar con la asesora!`;
 
-      const wsUrl = 'https://wa.me/51999999999?text=' + msg;
+      const wsUrl = `https://wa.me/${ASESORA_PHONE}?text=${msg}`;
       window.open(wsUrl, '_blank');
     }
 
@@ -2047,9 +2150,7 @@
       const toast = document.getElementById('toastMsg');
       document.getElementById('toastText').innerText = text;
       toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 3000);
+      setTimeout(() => toast.classList.remove('show'), 3000);
     }
 
     function toggleWish(btn) {
@@ -2062,37 +2163,9 @@
       }
     }
 
-    function filterCatalog(cat, clickedBtn) {
-      if (clickedBtn) {
-        const buttons = document.querySelectorAll('.filter-btn');
-        buttons.forEach(b => b.classList.remove('active'));
-        clickedBtn.classList.add('active');
-      }
-
-      const cards = document.querySelectorAll('.product-card');
-      cards.forEach(card => {
-        if (cat === 'todos' || card.getAttribute('data-category') === cat) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    }
-
-    document.querySelectorAll('.color-dot').forEach(dot => {
-      dot.addEventListener('click', (e) => {
-        const parent = e.target.parentElement;
-        parent.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
-        e.target.classList.add('active');
-      });
-    });
-
-    document.querySelectorAll('.size-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const parent = e.target.parentElement;
-        parent.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-        e.target.classList.add('active');
-      });
+    // INICIALIZACIÓN
+    document.addEventListener('DOMContentLoaded', () => {
+      renderProducts('todos');
     });
   </script>
 </body>
