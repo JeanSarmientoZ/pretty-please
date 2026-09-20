@@ -1194,6 +1194,25 @@
       font-size: 0.78rem;
       font-weight: 700;
     }
+    .btn-cart-del {
+      background: none;
+      border: none;
+      color: #dc2626;
+      font-size: 0.85rem;
+      cursor: pointer;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    .btn-cart-del:hover {
+      background: #fee2e2;
+      color: #991b1b;
+      transform: scale(1.1);
+    }
     .drawer-footer {
       padding: 16px 20px;
       border-top: 1px solid var(--border-suave);
@@ -2053,7 +2072,7 @@
             <div class="size-pills">
               ${sizesHtml}
             </div>
-            <button class="btn-add-cart" onclick="addToCart('${p.name.replace(/'/g, "\\'")}', ${p.price}, '${p.sizes ? p.sizes[0] : 'Standard'}', '${p.img}')">
+            <button class="btn-add-cart" onclick="addToCartByProdId(${p.id}, this)">
               <i class="fa-solid fa-bag-shopping"></i> Agregar a la bolsita
             </button>
           </div>
@@ -2117,16 +2136,77 @@
     }
 
     // CARRITO
-    function addToCart(title, price, variant, img) {
-      const existing = cart.find(i => i.title === title && i.variant === variant);
+    function loadCart() {
+      const stored = localStorage.getItem('pretty_cart');
+      if (stored) {
+        try { cart = JSON.parse(stored); } catch(e) { cart = []; }
+      } else {
+        cart = [];
+      }
+      updateCartUI();
+    }
+
+    function saveCart() {
+      localStorage.setItem('pretty_cart', JSON.stringify(cart));
+      updateCartUI();
+    }
+
+    function addToCartByProdId(prodId, btnElement) {
+      const prods = loadProducts();
+      const prod = prods.find(p => p.id == prodId);
+      if (!prod) return;
+
+      let selectedSize = prod.sizes && prod.sizes.length ? prod.sizes[0] : 'Standard';
+      let selectedColor = prod.colors && prod.colors.length ? prod.colors[0] : null;
+
+      if (btnElement) {
+        const card = btnElement.closest('.product-card');
+        if (card) {
+          const activeSizeBtn = card.querySelector('.size-btn.active');
+          if (activeSizeBtn) selectedSize = activeSizeBtn.innerText.trim();
+          const activeColorDot = card.querySelector('.color-dot.active');
+          if (activeColorDot && activeColorDot.style.backgroundColor) {
+            selectedColor = activeColorDot.style.backgroundColor;
+          }
+        }
+      }
+
+      addToCart(prod.name, prod.price, selectedSize, prod.img, prod.id, selectedColor);
+    }
+
+    function addToCart(title, price, variant, img, prodId = null, color = null) {
+      // Si ya existe la prenda con la misma variante/talla, sumamos +1
+      const existing = cart.find(i => {
+        if (prodId && i.id) {
+          return i.id == prodId && i.variant === variant;
+        }
+        return i.title === title && i.variant === variant;
+      });
+
       if (existing) {
         existing.qty += 1;
       } else {
-        cart.push({ title, price, variant, img, qty: 1 });
+        cart.push({
+          id: prodId,
+          title: title,
+          price: price,
+          variant: variant,
+          img: img,
+          color: color,
+          qty: 1
+        });
       }
-      updateCartUI();
+      saveCart();
       openCart();
       showToast(`¡${title} agregado a tu bolsita! ♡`);
+    }
+
+    function removeFromCart(index) {
+      if (cart[index]) {
+        cart.splice(index, 1);
+        saveCart();
+        showToast('Prenda eliminada de tu bolsita ♡');
+      }
     }
 
     function changeQty(index, delta) {
@@ -2134,9 +2214,10 @@
         cart[index].qty += delta;
         if (cart[index].qty <= 0) {
           cart.splice(index, 1);
+          showToast('Prenda eliminada de tu bolsita ♡');
         }
+        saveCart();
       }
-      updateCartUI();
     }
 
     function updateCartUI() {
@@ -2148,19 +2229,21 @@
       const drawerTotalText = document.getElementById('drawerTotalText');
 
       const totalItems = cart.reduce((acc, i) => acc + i.qty, 0);
-      cartBadge.innerText = totalItems;
+      if (cartBadge) cartBadge.innerText = totalItems;
       if (bottomCartBadge) bottomCartBadge.innerText = totalItems;
 
       if (cart.length === 0) {
-        drawerEmpty.style.display = 'flex';
-        drawerFooter.style.display = 'none';
-        drawerItems.innerHTML = '';
-        drawerItems.appendChild(drawerEmpty);
+        if (drawerEmpty) drawerEmpty.style.display = 'flex';
+        if (drawerFooter) drawerFooter.style.display = 'none';
+        if (drawerItems) {
+          drawerItems.innerHTML = '';
+          if (drawerEmpty) drawerItems.appendChild(drawerEmpty);
+        }
         return;
       }
 
-      drawerEmpty.style.display = 'none';
-      drawerFooter.style.display = 'block';
+      if (drawerEmpty) drawerEmpty.style.display = 'none';
+      if (drawerFooter) drawerFooter.style.display = 'block';
 
       let total = 0;
       let html = '';
@@ -2176,10 +2259,15 @@
               <div class="drawer-item-variant">${item.variant}</div>
               <div class="drawer-item-bottom">
                 <span class="drawer-item-price">S/. ${itemTotal.toFixed(2)}</span>
-                <div class="qty-controls">
-                  <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
-                  <span class="qty-val">${item.qty}</span>
-                  <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <div class="qty-controls">
+                    <button class="qty-btn" onclick="changeQty(${index}, -1)" title="Disminuir">-</button>
+                    <span class="qty-val">${item.qty}</span>
+                    <button class="qty-btn" onclick="changeQty(${index}, 1)" title="Aumentar">+</button>
+                  </div>
+                  <button class="btn-cart-del" onclick="removeFromCart(${index})" title="Eliminar de la bolsita">
+                    <i class="fa-solid fa-trash-can"></i>
+                  </button>
                 </div>
               </div>
             </div>
@@ -2187,8 +2275,8 @@
         `;
       });
 
-      drawerItems.innerHTML = html;
-      drawerTotalText.innerText = `S/. ${total.toFixed(2)}`;
+      if (drawerItems) drawerItems.innerHTML = html;
+      if (drawerTotalText) drawerTotalText.innerText = `S/. ${total.toFixed(2)}`;
     }
 
     function openCart() {
@@ -2343,9 +2431,10 @@
     }
 
     function moveToCartFromWishlist(prodId) {
-      const prod = wishlist.find(p => p.id === prodId);
+      const prod = wishlist.find(p => p.id == prodId) || loadProducts().find(p => p.id == prodId);
       if (!prod) return;
-      addToCart(prod.name, prod.price, prod.sizes ? prod.sizes[0] : 'Standard', prod.img);
+      const variant = prod.sizes && prod.sizes.length ? prod.sizes[0] : 'Standard';
+      addToCart(prod.name, prod.price, variant, prod.img, prod.id);
     }
 
     function removeFromWishlist(prodId) {
@@ -2413,6 +2502,7 @@
 
     // INICIALIZACIÓN
     document.addEventListener('DOMContentLoaded', () => {
+      loadCart();
       loadWishlist();
       renderProducts('todos');
       initSupabase();
