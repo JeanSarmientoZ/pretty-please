@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Panel de Administración | Pretty Please ♡</title>
+  <!-- SEGURIDAD: Impedir indexación por Google/bots y proteger contra clickjacking -->
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta name="referrer" content="no-referrer">
   
   <!-- Favicons oficiales Pretty Please (PP Sticker) -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
@@ -728,25 +734,20 @@
       <h2 class="login-title">Panel Administrador ♡</h2>
       <p class="login-sub">Ingresa para gestionar prendas, precios y pedidos de Gamarra</p>
 
-      <form id="loginForm" onsubmit="handleLogin(event)">
+      <form id="loginForm" onsubmit="handleLogin(event)" autocomplete="off">
         <div class="form-group">
           <label class="form-label">Correo Electrónico</label>
-          <input type="email" id="loginEmail" class="form-input" value="admin@prettyplease.pe" required placeholder="admin@prettyplease.pe">
+          <input type="email" id="loginEmail" class="form-input" required placeholder="admin@prettyplease.pe" autocomplete="email">
         </div>
         <div class="form-group">
           <label class="form-label">Contraseña</label>
-          <input type="password" id="loginPass" class="form-input" value="pretty2026" required placeholder="••••••••">
+          <input type="password" id="loginPass" class="form-input" required placeholder="••••••••" autocomplete="current-password">
         </div>
-        <button type="submit" class="btn-login">
+        <div id="loginError" style="display:none; color:#dc2626; font-size:0.82rem; font-weight:600; margin-bottom:8px; text-align:center;"></div>
+        <button type="submit" id="btnLogin" class="btn-login">
           <i class="fa-solid fa-arrow-right-to-bracket"></i> Iniciar Sesión
         </button>
       </form>
-
-      <div class="login-hint">
-        🔒 <strong>Credenciales de Acceso:</strong><br>
-        Correo: <code>admin@prettyplease.pe</code><br>
-        Contraseña: <code>pretty2026</code>
-      </div>
     </div>
   </div>
 
@@ -1155,19 +1156,77 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.prendas;</pre>
       updateStats();
     }
 
+    // === SEGURIDAD: Función para escapar HTML y prevenir XSS en el admin ===
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // === SEGURIDAD: Anti-brute-force para el login ===
+    let _loginAttempts = 0;
+    let _loginLocked = false;
+    let _loginLockTimer = null;
+    const MAX_LOGIN_ATTEMPTS = 5;
+    const LOGIN_LOCKOUT_MS = 30000; // 30 segundos
+
     // LOGIN LOGIC
     function handleLogin(e) {
       e.preventDefault();
+
+      if (_loginLocked) {
+        showLoginError('Demasiados intentos fallidos. Espera 30 segundos e intenta de nuevo.');
+        return;
+      }
+
       const email = document.getElementById('loginEmail').value.trim();
       const pass = document.getElementById('loginPass').value.trim();
 
+      // Validación básica de longitud para evitar payloads enormes
+      if (email.length > 120 || pass.length > 120) {
+        showLoginError('Datos de acceso no válidos.');
+        return;
+      }
+
       if (email === 'admin@prettyplease.pe' && pass === 'pretty2026') {
+        _loginAttempts = 0;
+        clearTimeout(_loginLockTimer);
+        _loginLocked = false;
+        hideLoginError();
         sessionStorage.setItem('pretty_admin_session', 'true');
         showToast('¡Bienvenida al Panel Administrador! ♡');
         checkSession();
       } else {
-        alert('Credenciales incorrectas. Usa admin@prettyplease.pe y pretty2026');
+        _loginAttempts++;
+        if (_loginAttempts >= MAX_LOGIN_ATTEMPTS) {
+          _loginLocked = true;
+          const btn = document.getElementById('btnLogin');
+          if (btn) { btn.disabled = true; btn.style.opacity = '0.5'; }
+          showLoginError(`Acceso bloqueado por ${MAX_LOGIN_ATTEMPTS} intentos. Espera 30 segundos.`);
+          _loginLockTimer = setTimeout(() => {
+            _loginLocked = false;
+            _loginAttempts = 0;
+            if (btn) { btn.disabled = false; btn.style.opacity = ''; }
+            hideLoginError();
+          }, LOGIN_LOCKOUT_MS);
+        } else {
+          showLoginError(`Credenciales incorrectas (${_loginAttempts}/${MAX_LOGIN_ATTEMPTS} intentos).`);
+        }
       }
+    }
+
+    function showLoginError(msg) {
+      const el = document.getElementById('loginError');
+      if (el) { el.style.display = 'block'; el.textContent = msg; }
+    }
+
+    function hideLoginError() {
+      const el = document.getElementById('loginError');
+      if (el) { el.style.display = 'none'; el.textContent = ''; }
     }
 
     function handleLogout() {
@@ -1243,27 +1302,27 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.prendas;</pre>
         tr.innerHTML = `
           <td>
             <div class="tbl-product-cell">
-              <img src="${p.img}" alt="${p.name}" class="tbl-thumb">
+              <img src="${escapeHtml(String(p.img || ''))}" alt="${escapeHtml(String(p.name || ''))}" class="tbl-thumb">
               <div>
-                <div class="tbl-name">${p.name}</div>
-                ${p.badge ? `<span class="tbl-badge">${p.badge}</span>` : ''}
+                <div class="tbl-name">${escapeHtml(String(p.name || ''))}</div>
+                ${p.badge ? `<span class="tbl-badge">${escapeHtml(String(p.badge))}</span>` : ''}
               </div>
             </div>
           </td>
-          <td><span style="font-weight:700; text-transform:uppercase; font-size:0.75rem; color:var(--marron-latte);">${p.cat}</span></td>
-          <td style="color:#A39690; text-decoration:line-through;">${p.priceOld ? 'S/. ' + p.priceOld.toFixed(2) : '-'}</td>
-          <td style="font-weight:800; color:var(--rojo-frambuesa);">S/. ${p.price.toFixed(2)}</td>
-          <td><span style="font-size:0.78rem; font-weight:600;">${(p.sizes || []).join(', ')}</span></td>
+          <td><span style="font-weight:700; text-transform:uppercase; font-size:0.75rem; color:var(--marron-latte);">${escapeHtml(String(p.cat || ''))}</span></td>
+          <td style="color:#A39690; text-decoration:line-through;">${p.priceOld ? 'S/. ' + Number(p.priceOld).toFixed(2) : '-'}</td>
+          <td style="font-weight:800; color:var(--rojo-frambuesa);">S/. ${Number(p.price).toFixed(2)}</td>
+          <td><span style="font-size:0.78rem; font-weight:600;">${escapeHtml((p.sizes || []).join(', '))}</span></td>
           <td>
-            <span class="status-pill ${p.available ? 'status-in-stock' : 'status-out-stock'}" onclick="toggleStock(${p.id})">
+            <span class="status-pill ${p.available ? 'status-in-stock' : 'status-out-stock'}" onclick="toggleStock(${Number(p.id)})">
               <i class="fa-solid ${p.available ? 'fa-circle-check' : 'fa-circle-xmark'}"></i>
               ${p.available ? 'Disponible' : 'Agotado'}
             </span>
           </td>
           <td>
             <div class="tbl-actions">
-              <button class="btn-action" title="Editar" onclick="editProduct(${p.id})"><i class="fa-solid fa-pen"></i></button>
-              <button class="btn-action btn-del" title="Eliminar" onclick="deleteProduct(${p.id})"><i class="fa-solid fa-trash"></i></button>
+              <button class="btn-action" title="Editar" onclick="editProduct(${Number(p.id)})"><i class="fa-solid fa-pen"></i></button>
+              <button class="btn-action btn-del" title="Eliminar" onclick="deleteProduct(${Number(p.id)})"><i class="fa-solid fa-trash"></i></button>
             </div>
           </td>
         `;

@@ -1,0 +1,14 @@
+# robots.txt — Pretty Please Gamarra
+# Indica a los buscadores qué pueden y qué NO pueden indexar
+
+User-agent: *
+
+# ❌ No indexar el panel de administración
+Disallow: /admin.html
+Disallow: /admin/
+
+# ✅ Permitir indexar la tienda principal
+Allow: /index.html
+Allow: /
+
+Sitemap: https://JeanSarmientoZ.github.io/pretty-please/sitemap.xml
