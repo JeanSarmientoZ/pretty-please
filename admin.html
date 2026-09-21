@@ -581,6 +581,53 @@
       color: white;
     }
 
+    /* MANITO INTERACTIVA EN ELEMENTOS CLICABLES DEL ADMIN */
+    a, button, [onclick], .dash-tab, .btn-action, .swatch-check, .size-check, 
+    .badge-preset-chip, .calc-discount-chip, .status-pill, .btn-create, .btn-outline, 
+    .btn-logout, .btn-login, summary, .image-dropzone {
+      cursor: pointer !important;
+    }
+
+    /* DROPZONE ARRASTRAR Y SOLTAR FOTO */
+    .image-dropzone {
+      border: 2px dashed var(--border-suave);
+      border-radius: 16px;
+      background: var(--hueso-calido);
+      padding: 22px 16px;
+      text-align: center;
+      transition: all 0.25s ease;
+      position: relative;
+      user-select: none;
+    }
+    .image-dropzone:hover, .image-dropzone.drag-active {
+      border-color: var(--rojo-frambuesa);
+      background: rgba(230, 184, 185, 0.22);
+      transform: translateY(-2px);
+    }
+    .dropzone-icon {
+      font-size: 2.2rem;
+      color: var(--rojo-frambuesa);
+      margin-bottom: 8px;
+      transition: transform 0.2s ease;
+    }
+    .image-dropzone:hover .dropzone-icon, .image-dropzone.drag-active .dropzone-icon {
+      transform: scale(1.15);
+    }
+    .dropzone-text {
+      font-size: 0.9rem;
+      color: var(--texto-oscuro);
+    }
+    .dropzone-browse {
+      color: var(--rojo-frambuesa);
+      font-weight: 700;
+      text-decoration: underline;
+    }
+    .dropzone-hint {
+      font-size: 0.75rem;
+      color: var(--texto-mutado);
+      margin-top: 5px;
+    }
+
     @media (max-width: 768px) {
       .dash-navbar {
         padding: 10px 14px;
@@ -696,7 +743,7 @@
       </form>
 
       <div class="login-hint">
-        ✨ <strong>Acceso Demo:</strong><br>
+        🔒 <strong>Credenciales de Acceso:</strong><br>
         Correo: <code>admin@prettyplease.pe</code><br>
         Contraseña: <code>pretty2026</code>
       </div>
@@ -743,7 +790,7 @@
         </div>
       </div>
 
-      <!-- MÉTRICAS RÁPIDAS -->
+      <!-- MÉTRICAS RÁPIDAS (100% DINÁMICAS) -->
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-icon"><i class="fa-solid fa-shirt"></i></div>
@@ -762,7 +809,7 @@
         <div class="stat-card">
           <div class="stat-icon" style="background:#FEF3C7; color:#B45309;"><i class="fa-solid fa-percent"></i></div>
           <div>
-            <div class="stat-val">5</div>
+            <div class="stat-val" id="statOnSale">0</div>
             <div class="stat-label">En Oferta / Descuento</div>
           </div>
         </div>
@@ -871,44 +918,57 @@
               </div>
             </div>
 
-            <div class="form-group">
-              <label class="form-label">Foto de la Prenda</label>
+            <div class="form-group form-full">
+              <label class="form-label">Foto de la Prenda (Arrastra y suelta tu imagen aquí)</label>
               
-              <!-- Botón para subir desde dispositivo -->
-              <div style="display:flex; gap:8px; margin-bottom:10px;">
-                <label for="prodImgFile" class="btn-outline" style="cursor:pointer; font-size:0.78rem; padding:6px 14px; background:var(--blanco); border-color:var(--rojo-frambuesa); color:var(--rojo-frambuesa);">
-                  <i class="fa-solid fa-cloud-arrow-up"></i> Subir foto desde Celular o PC
-                </label>
-                <input type="file" id="prodImgFile" accept="image/*" style="display:none;" onchange="handleImageUpload(event)">
+              <!-- DROPZONE DE ARRASTRE Y SELECCIÓN DE IMÁGENES -->
+              <div id="imageDropzone" class="image-dropzone" onclick="document.getElementById('prodImgFile').click()">
+                <input type="file" id="prodImgFile" accept="image/jpeg,image/png,image/webp,image/gif" style="display:none;" onchange="handleImageFileSelect(event)">
+                <div class="dropzone-icon">
+                  <i class="fa-solid fa-cloud-arrow-up"></i>
+                </div>
+                <div class="dropzone-text">
+                  <strong>Arrastra y suelta tu foto aquí</strong> o <span class="dropzone-browse">haz clic para examinar</span>
+                </div>
+                <div class="dropzone-hint">
+                  Solo imágenes: JPG, PNG o WEBP • Se optimiza y comprime automáticamente para celular y web
+                </div>
               </div>
 
-              <!-- Selector de Presets de la Colección -->
-              <div style="margin-bottom:8px;">
-                <label style="font-size:0.74rem; color:var(--texto-mutado); font-weight:700;">O elegir una foto existente:</label>
-                <select id="prodImgSelect" class="form-select" onchange="previewPresetImg(this.value)" style="margin-top:4px;">
-                  <option value="assets/product_heart_close.jpg">Polo Boxy Corazón Bordado (Detalle)</option>
-                  <option value="assets/product_lilac_tee.jpg">Oversized Tee Lavanda (Same girl)</option>
-                  <option value="assets/product_stack_hoodies.jpg">Crewneck Fleece Pastel (Stack)</option>
-                  <option value="assets/product_stack_pastel.jpg">Tripack Polos Pastel</option>
-                  <option value="assets/product_tote_bag.jpg">Tote Bag Canvas Margaritas</option>
-                  <option value="assets/product_pink_cap.jpg">Gorra Washed Rosa</option>
-                  <option value="assets/product_girl_white_tee.jpg">Boxy Classic Blanco</option>
-                  <option value="assets/product_pink_tee_girl.jpg">Baby Tee Sweet Rose</option>
-                  <option value="assets/product_rack_pastel.jpg">Rack Ropa Pastel Gamarra</option>
-                </select>
+              <!-- Vista previa activa de la foto -->
+              <div id="previewCard" style="display:flex; align-items:center; justify-content:space-between; margin-top:12px; padding:12px 14px; background:var(--blanco); border-radius:14px; border:1.5px solid var(--border-suave);">
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <img id="imgPreviewThumb" src="assets/product_heart_close.jpg" alt="Vista previa" style="width:58px; height:58px; border-radius:10px; object-fit:cover; border:1px solid var(--border-suave); background:white;">
+                  <div style="overflow:hidden;">
+                    <span id="imgPreviewName" style="font-size:0.84rem; font-weight:700; color:var(--texto-oscuro); display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Polo Boxy Corazón Bordado</span>
+                    <span id="imgPreviewStatus" style="font-size:0.72rem; color:#10B981; font-weight:600;"><i class="fa-solid fa-circle-check"></i> Foto lista para la prenda</span>
+                  </div>
+                </div>
+                <button type="button" class="btn-outline" style="padding:6px 14px; font-size:0.76rem;" onclick="document.getElementById('prodImgFile').click()">
+                  <i class="fa-solid fa-arrows-rotate"></i> Cambiar
+                </button>
+              </div>
+
+              <!-- Selector de Fotos Existentes del Catálogo (Desplegable limpio) -->
+              <div style="margin-top:10px;">
+                <details style="font-size:0.78rem; color:var(--texto-mutado); cursor:pointer;">
+                  <summary style="font-weight:600; padding:4px 0; user-select:none;">O elegir una foto existente del catálogo:</summary>
+                  <select id="prodImgSelect" class="form-select" onchange="previewPresetImg(this.value)" style="margin-top:6px;">
+                    <option value="assets/product_heart_close.jpg">Polo Boxy Corazón Bordado (Detalle)</option>
+                    <option value="assets/product_lilac_tee.jpg">Oversized Tee Lavanda (Same girl)</option>
+                    <option value="assets/product_stack_hoodies.jpg">Crewneck Fleece Pastel (Stack)</option>
+                    <option value="assets/product_stack_pastel.jpg">Tripack Polos Pastel</option>
+                    <option value="assets/product_tote_bag.jpg">Tote Bag Canvas Margaritas</option>
+                    <option value="assets/product_pink_cap.jpg">Gorra Washed Rosa</option>
+                    <option value="assets/product_girl_white_tee.jpg">Boxy Classic Blanco</option>
+                    <option value="assets/product_pink_tee_girl.jpg">Baby Tee Sweet Rose</option>
+                    <option value="assets/product_rack_pastel.jpg">Rack Ropa Pastel Gamarra</option>
+                  </select>
+                </details>
               </div>
 
               <!-- Valor final de imagen -->
               <input type="hidden" id="prodImgFinal" value="assets/product_heart_close.jpg">
-
-              <!-- Vista previa de foto -->
-              <div style="display:flex; align-items:center; gap:12px; margin-top:8px; padding:10px; background:var(--hueso-calido); border-radius:12px; border:1.5px dashed var(--border-suave);">
-                <img id="imgPreviewThumb" src="assets/product_heart_close.jpg" alt="Vista previa" style="width:58px; height:58px; border-radius:10px; object-fit:cover; border:1px solid var(--border-suave); background:white;">
-                <div style="overflow:hidden;">
-                  <span id="imgPreviewName" style="font-size:0.78rem; font-weight:700; color:var(--texto-oscuro); display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Polo Boxy Corazón Bordado</span>
-                  <span id="imgPreviewStatus" style="font-size:0.7rem; color:var(--marron-latte);">Foto lista para publicar</span>
-                </div>
-              </div>
             </div>
 
             <!-- SELECTOR DE COLORES -->
@@ -1215,6 +1275,7 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.prendas;</pre>
         document.getElementById('dashView').style.display = 'flex';
         renderTable();
         updateStats();
+        setupDropzone();
       } else {
         document.getElementById('loginView').style.display = 'flex';
         document.getElementById('dashView').style.display = 'none';
@@ -1238,8 +1299,9 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.prendas;</pre>
         document.getElementById('prodImgFinal').value = 'assets/product_heart_close.jpg';
         document.getElementById('imgPreviewThumb').src = 'assets/product_heart_close.jpg';
         document.getElementById('imgPreviewName').innerText = 'Polo Boxy Corazón Bordado';
-        document.getElementById('imgPreviewStatus').innerText = 'Foto lista para la prenda';
+        document.getElementById('imgPreviewStatus').innerHTML = '<i class="fa-solid fa-circle-check"></i> Foto lista para la prenda';
         document.getElementById('discountFeedback').innerHTML = '';
+        setupDropzone();
       }
     }
 
@@ -1318,7 +1380,7 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.prendas;</pre>
 
     function editProduct(id) {
       const prods = getProducts();
-      const p = prods.find(item => item.id === id);
+      const p = prods.find(item => item.id == id);
       if (!p) return;
 
       document.querySelectorAll('.dash-tab')[1].click(); // ir a pestaña nuevo
@@ -1332,8 +1394,28 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.prendas;</pre>
       document.getElementById('prodImgFinal').value = p.img;
       document.getElementById('imgPreviewThumb').src = p.img;
       document.getElementById('imgPreviewName').innerText = p.name;
-      document.getElementById('imgPreviewStatus').innerText = 'Foto actual de la prenda';
+      document.getElementById('imgPreviewStatus').innerHTML = '<i class="fa-solid fa-circle-check"></i> Foto actual de la prenda ♡';
       calculateDiscountHelper();
+
+      // Seleccionar swatches de color guardados
+      document.querySelectorAll('#colorSwatchesPicker .swatch-check').forEach(el => {
+        const c = el.getAttribute('data-color');
+        if (p.colors && p.colors.includes(c)) {
+          el.classList.add('selected');
+        } else {
+          el.classList.remove('selected');
+        }
+      });
+      // Seleccionar tallas guardadas
+      document.querySelectorAll('#sizesPicker .size-check').forEach(el => {
+        const s = el.getAttribute('data-size');
+        if (p.sizes && p.sizes.includes(s)) {
+          el.classList.add('selected');
+        } else {
+          el.classList.remove('selected');
+        }
+      });
+      setupDropzone();
     }
 
     // CÁLCULO Y COHERENCIA DE DESCUENTOS
@@ -1390,18 +1472,58 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.prendas;</pre>
       selectBadgeWithSync(val);
     }
 
-    // MANEJO Y COMPRESIÓN DE FOTOS
+    // MANEJO, ARRASTRE Y COMPRESIÓN DE FOTOS
     function previewPresetImg(val) {
       document.getElementById('prodImgFinal').value = val;
       document.getElementById('imgPreviewThumb').src = val;
-      document.getElementById('imgPreviewName').innerText = 'Foto de colección';
-      document.getElementById('imgPreviewStatus').innerText = 'Preset seleccionado';
+      document.getElementById('imgPreviewName').innerText = 'Foto de colección seleccionada';
+      document.getElementById('imgPreviewStatus').innerHTML = '<i class="fa-solid fa-circle-check"></i> Preset seleccionado ♡';
     }
 
-    function handleImageUpload(e) {
+    function handleImageFileSelect(e) {
       const file = e.target.files[0];
-      if (!file) return;
+      if (file) {
+        processImageFile(file);
+      }
+    }
 
+    function setupDropzone() {
+      const dropzone = document.getElementById('imageDropzone');
+      if (!dropzone) return;
+
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.classList.add('drag-active');
+        }, false);
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.classList.remove('drag-active');
+        }, false);
+      });
+
+      dropzone.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt ? dt.files : null;
+        if (files && files.length > 0) {
+          processImageFile(files[0]);
+        }
+      }, false);
+    }
+
+    function processImageFile(file) {
+      // 1. Validar estrictamente que sea una imagen (no cualquier archivo)
+      if (!file.type || !file.type.startsWith('image/')) {
+        showToast('⚠️ El archivo debe ser una imagen (JPG, PNG, WEBP) ♡');
+        return;
+      }
+
+      // 2. Leer y comprimir vía canvas para carga rápida
       const reader = new FileReader();
       reader.onload = function(evt) {
         const img = new Image();
@@ -1421,13 +1543,16 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.prendas;</pre>
           canvas.height = h;
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, w, h);
-          const optimizedDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+          const optimizedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
 
           document.getElementById('prodImgFinal').value = optimizedDataUrl;
           document.getElementById('imgPreviewThumb').src = optimizedDataUrl;
           document.getElementById('imgPreviewName').innerText = file.name;
-          document.getElementById('imgPreviewStatus').innerText = 'Foto optimizada y cargada ♡';
-          showToast('¡Foto cargada con éxito desde tu dispositivo! ♡');
+          document.getElementById('imgPreviewStatus').innerHTML = '<i class="fa-solid fa-circle-check"></i> Foto lista y optimizada ♡';
+          showToast('¡Foto cargada y optimizada con éxito! ♡');
+        };
+        img.onerror = function() {
+          showToast('⚠️ No se pudo procesar la imagen seleccionada');
         };
         img.src = evt.target.result;
       };
@@ -1671,8 +1796,26 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.prendas;</pre>
 
     function updateStats() {
       const prods = getProducts();
-      document.getElementById('statTotalProds').innerText = prods.length;
-      document.getElementById('statInStock').innerText = prods.filter(p => p.available).length;
+      if (document.getElementById('statTotalProds')) {
+        document.getElementById('statTotalProds').innerText = prods.length;
+      }
+      if (document.getElementById('statInStock')) {
+        document.getElementById('statInStock').innerText = prods.filter(p => p.available).length;
+      }
+      if (document.getElementById('statOnSale')) {
+        document.getElementById('statOnSale').innerText = prods.filter(p => p.priceOld && Number(p.priceOld) > Number(p.price)).length;
+      }
+      const savedPhone = localStorage.getItem('pretty_ws_phone') || '51902778794';
+      if (document.getElementById('statWsVal')) {
+        document.getElementById('statWsVal').innerText = '+' + savedPhone;
+      }
+      if (document.getElementById('wsPhoneInput')) {
+        document.getElementById('wsPhoneInput').value = savedPhone;
+      }
+      const savedAnn = localStorage.getItem('pretty_announcement');
+      if (savedAnn && document.getElementById('announcementInput')) {
+        document.getElementById('announcementInput').value = savedAnn;
+      }
     }
 
     function saveStoreSettings() {
@@ -1680,7 +1823,8 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.prendas;</pre>
       const ann = document.getElementById('announcementInput').value.trim();
       localStorage.setItem('pretty_ws_phone', phone);
       localStorage.setItem('pretty_announcement', ann);
-      showToast('¡Configuración de WhatsApp guardada! ♡');
+      updateStats();
+      showToast('¡Configuración de WhatsApp y anuncios guardada! ♡');
     }
 
     function saveSupabaseConfig() {
