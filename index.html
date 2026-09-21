@@ -2762,13 +2762,22 @@
 
     // CONEXIÓN CLOUD SUPABASE (TIEMPO REAL)
     const PRETTY_SUPABASE_URL = 'https://jpibxoedrwalsuqfovkv.supabase.co';
+    const PRETTY_SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpwaWJ4b2VkcndhbHN1cWZvdmt2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5Mzg2ODMsImV4cCI6MjEwNTUxNDY4M30.u-qiLk3QYQ27JqmqHkSpXq59kieuWlZoH9TmF7NzVbQ';
     let supabaseClient = null;
+
     function initSupabase() {
       const url = localStorage.getItem('pretty_supabase_url') || PRETTY_SUPABASE_URL;
-      const key = localStorage.getItem('pretty_supabase_key');
+      const key = localStorage.getItem('pretty_supabase_key') || PRETTY_SUPABASE_KEY;
       if (url && key && window.supabase) {
         try {
           supabaseClient = window.supabase.createClient(url, key);
+          // Escuchar cambios en tiempo real
+          supabaseClient
+            .channel('prendas-realtime')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'prendas' }, () => {
+              syncProductsFromSupabase();
+            })
+            .subscribe();
         } catch(e) {
           console.warn('Supabase init error:', e);
         }
@@ -2788,8 +2797,8 @@
             priceOld: d.precio_regular ? parseFloat(d.precio_regular) : null,
             badge: d.badge,
             img: d.imagen,
-            sizes: d.tallas || ['S', 'M', 'L'],
-            colors: d.colores || ['#C51F3D', '#E6B8B9'],
+            sizes: Array.isArray(d.tallas) ? d.tallas : (typeof d.tallas === 'string' ? JSON.parse(d.tallas) : ['S', 'M', 'L']),
+            colors: Array.isArray(d.colores) ? d.colores : (typeof d.colores === 'string' ? JSON.parse(d.colores) : ['#C51F3D', '#E6B8B9']),
             available: d.disponible !== false
           }));
           localStorage.setItem('pretty_products', JSON.stringify(mapped));
