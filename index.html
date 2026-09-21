@@ -2060,149 +2060,41 @@
   <script>
     const ASESORA_PHONE = localStorage.getItem('pretty_ws_phone') || "51902778794";
 
-    // CATÁLOGO INICIAL COMPLETO
-    const INITIAL_PRODUCTS = [
-      {
-        id: 1,
-        name: 'Polo Boxy "Corazón Bordado"',
-        cat: 'boxy',
-        price: 49.90,
-        priceOld: 65.00,
-        badge: 'MÁS VENDIDO ♡',
-        img: 'assets/product_heart_close.jpg',
-        sizes: ['S', 'M', 'L', 'Oversized'],
-        colors: ['#F7EFE6', '#E6B8B9', '#D9D1EA', '#D9E5D1'],
-        available: true
-      },
-      {
-        id: 2,
-        name: 'Oversized Tee "Same Girl, Happier Days"',
-        cat: 'oversized',
-        price: 55.00,
-        priceOld: 70.00,
-        badge: 'NUEVO ✨',
-        img: 'assets/product_lilac_tee.jpg',
-        sizes: ['Standard Oversized'],
-        colors: ['#D9D1EA', '#F7EFE6', '#F6E3A7'],
-        available: true
-      },
-      {
-        id: 3,
-        name: 'Crewneck Soft Fleece "Pastel Dream"',
-        cat: 'sweaters',
-        price: 79.90,
-        priceOld: 99.00,
-        badge: 'COZY FAVORITE',
-        img: 'assets/product_stack_hoodies.jpg',
-        sizes: ['S', 'M', 'L'],
-        colors: ['#E6B8B9', '#D9E5D1', '#D9D1EA', '#F7EFE6'],
-        available: true
-      },
-      {
-        id: 4,
-        name: 'Tripack "Good Days" (3 Polos a elección)',
-        cat: 'packs',
-        price: 129.90,
-        priceOld: 165.00,
-        badge: 'AHORRA 25% ✨',
-        img: 'assets/product_stack_pastel.jpg',
-        sizes: ['Pack S/M/L'],
-        colors: ['#C51F3D', '#E6B8B9', '#D9D1EA', '#D9E5D1', '#F6E3A7'],
-        available: true
-      },
-      {
-        id: 5,
-        name: 'Tote Bag Canvas "Pretty Please ♡"',
-        cat: 'accesorios',
-        price: 29.90,
-        priceOld: 40.00,
-        badge: 'ECO FRIENDLY',
-        img: 'assets/product_tote_bag.jpg',
-        sizes: ['Única'],
-        colors: ['#F7EFE6'],
-        available: true
-      },
-      {
-        id: 6,
-        name: 'Gorra Washed Bordada "Pretty Please"',
-        cat: 'accesorios',
-        price: 39.90,
-        priceOld: 50.00,
-        badge: 'VINTAGE WASH',
-        img: 'assets/product_pink_cap.jpg',
-        sizes: ['Ajustable'],
-        colors: ['#E6B8B9', '#B58B72'],
-        available: true
-      },
-      {
-        id: 7,
-        name: 'Polo Boxy Classic "Clean White"',
-        cat: 'boxy',
-        price: 49.90,
-        priceOld: 60.00,
-        badge: 'ESSENTIAL',
-        img: 'assets/product_girl_white_tee.jpg',
-        sizes: ['S', 'M', 'L'],
-        colors: ['#FFFFFF'],
-        available: true
-      },
-      {
-        id: 8,
-        name: 'Baby Tee "Corazón Sweet Rose"',
-        cat: 'boxy',
-        price: 45.00,
-        priceOld: 58.00,
-        badge: 'GIRL CRUSH',
-        img: 'assets/product_pink_tee_girl.jpg',
-        sizes: ['S', 'M'],
-        colors: ['#E6B8B9', '#F6E3A7'],
-        available: true
-      },
-      {
-        id: 9,
-        name: 'Oversized Tee "Good Days" Menta Suave',
-        cat: 'oversized',
-        price: 55.00,
-        priceOld: 68.00,
-        badge: 'TRENDING',
-        img: 'assets/product_rack_pastel.jpg',
-        sizes: ['S/M', 'L/XL'],
-        colors: ['#D9E5D1', '#F6E3A7', '#D9D1EA'],
-        available: true
-      },
-      {
-        id: 10,
-        name: 'Hoodie Oversized "Soft Cotton Club"',
-        cat: 'sweaters',
-        price: 89.90,
-        priceOld: 110.00,
-        badge: 'EDICIÓN LIMITADA',
-        img: 'assets/product_stack_hoodies.jpg',
-        sizes: ['M', 'L', 'Oversized'],
-        colors: ['#D9D1EA', '#E6B8B9'],
-        available: true
-      },
-      {
-        id: 11,
-        name: 'Pack Dúo Boxy (2 Polos a tu elección)',
-        cat: 'packs',
-        price: 89.90,
-        priceOld: 110.00,
-        badge: 'OFERTA PACK',
-        img: 'assets/product_stack_pastel.jpg',
-        sizes: ['S', 'M', 'L'],
-        colors: ['#F7EFE6', '#E6B8B9'],
-        available: true
-      }
+    // Nombres de maquetas antiguas para no mostrarlas en catálogo, favoritos ni bolsita
+    const MOCKUP_NAMES = [
+      'Polo Boxy "Corazón Bordado"',
+      'Oversized Tee "Same Girl, Happier Days"',
+      'Crewneck Soft Fleece "Pastel Dream"',
+      'Tripack "Good Days" (3 Polos a elección)',
+      'Tote Bag Canvas "Pretty Please ♡"',
+      'Gorra Washed Bordada "Pretty Please"',
+      'Polo Boxy Classic "Clean White"',
+      'Baby Tee "Corazón Sweet Rose"',
+      'Oversized Tee "Good Days" Menta Suave',
+      'Hoodie Oversized "Soft Cotton Club"',
+      'Pack Dúo Boxy (2 Polos a tu elección)',
+      'Pack Trío Good Days',
+      'Dúo Boxy Cotton'
     ];
+
+    // CATÁLOGO INICIAL VACÍO (SIN MAQUETAS - SE CARGA DESDE SUPABASE CLOUD)
+    const INITIAL_PRODUCTS = [];
 
     function loadProducts() {
       const stored = localStorage.getItem('pretty_products');
       if (stored) {
-        try { return JSON.parse(stored); } catch(e) {}
+        try {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed)) {
+            const filtered = parsed.filter(p => !MOCKUP_NAMES.includes(p.name));
+            if (filtered.length !== parsed.length) {
+              localStorage.setItem('pretty_products', JSON.stringify(filtered));
+            }
+            return filtered;
+          }
+        } catch(e) {}
       }
-      localStorage.setItem('pretty_products', JSON.stringify(INITIAL_PRODUCTS));
-      return INITIAL_PRODUCTS;
+      return [];
     }
 
     let cart = [];
@@ -2212,7 +2104,17 @@
     function loadWishlist() {
       const stored = localStorage.getItem('pretty_wishlist');
       if (stored) {
-        try { wishlist = JSON.parse(stored); } catch(e) { wishlist = []; }
+        try {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed)) {
+            wishlist = parsed.filter(w => !MOCKUP_NAMES.includes(w.name));
+            if (wishlist.length !== parsed.length) {
+              localStorage.setItem('pretty_wishlist', JSON.stringify(wishlist));
+            }
+          } else {
+            wishlist = [];
+          }
+        } catch(e) { wishlist = []; }
       } else {
         wishlist = [];
       }
@@ -2443,7 +2345,17 @@
     function loadCart() {
       const stored = localStorage.getItem('pretty_cart');
       if (stored) {
-        try { cart = JSON.parse(stored); } catch(e) { cart = []; }
+        try {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed)) {
+            cart = parsed.filter(i => !MOCKUP_NAMES.includes(i.title));
+            if (cart.length !== parsed.length) {
+              localStorage.setItem('pretty_cart', JSON.stringify(cart));
+            }
+          } else {
+            cart = [];
+          }
+        } catch(e) { cart = []; }
       } else {
         cart = [];
       }
@@ -2835,7 +2747,7 @@
       if (!supabaseClient) return;
       try {
         const { data, error } = await supabaseClient.from('prendas').select('*').order('id', { ascending: false });
-        if (data && !error && data.length > 0) {
+        if (!error && Array.isArray(data)) {
           const mapped = data.map(d => ({
             id: d.id,
             name: d.nombre,

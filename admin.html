@@ -795,14 +795,14 @@
         <div class="stat-card">
           <div class="stat-icon"><i class="fa-solid fa-shirt"></i></div>
           <div>
-            <div class="stat-val" id="statTotalProds">8</div>
+            <div class="stat-val" id="statTotalProds">0</div>
             <div class="stat-label">Prendas en Catálogo</div>
           </div>
         </div>
         <div class="stat-card">
           <div class="stat-icon" style="background:#DCFCE7; color:#166534;"><i class="fa-solid fa-circle-check"></i></div>
           <div>
-            <div class="stat-val" id="statInStock">8</div>
+            <div class="stat-val" id="statInStock">0</div>
             <div class="stat-label">Disponibles en Stock</div>
           </div>
         </div>
@@ -938,37 +938,19 @@
               <!-- Vista previa activa de la foto -->
               <div id="previewCard" style="display:flex; align-items:center; justify-content:space-between; margin-top:12px; padding:12px 14px; background:var(--blanco); border-radius:14px; border:1.5px solid var(--border-suave);">
                 <div style="display:flex; align-items:center; gap:12px;">
-                  <img id="imgPreviewThumb" src="assets/product_heart_close.jpg" alt="Vista previa" style="width:58px; height:58px; border-radius:10px; object-fit:cover; border:1px solid var(--border-suave); background:white;">
+                  <img id="imgPreviewThumb" src="assets/logo_pretty_transparent.png" alt="Vista previa" style="width:58px; height:58px; border-radius:10px; object-fit:contain; border:1px solid var(--border-suave); background:white; padding:4px;">
                   <div style="overflow:hidden;">
-                    <span id="imgPreviewName" style="font-size:0.84rem; font-weight:700; color:var(--texto-oscuro); display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Polo Boxy Corazón Bordado</span>
-                    <span id="imgPreviewStatus" style="font-size:0.72rem; color:#10B981; font-weight:600;"><i class="fa-solid fa-circle-check"></i> Foto lista para la prenda</span>
+                    <span id="imgPreviewName" style="font-size:0.84rem; font-weight:700; color:var(--texto-oscuro); display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Ninguna foto seleccionada aún</span>
+                    <span id="imgPreviewStatus" style="font-size:0.72rem; color:var(--texto-mutado);"><i class="fa-solid fa-cloud-arrow-up"></i> Arrastra una foto arriba o haz clic</span>
                   </div>
                 </div>
                 <button type="button" class="btn-outline" style="padding:6px 14px; font-size:0.76rem;" onclick="document.getElementById('prodImgFile').click()">
-                  <i class="fa-solid fa-arrows-rotate"></i> Cambiar
+                  <i class="fa-solid fa-folder-open"></i> Seleccionar
                 </button>
               </div>
 
-              <!-- Selector de Fotos Existentes del Catálogo (Desplegable limpio) -->
-              <div style="margin-top:10px;">
-                <details style="font-size:0.78rem; color:var(--texto-mutado); cursor:pointer;">
-                  <summary style="font-weight:600; padding:4px 0; user-select:none;">O elegir una foto existente del catálogo:</summary>
-                  <select id="prodImgSelect" class="form-select" onchange="previewPresetImg(this.value)" style="margin-top:6px;">
-                    <option value="assets/product_heart_close.jpg">Polo Boxy Corazón Bordado (Detalle)</option>
-                    <option value="assets/product_lilac_tee.jpg">Oversized Tee Lavanda (Same girl)</option>
-                    <option value="assets/product_stack_hoodies.jpg">Crewneck Fleece Pastel (Stack)</option>
-                    <option value="assets/product_stack_pastel.jpg">Tripack Polos Pastel</option>
-                    <option value="assets/product_tote_bag.jpg">Tote Bag Canvas Margaritas</option>
-                    <option value="assets/product_pink_cap.jpg">Gorra Washed Rosa</option>
-                    <option value="assets/product_girl_white_tee.jpg">Boxy Classic Blanco</option>
-                    <option value="assets/product_pink_tee_girl.jpg">Baby Tee Sweet Rose</option>
-                    <option value="assets/product_rack_pastel.jpg">Rack Ropa Pastel Gamarra</option>
-                  </select>
-                </details>
-              </div>
-
               <!-- Valor final de imagen -->
-              <input type="hidden" id="prodImgFinal" value="assets/product_heart_close.jpg">
+              <input type="hidden" id="prodImgFinal" value="">
             </div>
 
             <!-- SELECTOR DE COLORES -->
@@ -1069,8 +1051,8 @@
             <a href="https://supabase.com/dashboard/project/jpibxoedrwalsuqfovkv/sql/new" target="_blank" class="btn-action" style="padding:10px 18px; font-size:0.84rem; background:var(--texto-oscuro); color:#fff; border-radius:999px; font-weight:700; display:inline-flex; align-items:center; gap:8px;">
               <i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir SQL Editor en Supabase
             </a>
-            <button type="button" id="btnSeedCatalog" class="btn-primary" style="background:#10B981; padding:10px 18px; font-size:0.84rem; border-radius:999px;" onclick="seedCatalogToSupabase()">
-              <i class="fa-solid fa-cloud-arrow-up"></i> Subir Catálogo Actual a Supabase
+            <button type="button" id="btnSyncFromCloud" class="btn-primary" style="background:#10B981; padding:10px 18px; font-size:0.84rem; border-radius:999px;" onclick="syncFromSupabaseNow()">
+              <i class="fa-solid fa-arrows-rotate"></i> Sincronizar Catálogo con Supabase
             </button>
           </div>
 
@@ -1133,113 +1115,38 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.prendas;</pre>
   </div>
 
   <script>
-    // PRODUCTOS POR DEFECTO
-    const DEFAULT_PRODUCTS = [
-      {
-        id: 1,
-        name: 'Polo Boxy "Corazón Bordado"',
-        cat: 'boxy',
-        price: 49.90,
-        priceOld: 65.00,
-        badge: 'MÁS VENDIDO ♡',
-        img: 'assets/product_heart_close.jpg',
-        sizes: ['S', 'M', 'L', 'Oversized'],
-        colors: ['#F7EFE6', '#E6B8B9', '#D9D1EA', '#D9E5D1'],
-        available: true
-      },
-      {
-        id: 2,
-        name: 'Oversized Tee "Same Girl, Happier Days"',
-        cat: 'oversized',
-        price: 55.00,
-        priceOld: 70.00,
-        badge: 'NUEVO ✨',
-        img: 'assets/product_lilac_tee.jpg',
-        sizes: ['Standard Oversized'],
-        colors: ['#D9D1EA', '#F7EFE6', '#F6E3A7'],
-        available: true
-      },
-      {
-        id: 3,
-        name: 'Crewneck Soft Fleece "Pastel Dream"',
-        cat: 'sweaters',
-        price: 79.90,
-        priceOld: 99.00,
-        badge: 'COZY FAVORITE',
-        img: 'assets/product_stack_hoodies.jpg',
-        sizes: ['S', 'M', 'L'],
-        colors: ['#E6B8B9', '#D9E5D1', '#D9D1EA', '#F7EFE6'],
-        available: true
-      },
-      {
-        id: 4,
-        name: 'Tripack "Good Days" (3 Polos a elección)',
-        cat: 'packs',
-        price: 129.90,
-        priceOld: 165.00,
-        badge: 'AHORRA 25% ✨',
-        img: 'assets/product_stack_pastel.jpg',
-        sizes: ['Pack S/M/L'],
-        colors: ['#C51F3D', '#E6B8B9', '#D9D1EA', '#D9E5D1', '#F6E3A7'],
-        available: true
-      },
-      {
-        id: 5,
-        name: 'Tote Bag Canvas "Pretty Please ♡"',
-        cat: 'accesorios',
-        price: 29.90,
-        priceOld: 40.00,
-        badge: 'ECO FRIENDLY',
-        img: 'assets/product_tote_bag.jpg',
-        sizes: ['Única'],
-        colors: ['#F7EFE6'],
-        available: true
-      },
-      {
-        id: 6,
-        name: 'Gorra Washed Bordada "Pretty Please"',
-        cat: 'accesorios',
-        price: 39.90,
-        priceOld: 50.00,
-        badge: 'VINTAGE WASH',
-        img: 'assets/product_pink_cap.jpg',
-        sizes: ['Ajustable'],
-        colors: ['#E6B8B9', '#B58B72'],
-        available: true
-      },
-      {
-        id: 7,
-        name: 'Polo Boxy Classic "Clean White"',
-        cat: 'boxy',
-        price: 49.90,
-        priceOld: 60.00,
-        badge: 'ESSENTIAL',
-        img: 'assets/product_girl_white_tee.jpg',
-        sizes: ['S', 'M', 'L'],
-        colors: ['#FFFFFF'],
-        available: true
-      },
-      {
-        id: 8,
-        name: 'Baby Tee "Corazón Sweet Rose"',
-        cat: 'boxy',
-        price: 45.00,
-        priceOld: 58.00,
-        badge: 'GIRL CRUSH',
-        img: 'assets/product_pink_tee_girl.jpg',
-        sizes: ['S', 'M'],
-        colors: ['#E6B8B9', '#F6E3A7'],
-        available: true
-      }
+    // PRODUCTOS POR DEFECTO (VACÍO - SE ADMINISTRA Y SINCRONIZA CON SUPABASE)
+    const DEFAULT_PRODUCTS = [];
+
+    // Nombres de prendas maquetas antiguas para purgarlas de cualquier caché local
+    const MOCKUP_NAMES = [
+      'Polo Boxy "Corazón Bordado"',
+      'Oversized Tee "Same Girl, Happier Days"',
+      'Crewneck Soft Fleece "Pastel Dream"',
+      'Tripack "Good Days" (3 Polos a elección)',
+      'Tote Bag Canvas "Pretty Please ♡"',
+      'Gorra Washed Bordada "Pretty Please"',
+      'Polo Boxy Classic "Clean White"',
+      'Baby Tee "Corazón Sweet Rose"',
+      'Pack Trío Good Days',
+      'Dúo Boxy Cotton'
     ];
 
     function getProducts() {
       const stored = localStorage.getItem('pretty_products');
       if (stored) {
-        try { return JSON.parse(stored); } catch(e) {}
+        try {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed)) {
+            const filtered = parsed.filter(p => !MOCKUP_NAMES.includes(p.name));
+            if (filtered.length !== parsed.length) {
+              localStorage.setItem('pretty_products', JSON.stringify(filtered));
+            }
+            return filtered;
+          }
+        } catch(e) {}
       }
-      localStorage.setItem('pretty_products', JSON.stringify(DEFAULT_PRODUCTS));
-      return DEFAULT_PRODUCTS;
+      return [];
     }
 
     function setProducts(prods) {
@@ -1296,10 +1203,17 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.prendas;</pre>
         document.getElementById('productForm').reset();
         document.getElementById('editProdId').value = '';
         document.getElementById('formTitle').innerText = 'Subir Nueva Prenda al Catálogo';
-        document.getElementById('prodImgFinal').value = 'assets/product_heart_close.jpg';
-        document.getElementById('imgPreviewThumb').src = 'assets/product_heart_close.jpg';
-        document.getElementById('imgPreviewName').innerText = 'Polo Boxy Corazón Bordado';
-        document.getElementById('imgPreviewStatus').innerHTML = '<i class="fa-solid fa-circle-check"></i> Foto lista para la prenda';
+        document.getElementById('prodImgFinal').value = '';
+        const thumb = document.getElementById('imgPreviewThumb');
+        if (thumb) {
+          thumb.src = 'assets/logo_pretty_transparent.png';
+          thumb.style.objectFit = 'contain';
+          thumb.style.padding = '4px';
+        }
+        const pName = document.getElementById('imgPreviewName');
+        if (pName) pName.innerText = 'Ninguna foto seleccionada aún';
+        const pStatus = document.getElementById('imgPreviewStatus');
+        if (pStatus) pStatus.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Arrastra una foto arriba o haz clic';
         document.getElementById('discountFeedback').innerHTML = '';
         setupDropzone();
       }
@@ -1310,6 +1224,19 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.prendas;</pre>
       const prods = getProducts();
       const tbody = document.getElementById('productsTableBody');
       tbody.innerHTML = '';
+
+      if (prods.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" style="text-align:center; padding:45px 20px; color:var(--texto-mutado);">
+              <div style="font-size:2.4rem; margin-bottom:12px;">🛍️</div>
+              <div style="font-weight:700; font-size:1.1rem; color:var(--texto-oscuro);">No hay prendas en el catálogo</div>
+              <div style="font-size:0.85rem; margin-top:6px;">Haz clic en <strong>"Nueva Prenda"</strong> para publicar o en <strong>"Conexión Supabase"</strong> para sincronizar tu base de datos en la nube.</div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
 
       prods.forEach(p => {
         const tr = document.createElement('tr');
@@ -1569,13 +1496,19 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.prendas;</pre>
       // Tallas seleccionadas
       const sizes = Array.from(document.querySelectorAll('#sizesPicker .size-check.selected')).map(el => el.getAttribute('data-size'));
 
+      const finalImg = document.getElementById('prodImgFinal').value.trim();
+      if (!finalImg) {
+        alert('Por favor selecciona o arrastra una foto para la prenda antes de guardarla ♡');
+        return;
+      }
+
       const prodData = {
         name: document.getElementById('prodName').value.trim(),
         cat: document.getElementById('prodCat').value,
         price: parseFloat(document.getElementById('prodPrice').value),
         priceOld: document.getElementById('prodPriceOld').value ? parseFloat(document.getElementById('prodPriceOld').value) : null,
         badge: document.getElementById('prodBadge').value.trim(),
-        img: document.getElementById('prodImgFinal').value || 'assets/product_heart_close.jpg',
+        img: finalImg,
         sizes: sizes.length ? sizes : ['S', 'M', 'L'],
         colors: colors.length ? colors : ['#C51F3D', '#E6B8B9'],
         available: true
@@ -1637,6 +1570,13 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.prendas;</pre>
           supabaseClient = window.supabase.createClient(url, key);
           checkSupabaseStatus();
           fetchProductsFromSupabase();
+          // Escuchar cambios en tiempo real desde Supabase
+          supabaseClient
+            .channel('admin-prendas-realtime')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'prendas' }, () => {
+              fetchProductsFromSupabase();
+            })
+            .subscribe();
         } catch(e) {
           console.warn('Supabase init error:', e);
         }
@@ -1663,7 +1603,7 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.prendas;</pre>
               1. Haz clic en el botón <strong>"Copiar Script SQL"</strong> aquí abajo.<br>
               2. Haz clic en <strong>"Abrir SQL Editor en Supabase"</strong>.<br>
               3. Pega el código en el editor y presiona el botón verde <strong>RUN</strong>.<br>
-              4. ¡Listo! Vuelve aquí y dale a <strong>"Subir Catálogo Actual a Supabase"</strong>.
+              4. ¡Listo! Vuelve aquí y dale a <strong>"Sincronizar Catálogo con Supabase"</strong>.
             </div>`;
           } else {
             badge.innerHTML = `<div style="background:#FEE2E2; border:1px solid #FCA5A5; color:#991B1B; padding:12px 16px; border-radius:12px; font-size:0.85rem;">
@@ -1683,43 +1623,21 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.prendas;</pre>
       }
     }
 
-    async function seedCatalogToSupabase() {
-      if (!supabaseClient) {
-        showToast('Supabase aún no está conectado');
-        return;
-      }
-      const prods = getProducts();
-      const btn = document.getElementById('btnSeedCatalog');
+    async function syncFromSupabaseNow() {
+      const btn = document.getElementById('btnSyncFromCloud');
       if (btn) {
         btn.disabled = true;
-        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Subiendo a la nube...';
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sincronizando...';
       }
       try {
-        const rows = prods.map(p => ({
-          nombre: p.name,
-          categoria: p.cat,
-          precio: p.price,
-          precio_regular: p.priceOld || null,
-          badge: p.badge || null,
-          imagen: p.img,
-          tallas: p.sizes || ['S', 'M', 'L'],
-          colores: p.colors || ['#C51F3D', '#E6B8B9'],
-          disponible: p.available !== false
-        }));
-
-        const { data, error } = await supabaseClient.from('prendas').insert(rows).select();
-        if (error) {
-          alert('No se pudo subir el catálogo: ' + error.message + '\n\nVerifica haber ejecutado primero el Script SQL en Supabase.');
-        } else {
-          showToast(`¡${rows.length} prendas subidas a Supabase Cloud con éxito! ♡`);
-          checkSupabaseStatus();
-        }
+        await fetchProductsFromSupabase();
+        showToast('¡Catálogo sincronizado en vivo desde Supabase Cloud! ♡');
       } catch(e) {
-        alert('Error: ' + e.message);
+        showToast('Error al sincronizar: ' + e.message);
       } finally {
         if (btn) {
           btn.disabled = false;
-          btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Subir Catálogo Actual a Supabase';
+          btn.innerHTML = '<i class="fa-solid fa-arrows-rotate"></i> Sincronizar Catálogo con Supabase';
         }
       }
     }
@@ -1737,7 +1655,7 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.prendas;</pre>
       if (!supabaseClient) return;
       try {
         const { data, error } = await supabaseClient.from('prendas').select('*').order('id', { ascending: false });
-        if (data && !error && data.length > 0) {
+        if (!error && Array.isArray(data)) {
           const mapped = data.map(d => ({
             id: d.id,
             name: d.nombre,
