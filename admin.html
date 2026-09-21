@@ -546,6 +546,131 @@
       transform: translateY(0);
     }
 
+    /* ===== MODAL DE CONFIRMACIÓN ===== */
+    .confirm-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(45, 36, 33, 0.45);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .confirm-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .confirm-card {
+      background: var(--blanco);
+      border-radius: 24px;
+      padding: 36px 32px 28px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 25px 50px -12px rgba(45, 36, 33, 0.3);
+      text-align: center;
+      transform: scale(0.88) translateY(16px);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .confirm-overlay.open .confirm-card {
+      transform: scale(1) translateY(0);
+    }
+    .confirm-icon-wrap {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: #FEE2E2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 1.8rem;
+      color: #DC2626;
+    }
+    .confirm-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--texto-oscuro);
+      margin-bottom: 8px;
+    }
+    .confirm-sub {
+      font-size: 0.88rem;
+      color: var(--texto-mutado);
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+    .confirm-product-name {
+      display: inline-block;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #DC2626;
+      background: #FEE2E2;
+      border: 1px solid #FCA5A5;
+      border-radius: 8px;
+      padding: 6px 14px;
+      margin: 10px 0 22px;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .confirm-actions {
+      display: flex;
+      gap: 10px;
+    }
+    .btn-confirm-cancel {
+      flex: 1;
+      padding: 12px;
+      border-radius: var(--radio-full);
+      border: 1.5px solid var(--border-suave);
+      background: var(--hueso-calido);
+      color: var(--texto-oscuro);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-confirm-cancel:hover {
+      border-color: var(--marron-latte);
+      background: rgba(181, 139, 114, 0.12);
+    }
+    .btn-confirm-delete {
+      flex: 1;
+      padding: 12px;
+      border-radius: var(--radio-full);
+      border: none;
+      background: #DC2626;
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+    }
+    .btn-confirm-delete:hover {
+      background: #b91c1c;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(220, 38, 38, 0.42);
+    }
+
+    /* ===== MEJORA: logout button hover ===== */
+    .btn-logout {
+      transition: all 0.2s ease;
+    }
+    .btn-logout:hover {
+      background: #fecaca;
+      border-color: #f87171;
+    }
+
     /* SELECTOR COMPACTO DE ETIQUETAS */
     .badge-quick-select {
       display: flex;
@@ -1109,6 +1234,26 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.prendas;</pre>
     </main>
   </div>
 
+  <!-- MODAL DE CONFIRMACIÓN DE ELIMINACIÓN -->
+  <div class="confirm-overlay" id="confirmDeleteOverlay" onclick="closeConfirmDelete(event)">
+    <div class="confirm-card" role="dialog" aria-modal="true" aria-labelledby="confirmDeleteTitle">
+      <div class="confirm-icon-wrap">
+        <i class="fa-solid fa-trash-can"></i>
+      </div>
+      <div class="confirm-title" id="confirmDeleteTitle">¿Eliminar esta prenda?</div>
+      <div class="confirm-sub">Esta acción no se puede deshacer. La prenda será eliminada del catálogo y de Supabase.</div>
+      <div class="confirm-product-name" id="confirmDeleteName">—</div>
+      <div class="confirm-actions">
+        <button class="btn-confirm-cancel" onclick="closeConfirmDelete()">
+          <i class="fa-solid fa-xmark"></i> Cancelar
+        </button>
+        <button class="btn-confirm-delete" id="btnConfirmDeleteExec" onclick="executeDelete()">
+          <i class="fa-solid fa-trash-can"></i> Sí, eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- TOAST NOTIFICACIÓN -->
   <div class="toast-box" id="toastBox">
     <i class="fa-solid fa-heart" style="color: #FF5A79;"></i>
@@ -1347,22 +1492,67 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.prendas;</pre>
       }
     }
 
-    async function deleteProduct(id) {
-      if (confirm('¿Estás segura de eliminar esta prenda del catálogo?')) {
-        let prods = getProducts();
-        prods = prods.filter(p => p.id != id);
-        setProducts(prods);
-        if (supabaseClient) {
-          try {
-            await supabaseClient.from('prendas').delete().eq('id', id);
-            checkSupabaseStatus();
-          } catch(e) {
-            console.warn('Supabase delete error:', e);
-          }
-        }
-        showToast('Prenda eliminada con éxito ♡');
-      }
+    // ===== MODAL DE CONFIRMACIÓN DE ELIMINACIÓN =====
+    let _pendingDeleteId = null;
+
+    function deleteProduct(id) {
+      const prods = getProducts();
+      const p = prods.find(item => item.id == id);
+      if (!p) return;
+      _pendingDeleteId = id;
+      document.getElementById('confirmDeleteName').textContent = p.name || 'Sin nombre';
+      const overlay = document.getElementById('confirmDeleteOverlay');
+      overlay.classList.add('open');
+      // Trap focus en el modal
+      setTimeout(() => {
+        const btn = document.getElementById('btnConfirmDeleteExec');
+        if (btn) btn.focus();
+      }, 80);
     }
+
+    function closeConfirmDelete(event) {
+      // Si se hizo click en el overlay (fondo) y no en la card, cerrar
+      if (event && event.target !== document.getElementById('confirmDeleteOverlay')) return;
+      _doDismissConfirm();
+    }
+
+    function _doDismissConfirm() {
+      const overlay = document.getElementById('confirmDeleteOverlay');
+      overlay.classList.remove('open');
+      _pendingDeleteId = null;
+    }
+
+    async function executeDelete() {
+      const id = _pendingDeleteId;
+      if (!id) return;
+      _doDismissConfirm();
+
+      const btn = document.getElementById('btnConfirmDeleteExec');
+      if (btn) btn.disabled = true;
+
+      let prods = getProducts();
+      prods = prods.filter(p => p.id != id);
+      setProducts(prods);
+
+      if (supabaseClient) {
+        try {
+          await supabaseClient.from('prendas').delete().eq('id', id);
+          checkSupabaseStatus();
+        } catch(e) {
+          console.warn('Supabase delete error:', e);
+        }
+      }
+
+      showToast('Prenda eliminada del catálogo ♡');
+      if (btn) btn.disabled = false;
+    }
+
+    // Cerrar modal con tecla Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') _doDismissConfirm();
+    });
+
+
 
     function editProduct(id) {
       const prods = getProducts();
