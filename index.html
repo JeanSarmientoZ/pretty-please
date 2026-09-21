@@ -138,15 +138,20 @@
 
     .nav-links {
       display: flex;
-      gap: 22px;
+      gap: 20px;
       list-style: none;
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
+      margin: 0 auto;
+    }
+    .nav-links li {
+      white-space: nowrap;
     }
     .nav-links a {
       color: var(--texto-oscuro);
       transition: color 0.2s ease;
       cursor: pointer;
+      white-space: nowrap;
     }
     .nav-links a:hover {
       color: var(--rojo-frambuesa);
@@ -343,17 +348,20 @@
     /* HISTORIAS DESTACADAS (HIGHLIGHTS) */
     .highlights-section {
       max-width: 1240px;
-      margin: 10px auto 0 auto;
+      margin: 12px auto 4px auto;
       padding: 6px 16px;
+      display: flex;
+      justify-content: center;
     }
     .highlights-slider {
       display: flex;
-      justify-content: flex-start;
-      gap: 20px;
+      justify-content: center;
+      gap: 28px;
       overflow-x: auto;
-      padding: 14px 10px 16px 10px;
+      padding: 12px 16px 16px 16px;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
+      max-width: 100%;
     }
     .highlights-slider::-webkit-scrollbar {
       display: none;
@@ -362,10 +370,11 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
       cursor: pointer;
       transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
       flex-shrink: 0;
+      text-align: center;
     }
     .highlight-item:hover {
       transform: translateY(-5px) scale(1.06);
@@ -408,10 +417,12 @@
       transform: scale(1.18) rotate(-6deg);
     }
     .highlight-item span {
-      font-size: 0.74rem;
+      font-size: 0.76rem;
       font-weight: 700;
       color: var(--texto-oscuro);
       transition: color 0.2s ease;
+      white-space: nowrap;
+      text-align: center;
     }
     .highlight-item:hover span {
       color: var(--rojo-frambuesa);
@@ -1546,7 +1557,23 @@
       }
     }
 
+    @media (max-width: 1140px) {
+      .nav-links {
+        gap: 14px;
+        font-size: 0.82rem;
+      }
+    }
+
     @media (max-width: 640px) {
+      .highlights-section {
+        justify-content: flex-start;
+      }
+      .highlights-slider {
+        justify-content: flex-start;
+        gap: 16px;
+        padding-left: 12px;
+        padding-right: 12px;
+      }
       .footer-container {
         grid-template-columns: 1fr !important;
         gap: 24px;
@@ -1575,6 +1602,12 @@
           <i class="fa-solid fa-bars"></i>
         </button>
 
+        <!-- LOGO -->
+        <a href="#" class="nav-logo">
+          <img src="assets/logo_pretty_transparent.png" alt="Pretty Please Logo">
+        </a>
+
+        <!-- LINKS DE NAVEGACIÓN -->
         <ul class="nav-links">
           <li><a onclick="goToCategory('todos')">Colección Pastel</a></li>
           <li><a onclick="goToCategory('boxy')">Polos Boxy</a></li>
@@ -1583,11 +1616,6 @@
           <li><a href="#lookbook">Lookbook ♡</a></li>
           <li><a href="#gamarra">Tienda Gamarra</a></li>
         </ul>
-
-        <!-- LOGO -->
-        <a href="#" class="nav-logo">
-          <img src="assets/logo_pretty_transparent.png" alt="Pretty Please Logo">
-        </a>
 
         <!-- ACCIONES -->
         <div class="nav-actions">
