@@ -183,7 +183,7 @@
       justify-content: center;
       cursor: pointer;
       color: var(--texto-oscuro);
-      transition: all 0.2s ease;
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
       position: relative;
     }
     .btn-icon:hover {
@@ -217,7 +217,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      transition: all 0.2s ease;
+      transition: background-color 0.2s ease, transform 0.2s ease;
       box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);
     }
     .btn-ws-nav:hover {
@@ -225,16 +225,17 @@
       transform: translateY(-2px);
     }
 
-    /* MENÚ MÓVIL LATERAL (DRAWER) */
+    /* MENÚ MÓVIL LATERAL (DRAWER) - GPU ACCELERATED */
     .mobile-menu-overlay {
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.45);
       backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
       z-index: 1000;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.25s ease;
     }
     .mobile-menu-overlay.active {
       opacity: 1;
@@ -243,19 +244,22 @@
     .mobile-menu-drawer {
       position: fixed;
       top: 0;
-      left: -300px;
+      left: 0;
       width: 280px;
       height: 100vh;
+      height: 100dvh;
       background: var(--blanco);
       z-index: 1001;
       box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
       display: flex;
       flex-direction: column;
-      transition: left 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateX(-100%);
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform;
       padding: 20px;
     }
     .mobile-menu-drawer.active {
-      left: 0;
+      transform: translateX(0);
     }
     .mobile-menu-header {
       display: flex;
@@ -372,12 +376,12 @@
       align-items: center;
       gap: 7px;
       cursor: pointer;
-      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.2s ease;
       flex-shrink: 0;
       text-align: center;
     }
     .highlight-item:hover {
-      transform: translateY(-5px) scale(1.06);
+      transform: translateY(-3px);
     }
     .highlight-ring {
       width: 66px;
@@ -388,10 +392,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s ease;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
     }
     .highlight-item:hover .highlight-ring {
-      box-shadow: 0 8px 18px rgba(197, 31, 61, 0.28);
+      box-shadow: 0 6px 16px rgba(197, 31, 61, 0.22);
       background: linear-gradient(135deg, var(--rojo-frambuesa), #ff6b8b, var(--amarillo-mantequilla));
     }
     .highlight-circle {
@@ -405,16 +409,16 @@
       font-size: 1.35rem;
       color: var(--rojo-frambuesa);
       border: 2px solid var(--blanco);
-      transition: all 0.25s ease;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
     .highlight-circle i {
-      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.2s ease;
     }
     .highlight-item:hover .highlight-circle {
       background: var(--blanco);
     }
     .highlight-item:hover .highlight-circle i {
-      transform: scale(1.18) rotate(-6deg);
+      transform: scale(1.12);
     }
     .highlight-item span {
       font-size: 0.76rem;
@@ -695,13 +699,13 @@
       cursor: pointer;
       white-space: nowrap;
       flex-shrink: 0;
-      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
     }
     .filter-btn:hover {
-      transform: translateY(-3px) scale(1.04);
+      transform: translateY(-2px);
       border-color: var(--rojo-frambuesa);
       color: var(--rojo-frambuesa);
-      box-shadow: 0 6px 16px rgba(197, 31, 61, 0.15);
+      box-shadow: 0 4px 12px rgba(197, 31, 61, 0.15);
     }
     .filter-btn.active {
       background: var(--rojo-frambuesa);
@@ -724,7 +728,7 @@
       display: flex;
       flex-direction: column;
       box-shadow: var(--sombra-card);
-      transition: all 0.25s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
       position: relative;
     }
     .product-thumb {
@@ -774,7 +778,7 @@
       justify-content: center;
       color: var(--texto-mutado);
       z-index: 2;
-      transition: all 0.2s ease;
+      transition: color 0.18s ease, background-color 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
     .btn-wish:hover, .btn-wish.active {
@@ -851,7 +855,7 @@
       padding: 1px 7px;
       border-radius: var(--radio-full);
       border: 1px dashed var(--border-suave);
-      transition: all 0.2s ease;
+      transition: color 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
       white-space: nowrap;
       max-width: 95px;
       overflow: hidden;
@@ -913,14 +917,14 @@
       border: 2px solid var(--blanco);
       box-shadow: 0 0 0 1px rgba(0,0,0,0.14);
       cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
     }
     .color-dot:hover {
-      transform: scale(1.22);
+      transform: scale(1.15);
       box-shadow: 0 0 0 2px var(--marron-latte);
     }
     .color-dot.active {
-      transform: scale(1.25);
+      transform: scale(1.18);
       box-shadow: 0 0 0 2px var(--rojo-frambuesa), 0 3px 8px rgba(197, 31, 61, 0.35);
     }
 
@@ -939,12 +943,12 @@
       font-weight: 700;
       cursor: pointer;
       color: var(--texto-oscuro);
-      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
     }
     .size-btn:hover {
       border-color: var(--rojo-frambuesa);
       color: var(--rojo-frambuesa);
-      transform: translateY(-2px);
+      transform: translateY(-1px);
     }
     .size-btn.active {
       background: var(--rojo-frambuesa);
@@ -969,13 +973,13 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
     }
     .btn-add-cart:hover {
       background: var(--rojo-frambuesa);
       color: var(--blanco);
       border-color: var(--rojo-frambuesa);
-      transform: translateY(-2px);
+      transform: translateY(-1px);
       box-shadow: 0 4px 12px rgba(197, 31, 61, 0.25);
     }
 
@@ -1231,16 +1235,17 @@
       gap: 10px;
     }
 
-    /* CARRITO SLIDE-IN (DRAWER) */
+    /* CARRITO SLIDE-IN (DRAWER) - GPU ACCELERATED */
     .cart-drawer-overlay {
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.45);
       backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
       z-index: 999;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.25s ease;
     }
     .cart-drawer-overlay.active {
       opacity: 1;
@@ -1249,19 +1254,22 @@
     .cart-drawer {
       position: fixed;
       top: 0;
-      right: -420px;
+      right: 0;
       width: 380px;
       max-width: 90vw;
       height: 100vh;
+      height: 100dvh;
       background: var(--blanco);
       z-index: 1000;
       box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
       display: flex;
       flex-direction: column;
-      transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateX(100%);
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform;
     }
     .cart-drawer.active {
-      right: 0;
+      transform: translateX(0);
     }
     .drawer-header {
       padding: 16px 20px;
@@ -1583,6 +1591,13 @@
         text-align: center;
         gap: 10px;
       }
+    }
+
+    /* ANTI-LAG AL EXPANDIR Y CONTRAER: Suprime cálculos pesados de CSS durante el redimensionamiento */
+    body.is-resizing,
+    body.is-resizing * {
+      transition: none !important;
+      animation: none !important;
     }
   </style>
 </head>
@@ -2808,6 +2823,16 @@
         const span = document.getElementById('topAnnouncement').querySelector('span');
         if (span) span.innerText = savedAnn;
       }
+
+      // FLUIDEZ TOTAL AL EXPANDIR Y CONTRAER (Sin movimientos erráticos)
+      let _resizeDebounce;
+      window.addEventListener('resize', () => {
+        document.body.classList.add('is-resizing');
+        clearTimeout(_resizeDebounce);
+        _resizeDebounce = setTimeout(() => {
+          document.body.classList.remove('is-resizing');
+        }, 100);
+      }, { passive: true });
     });
   </script>
 </body>
